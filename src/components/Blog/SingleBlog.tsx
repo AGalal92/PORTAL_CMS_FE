@@ -1,57 +1,47 @@
-import { Blog } from "@/types/blog";
-import Image from "next/image";
+import ImageComponent from "@/components/Image/ImageComponent"; // Assuming you have ImageComponent
 import Link from "next/link";
 
-const SingleBlog = ({ blog }: { blog: Blog }) => {
-  const { title, image, paragraph, author, tags, publishDate } = blog;
+const SingleBlog = ({ work }: { work: any }) => {
+  const { name, slug, description, image, link } = work;
+
   return (
-    <>
-      <div className="group relative overflow-hidden rounded-sm bg-white shadow-one duration-300 hover:shadow-two dark:bg-dark dark:hover:shadow-gray-dark">
-        <Link
-          href="/blog-details"
-          className="relative block aspect-[37/22] w-full"
-        >
-          <span className="absolute right-6 top-6 z-20 inline-flex items-center justify-center rounded-full bg-primary px-4 py-2 text-sm font-semibold capitalize text-white">
-            {tags[0]}
-          </span>
-          <Image src={image} alt="image" fill />
+    <div className="card bg-white dark:bg-dark w-96 shadow-xl dark:text-white transition-colors duration-300 h-[450px] flex flex-col justify-between">
+      {/* Image Section */}
+      <figure className="relative h-[50%]">
+        <Link href={`/blog-details/${slug}`}>
+          <ImageComponent
+            url={image[0]} // Using the first image from the image array
+            alt={`${name} Image`}
+            width={384}
+            height={256}
+            className="rounded-t-lg object-cover w-full h-full"
+          />
         </Link>
-        <div className="p-6 sm:p-8 md:px-6 md:py-8 lg:p-8 xl:px-5 xl:py-8 2xl:p-8">
-          <h3>
-            <Link
-              href="/blog-details"
-              className="mb-4 block text-xl font-bold text-black hover:text-primary dark:text-white dark:hover:text-primary sm:text-2xl"
-            >
-              {title}
-            </Link>
-          </h3>
-          <p className="mb-6 border-b border-body-color border-opacity-10 pb-6 text-base font-medium text-body-color dark:border-white dark:border-opacity-10">
-            {paragraph}
-          </p>
-          <div className="flex items-center">
-            <div className="mr-5 flex items-center border-r border-body-color border-opacity-10 pr-5 dark:border-white dark:border-opacity-10 xl:mr-3 xl:pr-3 2xl:mr-5 2xl:pr-5">
-              <div className="mr-4">
-                <div className="relative h-10 w-10 overflow-hidden rounded-full">
-                  <Image src={author.image} alt="author" fill />
-                </div>
-              </div>
-              <div className="w-full">
-                <h4 className="mb-1 text-sm font-medium text-dark dark:text-white">
-                  By {author.name}
-                </h4>
-                <p className="text-xs text-body-color">{author.designation}</p>
-              </div>
-            </div>
-            <div className="inline-block">
-              <h4 className="mb-1 text-sm font-medium text-dark dark:text-white">
-                Date
-              </h4>
-              <p className="text-xs text-body-color">{publishDate}</p>
-            </div>
-          </div>
-        </div>
+      </figure>
+
+      {/* Card Body */}
+      <div className="card-body h-[50%] overflow-hidden p-4 flex flex-col justify-between">
+        <h2 className="card-title text-gray-900 dark:text-white">{name}</h2>
+        <p className="text-gray-700 dark:text-gray-300 text-sm line-clamp-3">
+          {description?.[0]?.children?.[0]?.text || "No description available"}
+        </p>
       </div>
-    </>
+
+      {/* Footer Section */}
+      <div className="card-footer h-[10%] p-4 flex flex-wrap gap-2 justify-start border-t border-gray-200 dark:border-gray-700 overflow-hidden">
+        {link.map((l: any) => (
+          <Link
+            key={l.id}
+            href={l.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="badge badge-outline text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-600 transition text-xs"
+          >
+            {l.url}
+          </Link>
+        ))}
+      </div>
+    </div>
   );
 };
 

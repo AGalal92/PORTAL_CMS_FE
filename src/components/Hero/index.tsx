@@ -1,6 +1,23 @@
 import Link from "next/link";
-
-const Hero = () => {
+import Image from "next/image";
+import React from "react";
+import ImageComponent from "@/components/Image/ImageComponent";
+interface HeroProps {
+  about: {
+    data: Array<{
+      id: number;
+      title: string;
+      slug: string;
+      description: Array<{
+        text: string;
+        children: Array<{ text: string }>;
+      }>;
+      image: string[]; // The array of image URLs
+    }>;
+  };
+}
+const Hero: React.FC<HeroProps> = ({ about }) => {
+  const aboutImage = about?.data?.[0]?.image?.[0]; // Extract the first image URL
   return (
     <>
       <section
@@ -12,32 +29,32 @@ const Hero = () => {
             <div className="w-full px-4">
               <div className="mx-auto max-w-[800px] text-center">
                 <h1 className="mb-5 text-3xl font-bold leading-tight text-black dark:text-white sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight">
-                  Free and Open-Source Next.js Template for Startup & SaaS
+                  {about?.data?.[0]?.title || "Free and Open-Source Next.js Template for Startup & SaaS."}
+
                 </h1>
+                {/* <p className="mb-12 text-base !leading-relaxed text-body-color dark:text-body-color-dark sm:text-lg md:text-xl">
+                  {about?.data?.[0]?.slug || "Default description for the hero section."}
+                </p> */}
                 <p className="mb-12 text-base !leading-relaxed text-body-color dark:text-body-color-dark sm:text-lg md:text-xl">
-                  Startup is free Next.js template for startups and SaaS
-                  business websites comes with all the essential pages,
-                  components, and sections you need to launch a complete
-                  business website, built-with Next 13.x and Tailwind CSS.
+                  {about?.data?.[0]?.description?.[0]?.children?.[0]?.text ||
+                    "Default detailed description goes here."}
                 </p>
-                <div className="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
-                  <Link
-                    href="https://nextjstemplates.com/templates/saas-starter-startup"
-                    className="rounded-sm bg-primary px-8 py-4 text-base font-semibold text-white duration-300 ease-in-out hover:bg-primary/80"
-                  >
-                    🔥 Get Pro
-                  </Link>
-                  <Link
-                    href="https://github.com/NextJSTemplates/startup-nextjs"
-                    className="inline-block rounded-sm bg-black px-8 py-4 text-base font-semibold text-white duration-300 ease-in-out hover:bg-black/90 dark:bg-white/10 dark:text-white dark:hover:bg-white/5"
-                  >
-                    Star on GitHub
-                  </Link>
-                </div>
+                {/* Image */}
+                {/* {aboutImage && (
+                  <ImageComponent
+                    url={aboutImage} // Relative path from the API (e.g., "/uploads/image.jpg")
+                    alt={about?.data?.[0]?.title || "About Image"}
+                    width={800} // Optional custom width
+                    height={600} // Optional custom height
+                    className="mx-auto rounded-lg" // Additional styling
+                  />
+                )} */}
               </div>
             </div>
           </div>
         </div>
+
+
         <div className="absolute right-0 top-0 z-[-1] opacity-30 lg:opacity-100">
           <svg
             width="450"

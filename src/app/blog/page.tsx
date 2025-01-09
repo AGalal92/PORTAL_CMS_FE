@@ -10,7 +10,8 @@ export const metadata: Metadata = {
   // other metadata
 };
 
-const Blog = () => {
+const Blog = ({works }: { works: any }) => {
+  
   return (
     <>
       <Breadcrumb
@@ -26,7 +27,7 @@ const Blog = () => {
                 key={blog.id}
                 className="w-full px-4 md:w-2/3 lg:w-1/2 xl:w-1/3"
               >
-                <SingleBlog blog={blog} />
+                <SingleBlog work={works} />
               </div>
             ))}
           </div>
