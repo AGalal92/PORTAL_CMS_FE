@@ -2,13 +2,13 @@ import ImageComponent from "@/components/Image/ImageComponent"; // Assuming you 
 import Link from "next/link";
 
 const SingleBlog = ({ work }: { work: any }) => {
-  const { name, slug, description, image, link } = work;
+  const { id,name, slug, description, image, link } = work;
 
   return (
     <div className="card bg-white dark:bg-dark w-96 shadow-xl dark:text-white transition-colors duration-300 h-[450px] flex flex-col justify-between">
       {/* Image Section */}
       <figure className="relative h-[50%]">
-        <Link href={`/blog-details/${slug}`}>
+        <Link href={`/project/${id}`}>
           <ImageComponent
             url={image[0]} // Using the first image from the image array
             alt={`${name} Image`}

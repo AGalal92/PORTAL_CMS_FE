@@ -24,39 +24,39 @@ const Blog = ({ works }: { works: Works }) => {
       console.error("The 'works.data' array is undefined or empty.");
       return <div>No works available</div>;
     }
-  const sliderSettings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
+    const sliderSettings = {
+      dots: true,
+      infinite: works.data.length > 1, // Only make it infinite if more than 1 item
+      speed: 500,
+      slidesToShow: Math.min(3, works.data.length), // Show the number of slides based on items
+      slidesToScroll: 1,
+      responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: Math.min(2, works.data.length),
+            slidesToScroll: 1,
+          },
         },
-      },
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
+        {
+          breakpoint: 768,
+          settings: {
+            slidesToShow: Math.min(1, works.data.length),
+            slidesToScroll: 1,
+          },
         },
-      },
-    ],
-    nextArrow: <NextArrow />,
-    prevArrow: <PrevArrow />,
-    appendDots: (dots: React.ReactNode) => (
-      <div>
-        <ul className="slick-dots slick-thumb   ">{dots}</ul>
-      </div>
-    ),
-    customPaging: (i: number) => (
-      <div className="w-2 h-2 rounded-full bg-gray-500 dark:bg-white"></div>
-    ),
-  };
+      ],
+      nextArrow: <NextArrow />,
+      prevArrow: <PrevArrow />,
+      appendDots: (dots: React.ReactNode) => (
+        <div>
+          <ul className="slick-dots slick-thumb">{dots}</ul>
+        </div>
+      ),
+      customPaging: (i: number) => (
+        <div className="w-2 h-2 rounded-full bg-gray-500 dark:bg-white"></div>
+      ),
+    };
 
   return (
     <section

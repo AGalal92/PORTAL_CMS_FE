@@ -1,8 +1,50 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useState, useMemo } from "react";
+import menuData from "../Header/menuData";
 
 const Footer = () => {
+  // Navbar toggle
+  const [navbarOpen, setNavbarOpen] = useState(false);
+  const navbarToggleHandler = () => {
+    setNavbarOpen(!navbarOpen);
+  };
+
+  // Sticky Navbar
+  const [sticky, setSticky] = useState(false);
+  const handleStickyNavbar = () => {
+    if (window.scrollY >= 80) {
+      setSticky(true);
+    } else {
+      setSticky(false);
+    }
+  };
+  useEffect(() => {
+    window.addEventListener("scroll", handleStickyNavbar);
+  });
+
+  // submenu handler
+  const [openIndex, setOpenIndex] = useState(-1);
+  const handleSubmenu = (index) => {
+    if (openIndex === index) {
+      setOpenIndex(-1);
+    } else {
+      setOpenIndex(index);
+    }
+  };
+
+  const usePathName = usePathname();
+  
+  const filteredMenuData = useMemo(() => {
+    if (usePathName === "/") {
+      return menuData; // Return the original menuData
+    } else {
+      return []; // Return an empty array
+    }
+  }, [usePathName]);
+
   return (
     <>
       <footer className="relative z-10 bg-white pt-16 dark:bg-gray-dark md:pt-10 lg:pt-14">
@@ -27,121 +69,134 @@ const Footer = () => {
                   />
                 </Link>
                 <p className="mb-9 text-base leading-relaxed text-body-color dark:text-body-color-dark">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Integer lobortis.
+
+                  <span className="flex items-center">
+                    Legion Portfolio. All rights reserved. 2025 
+                  </span>
                 </p>
-                <div className="flex items-center">
+                  <div className="flex items-center space-x-6">
+                  {/* LinkedIn */}
                   <a
-                    href="/"
-                    aria-label="social-link"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mr-6 text-body-color duration-300 hover:text-primary dark:text-body-color-dark dark:hover:text-primary"
-                  >
-                    <svg
-                      width="18"
-                      height="18"
-                      viewBox="0 0 22 22"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M12.1 10.4939V7.42705C12.1 6.23984 13.085 5.27741 14.3 5.27741H16.5V2.05296L13.5135 1.84452C10.9664 1.66676 8.8 3.63781 8.8 6.13287V10.4939H5.5V13.7183H8.8V20.1667H12.1V13.7183H15.4L16.5 10.4939H12.1Z"
-                        fill="currentColor"
-                      />
-                    </svg>
-                  </a>
-                  <a
-                    href="/"
-                    aria-label="social-link"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mr-6 text-body-color duration-300 hover:text-primary dark:text-body-color-dark dark:hover:text-primary"
-                  >
-                    <svg
-                      width="18"
-                      height="18"
-                      viewBox="0 0 22 22"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        d="M13.9831 19.25L9.82094 13.3176L4.61058 19.25H2.40625L8.843 11.9233L2.40625 2.75H8.06572L11.9884 8.34127L16.9034 2.75H19.1077L12.9697 9.73737L19.6425 19.25H13.9831ZM16.4378 17.5775H14.9538L5.56249 4.42252H7.04674L10.808 9.6899L11.4584 10.6039L16.4378 17.5775Z"
-                        fill="currentColor"
-                      />
-                    </svg>
-                  </a>
-                  <a
-                    href="/"
-                    aria-label="social-link"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mr-6 text-body-color duration-300 hover:text-primary dark:text-body-color-dark dark:hover:text-primary"
-                  >
-                    <svg
-                      width="18"
-                      height="14"
-                      viewBox="0 0 18 14"
-                      className="fill-current"
-                    >
-                      <path d="M17.5058 2.07119C17.3068 1.2488 16.7099 0.609173 15.9423 0.395963C14.5778 7.26191e-08 9.0627 0 9.0627 0C9.0627 0 3.54766 7.26191e-08 2.18311 0.395963C1.41555 0.609173 0.818561 1.2488 0.619565 2.07119C0.25 3.56366 0.25 6.60953 0.25 6.60953C0.25 6.60953 0.25 9.68585 0.619565 11.1479C0.818561 11.9703 1.41555 12.6099 2.18311 12.8231C3.54766 13.2191 9.0627 13.2191 9.0627 13.2191C9.0627 13.2191 14.5778 13.2191 15.9423 12.8231C16.7099 12.6099 17.3068 11.9703 17.5058 11.1479C17.8754 9.68585 17.8754 6.60953 17.8754 6.60953C17.8754 6.60953 17.8754 3.56366 17.5058 2.07119ZM7.30016 9.44218V3.77687L11.8771 6.60953L7.30016 9.44218Z" />
-                    </svg>
-                  </a>
-                  <a
-                    href="/"
-                    aria-label="social-link"
+                    href="https://www.linkedin.com"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-body-color duration-300 hover:text-primary dark:text-body-color-dark dark:hover:text-primary"
+                    aria-label="LinkedIn"
                   >
                     <svg
-                      width="17"
-                      height="16"
-                      viewBox="0 0 17 16"
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
                       className="fill-current"
                     >
-                      <path d="M15.2196 0H1.99991C1.37516 0 0.875366 0.497491 0.875366 1.11936V14.3029C0.875366 14.8999 1.37516 15.4222 1.99991 15.4222H15.1696C15.7943 15.4222 16.2941 14.9247 16.2941 14.3029V1.09448C16.3441 0.497491 15.8443 0 15.2196 0ZM5.44852 13.1089H3.17444V5.7709H5.44852V13.1089ZM4.29899 4.75104C3.54929 4.75104 2.97452 4.15405 2.97452 3.43269C2.97452 2.71133 3.57428 2.11434 4.29899 2.11434C5.02369 2.11434 5.62345 2.71133 5.62345 3.43269C5.62345 4.15405 5.07367 4.75104 4.29899 4.75104ZM14.07 13.1089H11.796V9.55183C11.796 8.7061 11.771 7.58674 10.5964 7.58674C9.39693 7.58674 9.222 8.53198 9.222 9.47721V13.1089H6.94792V5.7709H9.17202V6.79076H9.19701C9.52188 6.19377 10.2466 5.59678 11.3711 5.59678C13.6952 5.59678 14.12 7.08925 14.12 9.12897V13.1089H14.07Z" />
+                      <path d="M22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.72V1.72C24 .77 23.21 0 22.23 0zM7.12 20.45H3.56V9h3.56v11.45zM5.34 7.59c-1.14 0-2.06-.92-2.06-2.06s.92-2.06 2.06-2.06 2.06.92 2.06 2.06-.92 2.06-2.06 2.06zM20.45 20.45h-3.56v-5.59c0-1.33-.03-3.05-1.86-3.05-1.86 0-2.15 1.45-2.15 2.96v5.68H9.32V9h3.42v1.56h.05c.48-.91 1.66-1.86 3.41-1.86 3.65 0 4.33 2.4 4.33 5.52v6.23z" />
+                    </svg>
+                  </a>
+
+                  {/* GitHub */}
+                  <a
+                    href="https://github.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-body-color duration-300 hover:text-primary dark:text-body-color-dark dark:hover:text-primary"
+                    aria-label="GitHub"
+                  >
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="fill-current"
+                    >
+                      <path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.6-1.5-2-1.5-2-1.2-.8 0-.8 0-.8 1.4.1 2.1 1.4 2.1 1.4 1.2 2.1 3 1.5 3.8 1.1.1-.9.5-1.5.9-1.8-2.7-.3-5.6-1.4-5.6-6.3 0-1.4.5-2.5 1.3-3.4-.1-.3-.6-1.7.1-3.5 0 0 1.1-.3 3.5 1.3a11.9 11.9 0 0 1 6.4 0C19 5 20.1 5.4 20.1 5.4c.7 1.8.2 3.2.1 3.5.8.9 1.3 2 1.3 3.4 0 4.9-2.9 6-5.6 6.3.5.4 1 1.2 1 2.4v3.6c0 .3.2.7.8.6A12 12 0 0 0 12 .3" />
+                    </svg>
+                  </a>
+
+                  {/* Facebook */}
+                  <a
+                    href="https://www.facebook.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-body-color duration-300 hover:text-primary dark:text-body-color-dark dark:hover:text-primary"
+                    aria-label="Facebook"
+                  >
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="fill-current"
+                    >
+                      <path d="M9 8h-3v4h3v12h5V12h3.6l.4-4h-4V6c0-1 .2-2 2-2h2V0h-3c-3 0-5 2-5 5v3z" />
+                    </svg>
+                  </a>
+
+                  {/* WhatsApp */}
+                  <a
+                    href="https://wa.me/+01143426161"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-body-color duration-300 hover:text-primary dark:text-body-color-dark dark:hover:text-primary"
+                    aria-label="WhatsApp"
+                  >
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="fill-current"
+                    >
+                      <path d="M20.5 3.5a11.9 11.9 0 0 0-16.9 0A11.8 11.8 0 0 0 .2 12a11.6 11.6 0 0 0 2 6.3L0 24l5.8-2a11.6 11.6 0 0 0 6.2 1.8h.5a11.8 11.8 0 0 0 8.3-3.5 11.9 11.9 0 0 0 0-16.8zm-8.6 17.6h-.4A10.5 10.5 0 0 1 7.5 20L7 19.7l-3.4.9.9-3.4-.3-.5a10.3 10.3 0 1 1 17.6-7.2 10.4 10.4 0 0 1-10.8 10.1zM16 14c-.5-.2-2.7-1.3-3-1.4s-.6-.2-.9.2c-.2.4-.9 1.2-1 1.3-.2.2-.4.2-.9 0s-1.6-.6-3-1.8a11 11 0 0 1-2-2.5c-.2-.4 0-.7.2-1s.4-.6.7-1c.3-.3.4-.6.6-1a1 1 0 0 0 0-.9c-.2-.2-.9-2.1-1.2-2.9s-.7-.6-1-.6h-.9A3 3 0 0 0 3.7 8a14.5 14.5 0 0 0 2.6 4c1.5 1.7 4.2 3.7 5.7 4.1a6.6 6.6 0 0 0 1.4.2c.4 0 .7 0 1-.3a7 7 0 0 0 1.5-2c.2-.5 0-.7-.2-.9z" />
                     </svg>
                   </a>
                 </div>
               </div>
             </div>
 
+            
+            {usePathName === "/" ? (
             <div className="w-full px-4 sm:w-1/2 md:w-1/2 lg:w-2/12 xl:w-2/12">
               <div className="mb-12 lg:mb-16">
                 <h2 className="mb-10 text-xl font-bold text-black dark:text-white">
                   Useful Links
                 </h2>
-                <ul>
-                  <li>
-                    <Link
-                      href="/blog"
-                      className="mb-4 inline-block text-base text-body-color duration-300 hover:text-primary dark:text-body-color-dark dark:hover:text-primary"
-                    >
-                      Blog
-                    </Link>
-                  </li>
-                  {/* <li>
-                    <Link
-                      href="/"
-                      className="mb-4 inline-block text-base text-body-color duration-300 hover:text-primary dark:text-body-color-dark dark:hover:text-primary"
-                    >
-                      Pricing
-                    </Link>
-                  </li> */}
-                  <li>
-                    <Link
-                      href="/about"
-                      className="mb-4 inline-block text-base text-body-color duration-300 hover:text-primary dark:text-body-color-dark dark:hover:text-primary"
-                    >
-                      About
-                    </Link>
-                  </li>
+                <ul className="flex flex-col">
+                  {filteredMenuData.map((menuItem, index) => (
+                    <li key={index} className="relative">
+                      {menuItem.path ? (
+                        <Link
+                          href={menuItem.path}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            const target = document.querySelector(menuItem.path);
+                            const yOffset = -80; // Adjust based on your navbar height
+                            const y = target.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                            window.scrollTo({ top: y, behavior: "smooth" });
+                          }}
+                          className={`block py-2 text-base px-4 ${usePathName === menuItem.path
+                              ? "text-primary dark:text-white"
+                              : "text-dark hover:text-primary dark:text-white/70 dark:hover:text-white"
+                            }`}
+                        >
+                          {menuItem.title}
+                        </Link>
+                      ) : (
+                        <span className="block py-2 text-base px-4 text-dark dark:text-white">
+                          {menuItem.title}
+                        </span>
+                      )}
+                    </li>
+                  ))}
                 </ul>
+
               </div>
             </div>
+            ) : (null)}
 
             {/* <div className="w-full px-4 sm:w-1/2 md:w-1/2 lg:w-2/12 xl:w-2/12">
               <div className="mb-12 lg:mb-16">
@@ -188,7 +243,7 @@ const Footer = () => {
                       href="/contact"
                       className="mb-4 inline-block text-base text-body-color duration-300 hover:text-primary dark:text-body-color-dark dark:hover:text-primary"
                     >
-                      Open Support Ticket
+                      Contact Us
                     </Link>
                   </li>
                   {/* <li>

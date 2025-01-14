@@ -6,6 +6,7 @@ import ScrollUp from "@/components/Common/ScrollUp";
 import Contact from "@/components/Contact";
 import Features from "@/components/Features";
 import Hero from "@/components/Hero";
+import Intro from "@/components/Intro";
 import Pricing from "@/components/Pricing";
 import Testimonials from "@/components/Testimonials";
 import Video from "@/components/Video";
@@ -27,18 +28,27 @@ export default async function Home() {
     return (
       <>
         <ScrollUp />
-        <Hero about={abouts} /> {/* Pass abouts data to the Hero component */}
-        <Features services={services} />
-        <Video />
-        {/* <Brands /> */}
-        {/* <AboutSectionOne /> */}
-        {/* <AboutSectionTwo /> */}
-        {/* <Testimonials /> */}
-        {/* <Pricing /> */}
-        <Blog works={works} />
-        <Contact />
+        <section id="Home">
+          <Intro /> {/* Add your intro component here */}
+        </section>
+        <section id="blog">
+          <Blog works={works} />
+        </section>
+        <section id="hero">
+          <Hero about={abouts} /> {/* Pass abouts data to the Hero component */}
+        </section>
+        <section id="video">
+          <Video />
+        </section>
+        <section id="features">
+          <Features services={services} />
+        </section>
+        <section id="contact">
+          <Contact />
+        </section>
       </>
     );
+    
   } catch (error) {
     console.error("Error fetching abouts data:", error);
 
