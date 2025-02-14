@@ -6,11 +6,13 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import { useScreenSize } from "../hooks/useScreenSize"; // Import the custom hook
 
 export default function Contact() {
   const { darkMode } = useTheme();
   const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
   const [loading, setLoading] = useState(false);
+  const { isMobile, isTablet } = useScreenSize(); // Get screen size info
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
@@ -39,14 +41,14 @@ export default function Contact() {
       id="contact"
       className={`py-16 transition-all duration-500 ${darkMode ? "bg-gray-900 text-white" : "bg-gray-300 text-black"}`}
     >
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* ✅ Left-aligned Title with Underline */}
         <div className="mb-8">
           <p className="text-xs uppercase font-light tracking-widest relative inline-block">
             Contact Us
             <span className="absolute left-24 top-1/2 w-24 h-[2px] bg-yellow-500"></span>
           </p>
-          <h2 className={`text-5xl font-extrabold text-left font-raleway ${darkMode ? "text-white" : "text-black"}`}>
+          <h2 className={`text-3xl sm:text-4xl md:text-5xl font-extrabold text-left font-raleway ${darkMode ? "text-white" : "text-black"}`}>
             WE WILL REACH YOU
           </h2>
         </div>
@@ -54,15 +56,53 @@ export default function Contact() {
         {/* ✅ Form with Two Columns */}
         <Box component="form" className="space-y-6" onSubmit={handleSubmit}>
           <Grid container spacing={2}>
-            <FormField label="Your Name" name="name" value={form.name} handleChange={handleChange} darkMode={darkMode} />
-            <FormField label="Subject" name="subject" value={form.subject} handleChange={handleChange} darkMode={darkMode} />
-            <FormField label="Your Email" name="email" type="email" value={form.email} handleChange={handleChange} darkMode={darkMode} fullWidth />
-            <FormField label="Your Message" name="message" multiline rows={5} value={form.message} handleChange={handleChange} darkMode={darkMode} fullWidth />
+            <FormField
+              label="Your Name"
+              name="name"
+              value={form.name}
+              handleChange={handleChange}
+              darkMode={darkMode}
+              isMobile={isMobile}
+              isTablet={isTablet}
+            />
+            <FormField
+              label="Subject"
+              name="subject"
+              value={form.subject}
+              handleChange={handleChange}
+              darkMode={darkMode}
+              isMobile={isMobile}
+              isTablet={isTablet}
+            />
+            <FormField
+              label="Your Email"
+              name="email"
+              type="email"
+              value={form.email}
+              handleChange={handleChange}
+              darkMode={darkMode}
+              isMobile={isMobile}
+              isTablet={isTablet}
+              fullWidth
+            />
+            <FormField
+              label="Your Message"
+              name="message"
+              multiline
+              rows={isMobile ? 3 : 5}
+              value={form.message}
+              handleChange={handleChange}
+              darkMode={darkMode}
+              isMobile={isMobile}
+              isTablet={isTablet}
+              fullWidth
+            />
           </Grid>
 
           {/* ✅ Submit Button with Motion */}
           <motion.div whileHover={{ scale: 1.02 }}>
             <Button
+             title="Send Message"
               type="submit"
               variant="contained"
               fullWidth
@@ -93,8 +133,20 @@ export default function Contact() {
 }
 
 // ✅ Separate Component for Animated Input Fields
-const FormField = ({ label, name, value, handleChange, darkMode, type = "text", multiline = false, rows, fullWidth = false }) => {
-  const { ref, inView } = useInView({ triggerOnce: false, threshold: 0.3 });
+const FormField = ({
+  label,
+  name,
+  value,
+  handleChange,
+  darkMode,
+  type = "text",
+  multiline = false,
+  rows,
+  fullWidth = false,
+  isMobile,
+  isTablet,
+}) => {
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: isMobile ? 0.1 : 0.3 });
 
   return (
     <Grid item xs={12} sm={fullWidth ? 12 : 6}>
@@ -105,6 +157,7 @@ const FormField = ({ label, name, value, handleChange, darkMode, type = "text", 
         transition={{ duration: 0.8 }}
       >
         <TextField
+          id="name"
           fullWidth
           label={label}
           variant="outlined"

@@ -1,9 +1,10 @@
 "use client";
-import { Card, CardContent, Typography, Grid, Avatar, Container } from "@mui/material";
+import { Card, CardContent, Typography, Grid, Avatar } from "@mui/material";
 import { motion } from "framer-motion";
 import { useTheme } from "../layout"; // Import Dark Mode Context
 import { Facebook, Twitter, LinkedIn, GitHub } from "@mui/icons-material"; // Social Icons
 import { useInView } from "react-intersection-observer";
+import { useScreenSize } from "../hooks/useScreenSize"; // Import the custom hook
 
 const teamMembers = [
   { name: "John Doe", role: "CEO", level: "Senior Executive", image: "/images/hero1.jpg", socials: { linkedin: "#", github: "#", twitter: "#", facebook: "#" } },
@@ -13,27 +14,35 @@ const teamMembers = [
 
 export default function Team() {
   const { darkMode } = useTheme(); // Use Dark Mode Context
+  const { isMobile, isTablet } = useScreenSize(); // Get screen size info
 
   return (
     <section
       id="team"
       className={`py-16 transition-all duration-500 ${darkMode ? "bg-gray-900 text-white" : "bg-gray-300 text-black"}`}
     >
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* ✅ Left-Aligned "Check Our Team" Title with Underline */}
         <div className="mb-10">
           <p className="text-xs uppercase font-light tracking-widest relative inline-block">
             Team
             <span className="absolute left-24 top-1/2 w-24 h-[2px] bg-yellow-500"></span>
           </p>
-          <h2 className={`text-5xl font-extrabold text-left font-raleway ${darkMode ? "text-white" : "text-black"}`}>
+          <h2 className={`text-3xl sm:text-4xl md:text-5xl font-extrabold text-left font-raleway ${darkMode ? "text-white" : "text-black"}`}>
             CHECK OUR TEAM
           </h2>
         </div>
 
+        {/* ✅ Team Member Grid */}
         <Grid container spacing={4} justifyContent="center">
           {teamMembers.map((member, index) => (
-            <TeamCard key={index} member={member} darkMode={darkMode} />
+            <TeamCard
+              key={index}
+              member={member}
+              darkMode={darkMode}
+              isMobile={isMobile}
+              isTablet={isTablet}
+            />
           ))}
         </Grid>
       </div>
@@ -42,8 +51,8 @@ export default function Team() {
 }
 
 // ✅ Animated Team Card Component
-const TeamCard = ({ member, darkMode }) => {
-  const { ref, inView } = useInView({ triggerOnce: false, threshold: 0.3 });
+const TeamCard = ({ member, darkMode, isMobile, isTablet }) => {
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: isMobile ? 0.1 : 0.3 });
 
   return (
     <Grid item xs={12} sm={6} md={4}>
@@ -70,8 +79,8 @@ const TeamCard = ({ member, darkMode }) => {
             alt={member.name}
             src={member.image}
             sx={{
-              width: 200,
-              height: 200,
+              width: isMobile ? 120 : isTablet ? 160 : 200,
+              height: isMobile ? 120 : isTablet ? 160 : 200,
               margin: "auto",
             }}
           />

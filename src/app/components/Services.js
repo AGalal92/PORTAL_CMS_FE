@@ -1,10 +1,11 @@
 "use client";
 import { useEffect } from "react";
-import { Card, CardContent, Typography, Grid, Container } from "@mui/material";
+import { Card, CardContent, Typography, Grid } from "@mui/material";
 import { Code, PhoneAndroid, DesignServices } from "@mui/icons-material";
 import { motion, useAnimation } from "framer-motion";
 import { useTheme } from "../layout"; // Import Dark Mode Context
 import { useInView } from "react-intersection-observer";
+import { useScreenSize } from "../hooks/useScreenSize"; // Import the custom hook
 
 const services = [
   { title: "Web Development", desc: "High-quality web applications.", icon: <Code fontSize="large" /> },
@@ -14,28 +15,36 @@ const services = [
 
 export default function Services() {
   const { darkMode } = useTheme();
+  const { isMobile, isTablet } = useScreenSize(); // Get screen size info
 
   return (
     <section
       id="services"
       className={`py-16 transition-all duration-500 ${darkMode ? "bg-gray-900 text-white" : "bg-gray-300 text-black"}`}
     >
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* ✅ Left-aligned Title with Underline */}
         <div className="mb-8">
           <p className="text-xs uppercase font-light tracking-widest relative inline-block">
             Services
             <span className="absolute left-24 top-1/2 w-24 h-[2px] bg-yellow-500"></span>
           </p>
-          <h2 className={`text-5xl font-extrabold text-left font-raleway ${darkMode ? "text-white" : "text-black"}`}>
+          <h2 className={`text-3xl sm:text-4xl md:text-5xl font-extrabold text-left font-raleway ${darkMode ? "text-white" : "text-black"}`}>
             CHECK OUR SERVICES
           </h2>
         </div>
 
-        {/* ✅ Service Cards with Individual Scroll Detection */}
+        {/* ✅ Service Cards with Responsive Layout */}
         <Grid container spacing={4} justifyContent="center">
           {services.map((service, index) => (
-            <ServiceCard key={index} service={service} darkMode={darkMode} index={index} />
+            <ServiceCard
+              key={index}
+              service={service}
+              darkMode={darkMode}
+              index={index}
+              isMobile={isMobile}
+              isTablet={isTablet}
+            />
           ))}
         </Grid>
       </div>
@@ -44,9 +53,9 @@ export default function Services() {
 }
 
 // ✅ Animated Service Card Component
-const ServiceCard = ({ service, darkMode, index }) => {
+const ServiceCard = ({ service, darkMode, index, isMobile, isTablet }) => {
   const controls = useAnimation();
-  const { ref, inView } = useInView({ threshold: 0.3, triggerOnce: false });
+  const { ref, inView } = useInView({ threshold: isMobile ? 0.1 : 0.3, triggerOnce: true });
 
   useEffect(() => {
     if (inView) {

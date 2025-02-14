@@ -15,6 +15,20 @@ const subText = "Your choice, our trust"; // Motivational phrase
 export default function Hero() {
   const [current, setCurrent] = useState(0);
   const heroRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+      setIsTablet(window.innerWidth <= 1200);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -57,6 +71,10 @@ export default function Hero() {
               layout="fill"
               objectFit="cover"
               className="transition-opacity duration-1000"
+              srcSet={`${img}-480.jpg 480w, ${img}-800.jpg 800w, ${img}-1200.jpg 1200w`}
+              sizes="(max-width: 600px) 480px, (max-width: 1200px) 800px, 1200px"
+              priority={index === 0}
+              loading={index === 0 ? "eager" : "lazy"}
             />
           </motion.div>
         ))}
@@ -74,7 +92,7 @@ export default function Hero() {
       >
         {/* Left: Hero Text */}
         <div className="text-left max-w-lg">
-          <h1 className="text-5xl md:text-7xl font-bold">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold">
             {welcomeText.map((word, index) => (
               <motion.span
                 key={index}
@@ -95,16 +113,19 @@ export default function Hero() {
             animate={{ opacity: 1 }}
             transition={{ delay: 2 }}
           >
-            <p className="text-lg md:text-xl text-gray-300">{subText}</p>
-            <ScrollLink
-              to="about"
-              smooth={true}
-              duration={800}
-              className="px-3 py-2 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-lg shadow-lg cursor-pointer transition-all transform hover:scale-103"
+            <p className="text-sm sm:text-lg md:text-xl text-gray-300">{subText}</p>
+            <a
+              href="#about"
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
+              }}
+              className="px-2 py-1 sm:px-3 sm:py-2 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-lg shadow-lg cursor-pointer transition-all transform hover:scale-103 text-sm sm:text-base"
             >
               Get Started
-            </ScrollLink>
+            </a>
           </motion.div>
+
         </div>
       </motion.div>
     </section>

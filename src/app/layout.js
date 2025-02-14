@@ -3,6 +3,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { createContext, useContext, useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import Head from "next/head";
 import "./globals.css";
 
 const ThemeContext = createContext();
@@ -37,10 +38,16 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
+       <head>
+        <title>Legion Agency</title>
+        <meta charSet="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="Legion provides software solutions and services" />
+      </head>
+      <body className={`${darkMode ? "dark bg-black text-white" : "bg-white text-black"} transition-colors duration-300`}>
       <ThemeContext.Provider value={{ darkMode, toggleDarkMode }}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <body className={darkMode ? "dark bg-black text-white" : "bg-white text-black"}>
             <AnimatePresence mode="wait">
               {animation && (
                 <motion.div
@@ -60,9 +67,9 @@ export default function RootLayout({ children }) {
             >
               {children}
             </motion.div>
-          </body>
         </ThemeProvider>
       </ThemeContext.Provider>
+      </body>
     </html>
   );
 }
