@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import { Card, CardContent, Typography, Grid, Avatar } from "@mui/material";
 import { motion } from "framer-motion";
 import { useTheme } from "../layout"; // Import Dark Mode Context
@@ -7,9 +8,30 @@ import { useInView } from "react-intersection-observer";
 import { useScreenSize } from "../hooks/useScreenSize"; // Import the custom hook
 
 const teamMembers = [
-  { name: "John Doe", role: "CEO", level: "Senior Executive", image: "/images/hero1.jpg", socials: { linkedin: "#", github: "#", twitter: "#", facebook: "#" } },
-  { name: "Jane Smith", role: "CTO", level: "Technology Leader", image: "/images/hero2.jpg", socials: { linkedin: "#", github: "#", twitter: "#", facebook: "#" } },
-  { name: "Mike Johnson", role: "Lead Developer", level: "Senior Engineer", image: "/images/hero3.jpg", socials: { linkedin: "#", github: "#", twitter: "#", facebook: "#" } },
+  { 
+    name: "Abdelrahman Galal", 
+    role: "Commander", 
+    level: "Warrior Leader", 
+    image: "/images/hero4.png", 
+    hoverImage: "/images/commander4.png", 
+    socials: { linkedin: "#", github: "#", twitter: "#", facebook: "#" }
+  },
+  { 
+    name: "Ahmed Hashim", 
+    role: "Scouter", 
+    level: "Battle-Scouter", 
+    image: "/images/hero5.png", 
+    hoverImage: "/images/scouter3.png", 
+    socials: { linkedin: "#", github: "#", twitter: "#", facebook: "#" }
+  },
+  { 
+    name: "Abanob Wagih", 
+    role: "Full Warrior Developer", 
+    level: "Battle-Warrior", 
+    image: "/images/hero6.png", 
+    hoverImage: "/images/commander3.png", 
+    socials: { linkedin: "#", github: "#", twitter: "#", facebook: "#" }
+  },
 ];
 
 export default function Team() {
@@ -19,22 +41,34 @@ export default function Team() {
   return (
     <section
       id="team"
-      className={`py-16 transition-all duration-500 ${darkMode ? "bg-gray-900 text-white" : "bg-gray-300 text-black"}`}
+      className="py-16 transition-all duration-500"
+      style={{
+        backgroundImage: darkMode
+          ? "url('/images/spartaTexture8.png')"
+          : "url('/images/spartaTexture5.png')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundAttachment: "fixed",
+      }}
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        {/* ✅ Left-Aligned "Check Our Team" Title with Underline */}
-        <div className="mb-10">
-          <p className="text-xs uppercase font-light tracking-widest relative inline-block">
+      <div className="container mx-auto px-6 sm:px-12 lg:px-20">
+        {/* ✅ Spartan-Themed Title */}
+        <div className="mb-12">
+          <p className="text-xs uppercase font-light tracking-widest text-yellow-500 relative inline-block">
             Team
             <span className="absolute left-24 top-1/2 w-24 h-[2px] bg-yellow-500"></span>
           </p>
-          <h2 className={`text-3xl sm:text-4xl md:text-5xl font-extrabold text-left font-raleway ${darkMode ? "text-white" : "text-black"}`}>
-            CHECK OUR TEAM
+          <h2
+            className={`text-4xl sm:text-5xl font-extrabold text-left font-cinzel ${
+              darkMode ? "text-yellow-400" : "text-gray-800"
+            }`}
+          >
+            🏛️ MEET OUR WARRIORS 🏛️
           </h2>
         </div>
 
         {/* ✅ Team Member Grid */}
-        <Grid container spacing={4} justifyContent="center">
+        <Grid container spacing={6} justifyContent="center">
           {teamMembers.map((member, index) => (
             <TeamCard
               key={index}
@@ -50,9 +84,10 @@ export default function Team() {
   );
 }
 
-// ✅ Animated Team Card Component
+// ✅ Animated Spartan-Themed Team Card Component with Full Card Hover Image Swap
 const TeamCard = ({ member, darkMode, isMobile, isTablet }) => {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: isMobile ? 0.1 : 0.3 });
+  const [hover, setHover] = useState(false); // State to track hover
 
   return (
     <Grid item xs={12} sm={6} md={4}>
@@ -61,38 +96,44 @@ const TeamCard = ({ member, darkMode, isMobile, isTablet }) => {
         initial={{ opacity: 0, y: 50 }}
         animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
         transition={{ duration: 0.8 }}
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
       >
         <Card
-          className="relative p-6 text-center border border-white/20 bg-white/10 backdrop-blur-md rounded-lg overflow-hidden"
+          className="relative p-6 text-center rounded-lg overflow-hidden group transition-transform duration-300 hover:scale-105 border-2 border-yellow-500 shadow-lg hover:shadow-yellow-500"
           sx={{
-            background: darkMode ? "rgba(255, 255, 255, 0.1)" : "rgba(255, 255, 255, 0.3)",
+            background: darkMode
+              ? "rgba(30, 30, 30, 0.9)"
+              : "rgba(255, 255, 255, 0.8)",
             backdropFilter: "blur(15px)",
-            border: "1px solid rgba(255, 255, 255, 0.2)",
+            border: "2px solid rgba(255, 204, 0, 0.5)",
             transition: "all 0.3s ease-in-out",
             boxShadow: darkMode
-              ? "0 4px 15px rgba(0, 255, 255, 0.1)"
-              : "0 4px 15px rgba(0, 119, 255, 0.1)",
+              ? "0 4px 15px rgba(255, 204, 0, 0.2)"
+              : "0 4px 15px rgba(255, 153, 0, 0.2)",
           }}
         >
-          {/* ✅ Team Member Image */}
+          {/* ✅ Spartan Warrior Image with Full Card Hover Effect */}
           <Avatar
             alt={member.name}
-            src={member.image}
+            src={hover ? member.hoverImage : member.image}
             sx={{
               width: isMobile ? 120 : isTablet ? 160 : 200,
               height: isMobile ? 120 : isTablet ? 160 : 200,
               margin: "auto",
+              transition: "transform 0.3s ease-in-out",
+              "&:hover": { transform: "scale(1.1)" },
             }}
           />
 
           <CardContent className="text-left">
             {/* ✅ Name */}
-            <Typography variant="h6" className="font-semibold mt-2">
+            <Typography variant="h6" className="font-bold text-yellow-500 uppercase mt-3">
               {member.name}
             </Typography>
 
             {/* ✅ Divider */}
-            <div className={`w-12 h-1 my-2 ${darkMode ? "bg-yellow-500" : "bg-yellow-500"}`}></div>
+            <div className="w-16 h-1 my-2 bg-yellow-500 "></div>
 
             {/* ✅ Job Title & Level */}
             <Typography variant="body2" className={`${darkMode ? "text-gray-300" : "text-gray-700"}`}>
@@ -111,7 +152,7 @@ const TeamCard = ({ member, darkMode, isMobile, isTablet }) => {
               whileHover={{ scale: 1.2 }}
               className={`${darkMode ? "text-blue-300" : "text-blue-600"} transition-all`}
             >
-              <LinkedIn fontSize="small" />
+              <LinkedIn fontSize="medium" />
             </motion.a>
             <motion.a
               href={member.socials.github}
@@ -119,7 +160,7 @@ const TeamCard = ({ member, darkMode, isMobile, isTablet }) => {
               whileHover={{ scale: 1.2 }}
               className={`${darkMode ? "text-gray-300" : "text-gray-800"} transition-all`}
             >
-              <GitHub fontSize="small" />
+              <GitHub fontSize="medium" />
             </motion.a>
             <motion.a
               href={member.socials.twitter}
@@ -127,7 +168,7 @@ const TeamCard = ({ member, darkMode, isMobile, isTablet }) => {
               whileHover={{ scale: 1.2 }}
               className={`${darkMode ? "text-blue-400" : "text-blue-500"} transition-all`}
             >
-              <Twitter fontSize="small" />
+              <Twitter fontSize="medium" />
             </motion.a>
             <motion.a
               href={member.socials.facebook}
@@ -135,7 +176,7 @@ const TeamCard = ({ member, darkMode, isMobile, isTablet }) => {
               whileHover={{ scale: 1.2 }}
               className={`${darkMode ? "text-blue-500" : "text-blue-700"} transition-all`}
             >
-              <Facebook fontSize="small" />
+              <Facebook fontSize="medium" />
             </motion.a>
           </div>
         </Card>

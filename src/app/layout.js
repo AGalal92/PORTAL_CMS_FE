@@ -5,6 +5,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Head from "next/head";
 import "./globals.css";
+import CustomCursor from "@/app/components/CustomCursor";
 
 const ThemeContext = createContext();
 export function useTheme() {
@@ -65,6 +66,7 @@ export default function RootLayout({ children }) {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.5 }}
             >
+              <CustomCursor />
               {children}
             </motion.div>
         </ThemeProvider>

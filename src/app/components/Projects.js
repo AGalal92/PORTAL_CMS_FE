@@ -31,30 +31,54 @@ export default function Projects() {
   return (
     <section
       id="projects"
-      className={`py-16 transition-all duration-500 ${darkMode ? "bg-gray-900 text-white" : "bg-gray-300 text-black"}`}
+      className="py-16 transition-all duration-500"
+      style={{
+        backgroundImage: darkMode
+          ? "url('/images/spartaTexture8.png')"
+          : "url('/images/spartaTexture5.png')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundAttachment: "fixed",
+      }}
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        {/* ✅ Left-aligned Title with Underline */}
-        <div className="mb-8">
-          <p className="text-xs uppercase font-light tracking-widest relative inline-block">
+      <div className="container mx-auto px-6 sm:px-12 lg:px-20">
+        {/* ✅ Spartan-Themed Title */}
+        <div className="mb-12">
+          <p className="text-xs uppercase font-light tracking-widest text-yellow-500 relative inline-block">
             Projects
             <span className="absolute left-20 top-1/2 w-24 h-[2px] bg-yellow-500"></span>
           </p>
-          <h2 className={`text-3xl sm:text-4xl md:text-5xl font-extrabold text-left font-raleway ${darkMode ? "text-white" : "text-black"}`}>
-            CHECK OUR PROJECTS
+          <h2
+            className={`text-4xl sm:text-5xl font-extrabold text-left font-cinzel ${
+              darkMode ? "text-yellow-400" : "text-gray-800"
+            }`}
+          >
+            ⚔️ CHECK OUR PROJECTS ⚔️
           </h2>
         </div>
 
-        {/* ✅ Centered Category Tabs */}
-        <Box className="flex justify-center mb-8">
+        {/* ✅ Centered Category Tabs with Warrior Feel */}
+        <Box className="flex justify-center mb-10">
           <ButtonGroup>
             {categories.map((category) => (
               <Button
-               title="Filter by category"
+                title="Filter by category"
                 key={category}
                 variant={selectedCategory === category ? "contained" : "outlined"}
-                color="primary"
+                color="warning"
                 onClick={() => setSelectedCategory(category)}
+                sx={{
+                  fontWeight: "bold",
+                  fontSize: "1rem",
+                  textTransform: "uppercase",
+                  border: "2px solid rgba(255, 204, 0, 0.6)",
+                  color: darkMode ? "yellow" : "black",
+                  backgroundColor: selectedCategory === category ? "rgba(255, 204, 0, 0.8)" : "transparent",
+                  "&:hover": {
+                    backgroundColor: "rgba(255, 204, 0, 1)",
+                    color: "black",
+                  },
+                }}
               >
                 {category}
               </Button>
@@ -63,7 +87,7 @@ export default function Projects() {
         </Box>
 
         {/* ✅ Project Grid with Animated Cards */}
-        <Grid container spacing={4} justifyContent="center">
+        <Grid container spacing={6} justifyContent="center">
           {filteredProjects.map((project, index) => (
             <ProjectCard
               key={index}
@@ -79,7 +103,7 @@ export default function Projects() {
   );
 }
 
-// ✅ Separate Animated Card Component
+// ✅ Separate Animated Spartan-Styled Project Card Component
 const ProjectCard = ({ project, darkMode, isMobile, isTablet }) => {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: isMobile ? 0.1 : 0.3 });
 
@@ -93,7 +117,7 @@ const ProjectCard = ({ project, darkMode, isMobile, isTablet }) => {
         initial={{ opacity: 0, y: 50 }}
         animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
         transition={{ duration: 0.8 }}
-        className="relative overflow-hidden rounded-lg group"
+        className="relative overflow-hidden rounded-lg group border-2 border-yellow-500 shadow-lg hover:shadow-yellow-500 transition-shadow duration-300"
       >
         {/* ✅ Image Only (No Borders or Background) */}
         <Image
@@ -101,7 +125,7 @@ const ProjectCard = ({ project, darkMode, isMobile, isTablet }) => {
           alt={project.name}
           width={500}
           height={300}
-          className="rounded-lg object-cover w-full h-auto"
+          className="rounded-lg object-cover w-full h-auto transition-transform duration-300 group-hover:scale-105"
           priority // Optimize loading for above-the-fold images
         />
 
@@ -112,7 +136,7 @@ const ProjectCard = ({ project, darkMode, isMobile, isTablet }) => {
           <span className="text-white text-lg font-semibold">{project.name}</span>
           <Link href={`/projects/${projectSlug}`} className="mt-2">
             <motion.div
-              className="bg-white text-black p-3 rounded-full shadow-lg cursor-pointer hover:scale-110 transition"
+              className="bg-yellow-500 text-black p-3 rounded-full shadow-lg cursor-pointer hover:scale-110 transition"
               whileHover={{ scale: 1.2 }}
             >
               <FiExternalLink size={24} />

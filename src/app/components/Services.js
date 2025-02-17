@@ -1,16 +1,50 @@
 "use client";
 import { useEffect } from "react";
 import { Card, CardContent, Typography, Grid } from "@mui/material";
-import { Code, PhoneAndroid, DesignServices } from "@mui/icons-material";
+import { 
+  Business, 
+  School, 
+  SportsSoccer, 
+  BarChart, 
+  Settings, 
+  AccountBox 
+} from "@mui/icons-material";
 import { motion, useAnimation } from "framer-motion";
 import { useTheme } from "../layout"; // Import Dark Mode Context
 import { useInView } from "react-intersection-observer";
 import { useScreenSize } from "../hooks/useScreenSize"; // Import the custom hook
 
 const services = [
-  { title: "Web Development", desc: "High-quality web applications.", icon: <Code fontSize="large" /> },
-  { title: "Mobile Apps", desc: "Cross-platform mobile applications.", icon: <PhoneAndroid fontSize="large" /> },
-  { title: "UI/UX Design", desc: "Modern and user-friendly designs.", icon: <DesignServices fontSize="large" /> },
+  { 
+    title: "ERP Solutions", 
+    desc: "Comprehensive ERP systems to streamline business operations and improve efficiency.", 
+    icon: <Business fontSize="large" className="text-yellow-500" /> 
+  },
+  { 
+    title: "Education Platform", 
+    desc: "Innovative e-learning solutions tailored for schools, universities, and training centers.", 
+    icon: <School fontSize="large" className="text-yellow-500" /> 
+  },
+  { 
+    title: "Sports Platform", 
+    desc: "Customized platforms for sports management, event organization, and athlete tracking.", 
+    icon: <SportsSoccer fontSize="large" className="text-yellow-500" /> 
+  },
+  { 
+    title: "Data Analysis", 
+    desc: "Advanced data analytics and visualization solutions to drive business insights.", 
+    icon: <BarChart fontSize="large" className="text-yellow-500" /> 
+  },
+  { 
+    title: "DevOps Services", 
+    desc: "CI/CD pipelines, cloud infrastructure, and automation for seamless software deployment.", 
+    icon: <Settings fontSize="large" className="text-yellow-500" /> 
+  },
+  { 
+    title: "Company/Personal Portfolios", 
+    desc: "Custom-designed portfolio websites to showcase brands, businesses, and personal projects.", 
+    icon: <AccountBox fontSize="large" className="text-yellow-500" /> 
+  },
 ];
 
 export default function Services() {
@@ -20,22 +54,34 @@ export default function Services() {
   return (
     <section
       id="services"
-      className={`py-16 transition-all duration-500 ${darkMode ? "bg-gray-900 text-white" : "bg-gray-300 text-black"}`}
+      className="py-16 transition-all duration-500"
+      style={{
+        backgroundImage: darkMode
+          ? "url('/images/spartaTexture8.png')"
+          : "url('/images/spartaTexture5.png')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundAttachment: "fixed",
+      }}
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        {/* ✅ Left-aligned Title with Underline */}
-        <div className="mb-8">
-          <p className="text-xs uppercase font-light tracking-widest relative inline-block">
+      <div className="container mx-auto px-6 sm:px-12 lg:px-20">
+        {/* ✅ Spartan-Themed Title */}
+        <div className="mb-12">
+          <p className="text-xs uppercase font-light tracking-widest text-yellow-500 relative inline-block">
             Services
             <span className="absolute left-24 top-1/2 w-24 h-[2px] bg-yellow-500"></span>
           </p>
-          <h2 className={`text-3xl sm:text-4xl md:text-5xl font-extrabold text-left font-raleway ${darkMode ? "text-white" : "text-black"}`}>
-            CHECK OUR SERVICES
+          <h2
+            className={`text-4xl sm:text-5xl font-extrabold text-left font-cinzel ${
+              darkMode ? "text-yellow-400" : "text-gray-800"
+            }`}
+          >
+            🏛️ CHECK OUR SERVICES 🏛️
           </h2>
         </div>
 
-        {/* ✅ Service Cards with Responsive Layout */}
-        <Grid container spacing={4} justifyContent="center">
+        {/* ✅ Spartan-Styled Service Cards */}
+        <Grid container spacing={6} justifyContent="center">
           {services.map((service, index) => (
             <ServiceCard
               key={index}
@@ -52,7 +98,7 @@ export default function Services() {
   );
 }
 
-// ✅ Animated Service Card Component
+// ✅ Animated Spartan-Themed Service Card Component
 const ServiceCard = ({ service, darkMode, index, isMobile, isTablet }) => {
   const controls = useAnimation();
   const { ref, inView } = useInView({ threshold: isMobile ? 0.1 : 0.3, triggerOnce: true });
@@ -74,23 +120,30 @@ const ServiceCard = ({ service, darkMode, index, isMobile, isTablet }) => {
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
         <Card
-          className="relative p-6 text-center border border-white/20 bg-white/10 backdrop-blur-md rounded-lg overflow-hidden"
+          className="relative p-6 text-center rounded-lg overflow-hidden group transition-transform duration-300 hover:scale-105"
           sx={{
-            background: darkMode ? "rgba(255, 255, 255, 0.1)" : "rgba(255, 255, 255, 0.3)",
+            background: darkMode
+              ? "rgba(30, 30, 30, 0.9)"
+              : "rgba(255, 255, 255, 0.8)",
             backdropFilter: "blur(15px)",
-            border: "1px solid rgba(255, 255, 255, 0.2)",
+            border: "2px solid rgba(255, 204, 0, 0.5)",
             transition: "all 0.3s ease-in-out",
             boxShadow: darkMode
-              ? "0 4px 15px rgba(0, 255, 255, 0.1)"
-              : "0 4px 15px rgba(0, 119, 255, 0.1)",
+              ? "0 4px 15px rgba(255, 204, 0, 0.2)"
+              : "0 4px 15px rgba(255, 153, 0, 0.2)",
           }}
         >
-          <div className="flex justify-center mb-4">{service.icon}</div>
+          <div className="flex justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+            {service.icon}
+          </div>
           <CardContent>
-            <Typography variant="h6" className="font-semibold">
+            <Typography variant="h6" className="font-bold text-yellow-500 uppercase">
               {service.title}
             </Typography>
-            <Typography variant="body2" className={`mt-2 ${darkMode ? "text-gray-300" : "text-gray-700"}`}>
+            <Typography
+              variant="body2"
+              className={`mt-2 ${darkMode ? "text-gray-300" : "text-gray-700"}`}
+            >
               {service.desc}
             </Typography>
           </CardContent>
