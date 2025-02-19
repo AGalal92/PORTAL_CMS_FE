@@ -7,9 +7,10 @@ import { useInView } from "react-intersection-observer";
 import { useScreenSize } from "../hooks/useScreenSize"; // Import the custom hook
 
 const teamMembers = [
-  { name: "John Doe", role: "CEO", level: "Senior Executive", image: "/images/hero1.jpg", socials: { linkedin: "#", github: "#", twitter: "#", facebook: "#" } },
-  { name: "Jane Smith", role: "CTO", level: "Technology Leader", image: "/images/hero2.jpg", socials: { linkedin: "#", github: "#", twitter: "#", facebook: "#" } },
-  { name: "Mike Johnson", role: "Lead Developer", level: "Senior Engineer", image: "/images/hero3.jpg", socials: { linkedin: "#", github: "#", twitter: "#", facebook: "#" } },
+  { name: "Abdelrhman Galal", role: "Full Stack Developer", level: "Tech Leader", image: "/images/abdelrhmanGalal.jpg", socials: { linkedin: "#", github: "#", twitter: "#", facebook: "#" } },
+  { name: "Ahmed Hashim", role: "Business Analyst", level: "Project Manager", image: "/images/ahmedHashim.jpg", socials: { linkedin: "#", github: "#", twitter: "#", facebook: "#" } },
+  { name: "Ahmed Adel", role: "Application Developer", level: "Lead Developer", image: "/images/ahmedAdel.jpg", socials: { linkedin: "#", github: "#", twitter: "#", facebook: "#" } },
+  { name: "Abanob Wagih", role: "Full Stack Developer", level: "Senior Developer", image: "/images/abanobWagih.png", socials: { linkedin: "#", github: "#", twitter: "#", facebook: "#" } },
 ];
 
 export default function Team() {

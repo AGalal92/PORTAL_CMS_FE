@@ -10,15 +10,15 @@ import { FiExternalLink } from "react-icons/fi"; // Import Link Icon
 import { useScreenSize } from "../hooks/useScreenSize"; // Import the custom hook
 
 const projects = [
-  { name: "E-commerce-Platform", image: "/images/project1.jpg", category: "Web" },
-  { name: "Mobile Banking App", image: "/images/project2.jpg", category: "Mobile" },
-  { name: "Portfolio Website", image: "/images/project3.jpg", category: "Web" },
-  { name: "Fitness Tracking App", image: "/images/project4.jpg", category: "Mobile" },
-  { name: "Admin Dashboard", image: "/images/project5.jpg", category: "Web" },
-  { name: "AI Chatbot", image: "/images/project6.jpg", category: "AI" },
+  { name: "sphinx-platform", image: "/images/sphinxLogin.png", category: "Web" },
+  // { name: "Mobile Banking App", image: "/images/project2.jpg", category: "Mobile" },
+  // { name: "Portfolio Website", image: "/images/project3.jpg", category: "Web" },
+  // { name: "Fitness Tracking App", image: "/images/project4.jpg", category: "Mobile" },
+  // { name: "Admin Dashboard", image: "/images/project5.jpg", category: "Web" },
+  // { name: "AI Chatbot", image: "/images/project6.jpg", category: "AI" },
 ];
 
-const categories = ["All", "Web", "Mobile", "AI"];
+const categories = ["All", "Web",];
 
 export default function Projects() {
   const { darkMode } = useTheme();

@@ -146,19 +146,45 @@ export default function ProjectDetails({ project }) {
         </div>
 
         {/* ✅ Project Video Section */}
-        {project.video && (
-          <motion.div
-            className="mt-10"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8 }}
-          >
-            <h3 className="text-2xl font-semibold">Project Video</h3>
-            <div className="mt-4 rounded-lg overflow-hidden shadow-lg">
-              <video src={project.video} controls className="w-full h-auto rounded-lg" />
-            </div>
-          </motion.div>
-        )}
+        {Array.isArray(project.video) && project.video.length > 0 && (
+  <motion.div
+    className="mt-10"
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{ duration: 0.8 }}
+  >
+    <h3 className="text-2xl font-semibold">Project Videos</h3>
+    <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
+      {project.video.map((videoSrc, index) => (
+        <div
+          key={index}
+          className="relative w-full overflow-hidden rounded-lg shadow-lg"
+          style={{ paddingBottom: "56.25%" }} // Maintain 16:9 aspect ratio
+        >
+          <video
+            src={videoSrc}
+            controls
+            className="absolute top-0 left-0 w-full h-full rounded-lg"
+            onClick={(e) => {
+              if (e.target.requestFullscreen) {
+                e.target.requestFullscreen(); // Open in fullscreen
+              } else if (e.target.webkitRequestFullscreen) {
+                e.target.webkitRequestFullscreen();
+              } else if (e.target.mozRequestFullScreen) {
+                e.target.mozRequestFullScreen();
+              } else if (e.target.msRequestFullscreen) {
+                e.target.msRequestFullscreen();
+              }
+            }}
+            allowFullScreen
+          />
+        </div>
+      ))}
+    </div>
+  </motion.div>
+)}
+
+
       </div>
     </section>
   );

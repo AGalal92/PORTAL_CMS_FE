@@ -1,16 +1,50 @@
 "use client";
 import { useEffect } from "react";
 import { Card, CardContent, Typography, Grid } from "@mui/material";
-import { Code, PhoneAndroid, DesignServices } from "@mui/icons-material";
+import { 
+  Business, 
+  School, 
+  SportsSoccer, 
+  BarChart, 
+  Settings, 
+  AccountBox 
+} from "@mui/icons-material";
 import { motion, useAnimation } from "framer-motion";
 import { useTheme } from "../layout"; // Import Dark Mode Context
 import { useInView } from "react-intersection-observer";
 import { useScreenSize } from "../hooks/useScreenSize"; // Import the custom hook
 
 const services = [
-  { title: "Web Development", desc: "High-quality web applications.", icon: <Code fontSize="large" /> },
-  { title: "Mobile Apps", desc: "Cross-platform mobile applications.", icon: <PhoneAndroid fontSize="large" /> },
-  { title: "UI/UX Design", desc: "Modern and user-friendly designs.", icon: <DesignServices fontSize="large" /> },
+  { 
+    title: "ERP Solutions", 
+    desc: "Comprehensive ERP systems to streamline business operations and improve efficiency.", 
+    icon: <Business fontSize="large" className="text-yellow-500" /> 
+  },
+  { 
+    title: "Education Platform", 
+    desc: "Innovative e-learning solutions tailored for schools, universities, and training centers.", 
+    icon: <School fontSize="large" className="text-yellow-500" /> 
+  },
+  { 
+    title: "Sports Platform", 
+    desc: "Customized platforms for sports management, event organization, and athlete tracking.", 
+    icon: <SportsSoccer fontSize="large" className="text-yellow-500" /> 
+  },
+  { 
+    title: "Data Analysis", 
+    desc: "Advanced data analytics and visualization solutions to drive business insights.", 
+    icon: <BarChart fontSize="large" className="text-yellow-500" /> 
+  },
+  { 
+    title: "DevOps Services", 
+    desc: "CI/CD pipelines, cloud infrastructure, and automation for seamless software deployment.", 
+    icon: <Settings fontSize="large" className="text-yellow-500" /> 
+  },
+  { 
+    title: "Company/Personal Portfolios", 
+    desc: "Custom-designed portfolio websites to showcase brands, businesses, and personal projects.", 
+    icon: <AccountBox fontSize="large" className="text-yellow-500" /> 
+  },
 ];
 
 export default function Services() {
