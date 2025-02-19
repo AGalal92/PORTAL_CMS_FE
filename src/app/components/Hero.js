@@ -8,7 +8,7 @@ import { Link as ScrollLink } from "react-scroll";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const images = ["/images/hero1.jpg", "/images/hero2.jpg", "/images/hero3.jpg"];
+const images = ["/images/hero1.jpg", "/images/hero2.jpg"];
 const welcomeText = "Welcome to Legion Agency".split(" "); // ✅ Split by words
 const subText = "Your choice, our trust"; // Motivational phrase
 
