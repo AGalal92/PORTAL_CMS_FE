@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: "Cairo", sans-serif;
+}
+
+/* Apply Cairo font to all text elements */
+@layer base {
+  h1, h2, h3, h4, h5, h6, p, span, a, button, input, textarea, label, li, th, td, div {
+    font-family: "Cairo", sans-serif;
+  }
+}
+
+/* Custom Dark Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a; /* Dark track */
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(245, 158, 11, 0.8); /* Yellow-500 with 80% opacity */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(245, 151, 11, 1); /* Fully opaque yellow on hover */
+}
+
+/* For Firefox */
+html {
+  scrollbar-color: rgba(245, 158, 11, 0.8) #1a1a1a;
+  scrollbar-width: thin;
+  font-family: "Cairo", sans-serif;
+}
+
+/* RTL and LTR classes */
+.rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+.ltr {
+  direction: ltr;
+  text-align: left;
+}
