@@ -18,6 +18,7 @@ const translations = {
     projectsData: [
       { id: 1, name: "Sphinx Platform", image: "/images/sphinxLogin.png", category: "web" },
       { id: 2, name: "EGAC Platform", image: "/images/EgacPortfolio.png", category: "portfolio" },
+      { id: 3, name: "Brainy Battalion Platform", image: "/images/brainy1.png", category: "portfolio" },
       
       // Add more projects here
     ],
@@ -33,6 +34,7 @@ const translations = {
     projectsData: [
       { id: 1, name: "منصة سفنكس", image: "/images/sphinxLogin.png", category: "web" },
       { id: 2, name: "منصة EGAC", image: "/images/EgacPortfolio.png", category: "portfolio" },
+      { id: 3, name: "منصة Brainy Battalion", image: "/images/brainy1.png", category: "portfolio" },
       // Add more projects here
     ],
   },

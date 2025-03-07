@@ -135,8 +135,8 @@ const TeamCard = ({ member, darkMode, isMobile, isTablet, language }) => {
     threshold: isMobile ? 0.1 : 0.3,
   });
 
-  const width = isMobile ? 250 : isTablet ? 300 : 350;
-  const height = isMobile ? 200 : isTablet ? 250 : 300;
+  const width = isMobile ? 150 : isTablet ? 300 : 350;
+  const height = isMobile ? 100 : isTablet ? 250 : 300;
 
   return (
     <motion.div

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useTheme, useLanguage } from "../App";
 import { FiExternalLink, FiMaximize } from "react-icons/fi"; // Import the full-screen icon
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion , AnimatePresence } from "framer-motion";
 import { useScreenSize } from "../hooks/useScreenSize";
 import { useParams, Link } from "react-router-dom";
 
@@ -28,6 +28,13 @@ const translations = {
           "A comprehensive web solution for a leading HVAC and home improvement company. This project features an intuitive website that showcases services, projects, and products, along with powerful administrative modules for content management, customer inquiries, and employee performance tracking. It streamlines operations and boosts customer engagement.",
         technologies: ["React.js", "Tailwind CSS", "PHP Laravel", "MySQL", "Bootstrap", "Material UI"],
       },
+      {
+        id: 3,
+        name: "Brainy Battalion Portfolio",
+        description:
+          "BrainyBattalion is a cybersecurity company that protects businesses from digital threats. We combine technical expertise with creative strategies to deliver strong security solutions.",
+        technologies: ["React.js", "Tailwind CSS", "PHP Laravel", "MySQL", "Bootstrap", "Material UI"],
+      },
     ],
   },
   ar: {
@@ -48,6 +55,12 @@ const translations = {
         name: "منصة EGAC",
         description:
           "حل ويب متكامل لشركة رائدة في مجال التكييف المركزي وتحسين المنازل. يتميز هذا المشروع بموقع إلكتروني سهل الاستخدام يعرض الخدمات، المشاريع، والمنتجات، بالإضافة إلى لوحة تحكم متكاملة لإدارة المحتوى، استفسارات العملاء، وتتبع أداء الموظفين. يُسهم هذا الحل في تبسيط العمليات وتعزيز تفاعل العملاء",
+        technologies: ["React.js", "Tailwind CSS", "PHP Laravel", "MySQL", "Bootstrap", "Material UI"],
+      },
+      {
+        id: 3,
+        name: "منصة Brainy Battalion",
+       description: "شركة BrainyBattalion هي شركة متخصصة في الأمن السيبراني تحمي الشركات من التهديدات الرقمية. نحن نجمع بين الخبرة التقنية والاستراتيجيات الإبداعية لتقديم حلول أمنية قوية.",
         technologies: ["React.js", "Tailwind CSS", "PHP Laravel", "MySQL", "Bootstrap", "Material UI"],
       },
     ],
@@ -76,12 +89,22 @@ export const projectsData = [
     images: ["/images/egac1.png", "/images/egac2.png", "/images/egac3.png", "/images/egac4.png"],
     video: ["/videos/EgacPortfolio.mp4", "/videos/EgacAdmin.mp4"],
   },
+  {
+    id: 3,
+    image: "/images/brainy1.png",
+    category: "Portfolio",
+    link: "#",
+    created_at: "2025-02-28",
+    updated_at: "2025-03-05",
+    images: ["/images/brainy1.png", "/images/brainy2.png", "/images/brainy3.png"],
+    video: ["/videos/brainy.mp4"],
+  },
 ];
 
 function ProjectDetails() {
   const { darkMode } = useTheme();
   const { language } = useLanguage();
-  const { isMobile, isTablet } = useScreenSize();
+  const { isMobile, } = useScreenSize();
   const { id } = useParams();
   const [currentImage, setCurrentImage] = useState(0);
   const [direction, setDirection] = useState(1);
@@ -124,7 +147,7 @@ function ProjectDetails() {
 
   return (
     <section
-      className={`p-30 transition-all duration-500 ${
+      className={`py-30 transition-all duration-500 ${
         darkMode ? "bg-gray-900 text-white" : "bg-gray-300 text-black"
       }`}
       dir={language === "ar" ? "rtl" : "ltr"}
