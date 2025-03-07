@@ -1,21 +1,21 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import { AnimatePresence, motion } from 'framer-motion';
-import { Helmet } from 'react-helmet';
-import './App.css';
+import React, { createContext, useContext, useState, useEffect } from "react";
+import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import { AnimatePresence, motion } from "framer-motion";
+import { Helmet } from "react-helmet";
+import "./App.css";
 
 // Import all your components
-import Header from './components/Header';
-import Hero from './components/Hero';
-import About from './components/About';
-import Services from './components/Services';
-import Projects from './components/Projects';
-import Team from './components/Team';
-import Contact from './components/Contact';
-import Footer from './components/Footer';
-import ProjectDetails from './pages/SignleProject';
+import Header from "./components/Header";
+import Hero from "./components/Hero";
+import About from "./components/About";
+import Services from "./components/Services";
+import Projects from "./components/Projects";
+import Team from "./components/Team";
+import Contact from "./components/Contact";
+import Footer from "./components/Footer";
+import ProjectDetails from "./pages/SignleProject";
 
 // Theme Context
 const ThemeContext = createContext();
@@ -30,19 +30,33 @@ export function useLanguage() {
 }
 
 function App() {
-  const [darkMode, setDarkMode] = useState(true);
+  const [darkMode, setDarkMode] = useState(() => {
+    // Initialize darkMode from localStorage, default to true if not set
+    const savedMode = localStorage.getItem("darkMode");
+    return savedMode !== null ? JSON.parse(savedMode) : true;
+  });
   const [animation, setAnimation] = useState(null);
   const [language, setLanguage] = useState(() => {
-    // Get language from localStorage or default to 'en'
-    return localStorage.getItem('language') || 'en';
+    // Initialize language from localStorage, default to 'en' if not set
+    return localStorage.getItem("language") || "en";
   });
+
+  // Save darkMode to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem("darkMode", JSON.stringify(darkMode));
+  }, [darkMode]);
+
+  // Save language to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem("language", language);
+  }, [language]);
 
   // Define MUI theme
   const theme = createTheme({
     palette: {
-      mode: darkMode ? 'dark' : 'light',
-      primary: { main: '#0D47A1' },
-      background: { default: darkMode ? '#121212' : '#ffffff' },
+      mode: darkMode ? "dark" : "light",
+      primary: { main: "#0D47A1" },
+      background: { default: darkMode ? "#121212" : "#ffffff" },
     },
   });
 
@@ -60,13 +74,9 @@ function App() {
     }, 400);
   };
 
-  // Toggle language and store in localStorage
+  // Toggle language
   const toggleLanguage = () => {
-    setLanguage((prev) => {
-      const newLang = prev === 'en' ? 'ar' : 'en';
-      localStorage.setItem('language', newLang);
-      return newLang;
-    });
+    setLanguage((prev) => (prev === "en" ? "ar" : "en"));
   };
 
   return (
@@ -79,7 +89,11 @@ function App() {
         <meta name="description" content="Legion provides software solutions and services" />
       </Helmet>
 
-      <div className={`${darkMode ? 'dark bg-black text-white' : 'bg-white text-black'} transition-colors duration-300 ${language === 'ar' ? 'rtl' : 'ltr'}`}>
+      <div
+        className={`${darkMode ? "dark bg-black text-white" : "bg-white text-black"} transition-colors duration-300 ${
+          language === "ar" ? "rtl" : "ltr"
+        }`}
+      >
         <ThemeContext.Provider value={{ darkMode, toggleDarkMode }}>
           <LanguageContext.Provider value={{ language, toggleLanguage }}>
             <ThemeProvider theme={theme}>
@@ -90,9 +104,9 @@ function App() {
                     <motion.div
                       className="fixed top-0 left-0 w-full h-full bg-black dark:bg-white rounded-full"
                       initial={{ width: 0, height: 0, x: animation.x, y: animation.y, opacity: 1 }}
-                      animate={{ width: '200vh', height: '200vh', x: '-50vw', y: '-50vh', opacity: 1 }}
+                      animate={{ width: "200vh", height: "200vh", x: "-50vw", y: "-50vh", opacity: 1 }}
                       exit={{ opacity: 0 }}
-                      transition={{ duration: 0.5, ease: 'easeInOut' }}
+                      transition={{ duration: 0.5, ease: "easeInOut" }}
                     />
                   )}
                 </AnimatePresence>
@@ -104,20 +118,7 @@ function App() {
                 >
                   <Header />
                   <Routes>
-                    <Route
-                      path="/"
-                      element={
-                        <>
-                          <Hero />
-                          <About />
-                          <Services />
-                          <Projects />
-                          <Team />
-                          <Contact />
-                          <Footer />
-                        </>
-                      }
-                    />
+                    <Route path="/" element={<HomePage />} />
                     <Route path="/projects/:id" element={<ProjectDetails />} />
                   </Routes>
                 </motion.div>
@@ -126,6 +127,46 @@ function App() {
           </LanguageContext.Provider>
         </ThemeContext.Provider>
       </div>
+    </>
+  );
+}
+
+// HomePage Component to handle hash-based navigation
+function HomePage() {
+  const location = useLocation();
+
+  // Handle hash-based navigation
+  useEffect(() => {
+    const hash = location.hash;
+    if (hash) {
+      const element = document.getElementById(hash.substring(1));
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [location]);
+
+  return (
+    <>
+      <section id="home">
+        <Hero />
+      </section>
+      <section id="about">
+        <About />
+      </section>
+      <section id="services">
+        <Services />
+      </section>
+      <section id="projects">
+        <Projects />
+      </section>
+      <section id="team">
+        <Team />
+      </section>
+      <section id="contact">
+        <Contact />
+      </section>
+      <Footer />
     </>
   );
 }

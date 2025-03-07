@@ -1,4 +1,9 @@
 @import "tailwindcss";
+@media (min-width: 769px) {
+  main {
+    margin-left: 80px; /* Matches w-20 */
+  }
+}
 
 :root {
   --background: #ffffff;

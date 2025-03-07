@@ -6,7 +6,8 @@ import { useLanguage } from '../App'; // Import useLanguage from App
 
 gsap.registerPlugin(ScrollTrigger);
 
-const images = ['/images/hero1.jpg', '/images/hero2.jpg'];
+const videos = ['/videos/legionHeroEn.mp4', '/videos/legionHeroAr.mp4']; // Video paths for desktop
+const mobileVideos = ['/videos/legionMobileEn.mp4', '/videos/legionMobileAr.mp4']; // Video paths for mobile
 
 // Translation object
 const translations = {
@@ -23,7 +24,6 @@ const translations = {
 };
 
 function Hero() {
-  const [current, setCurrent] = useState(0);
   const heroRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
   const [isTablet, setIsTablet] = useState(false);
@@ -42,13 +42,6 @@ function Hero() {
   }, []);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % images.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
     gsap.to(heroRef.current, {
       scrollTrigger: {
         trigger: heroRef.current,
@@ -63,6 +56,15 @@ function Hero() {
   // Split welcome text based on current language
   const welcomeText = t.welcome.split(' ');
 
+  // Determine the video source based on device type
+  const videoSource = isMobile
+    ? language === 'en'
+      ? mobileVideos[0]
+      : mobileVideos[1]
+    : language === 'en'
+    ? videos[0]
+    : videos[1];
+
   return (
     <section
       ref={heroRef}
@@ -70,33 +72,27 @@ function Hero() {
       className="relative w-full h-screen overflow-hidden bg-black text-white flex items-center"
       dir={language === 'ar' ? 'rtl' : 'ltr'} // Set direction based on language
     >
-      {/* Background Image Transition */}
+      {/* Background Video */}
       <div className="absolute inset-0 w-full h-full overflow-hidden">
-        {images.map((img, index) => (
-          <motion.div
-            key={index}
-            className="absolute inset-0 w-full h-full"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: current === index ? 1 : 0, zIndex: current === index ? 1 : 0 }}
-            transition={{ duration: 1, ease: 'easeInOut' }}
-          >
-            <img
-              src={img}
-              alt={`Hero Image ${index + 1}`}
-              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-              className="transition-opacity duration-1000"
-              loading={index === 0 ? 'eager' : 'lazy'}
-              onError={() => console.error(`Failed to load image: ${img}`)}
-            />
-          </motion.div>
-        ))}
+        <video
+          key={videoSource} // Force re-render when video source changes
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+        >
+          <source src={videoSource} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
       </div>
 
       {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-black/50 z-10"></div>
+      {/* <div className="absolute inset-0 bg-black/50 z-10"></div> */}
 
       {/* Hero Content */}
-      <motion.div
+      {/* <motion.div
         className={`relative z-20 container mx-auto flex flex-col md:flex-row items-start justify-between px-6 md:px-16 ${language === 'ar' ? 'text-right' : 'text-left'}`}
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
@@ -117,12 +113,11 @@ function Hero() {
             ))}
           </h1>
           <motion.div
-            className="flex items-center gap-4 mt-4"
+            className={`flex items-center gap-1 mt-4 ${isMobile ? 'ml-0' : 'ml-320'}`} // Adjust margin for mobile
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 2 }}
+            transition={{ delay: 6 }}
           >
-            <p className="text-sm sm:text-lg md:text-xl text-gray-300">{t.subText}</p>
             <a
               href="#about"
               onClick={(e) => {
@@ -135,7 +130,7 @@ function Hero() {
             </a>
           </motion.div>
         </div>
-      </motion.div>
+      </motion.div> */}
     </section>
   );
 }
