@@ -17,6 +17,8 @@ import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import ProjectDetails from "./pages/SignleProject";
 
+import ScrollToTop from "./hooks/ScrollToTop";
+
 // Theme Context
 const ThemeContext = createContext();
 export function useTheme() {
@@ -121,6 +123,7 @@ function App() {
                     <Route path="/" element={<HomePage />} />
                     <Route path="/projects/:id" element={<ProjectDetails />} />
                   </Routes>
+                  <ScrollToTop /> {/* Add the ScrollToTop component here */}
                 </motion.div>
               </Router>
             </ThemeProvider>
