@@ -3,10 +3,9 @@ import { BrowserRouter as Router, Route, Routes, useLocation } from "react-route
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { AnimatePresence, motion } from "framer-motion";
-import { Helmet } from "react-helmet";
+import { Helmet, HelmetProvider } from "react-helmet-async"; // Updated import
 import "./App.css";
 
-// Import all your components
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import About from "./components/About";
@@ -15,17 +14,14 @@ import Projects from "./components/Projects";
 import Team from "./components/Team";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
-import ProjectDetails from "./pages/SignleProject";
-
+import ProjectDetails, { projectsData } from "./pages/SignleProject";
 import ScrollToTop from "./hooks/ScrollToTop";
 
-// Theme Context
 const ThemeContext = createContext();
 export function useTheme() {
   return useContext(ThemeContext);
 }
 
-// Language Context
 const LanguageContext = createContext();
 export function useLanguage() {
   return useContext(LanguageContext);
@@ -33,27 +29,22 @@ export function useLanguage() {
 
 function App() {
   const [darkMode, setDarkMode] = useState(() => {
-    // Initialize darkMode from localStorage, default to true if not set
     const savedMode = localStorage.getItem("darkMode");
     return savedMode !== null ? JSON.parse(savedMode) : true;
   });
   const [animation, setAnimation] = useState(null);
   const [language, setLanguage] = useState(() => {
-    // Initialize language from localStorage, default to 'en' if not set
     return localStorage.getItem("language") || "en";
   });
 
-  // Save darkMode to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem("darkMode", JSON.stringify(darkMode));
   }, [darkMode]);
 
-  // Save language to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem("language", language);
   }, [language]);
 
-  // Define MUI theme
   const theme = createTheme({
     palette: {
       mode: darkMode ? "dark" : "light",
@@ -62,33 +53,63 @@ function App() {
     },
   });
 
-  // Toggle dark mode with animation
   const toggleDarkMode = (e) => {
     const rect = e.target.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
-
     setAnimation({ x: centerX, y: centerY });
-
     setTimeout(() => {
       setDarkMode((prev) => !prev);
       setAnimation(null);
     }, 400);
   };
 
-  // Toggle language
   const toggleLanguage = () => {
     setLanguage((prev) => (prev === "en" ? "ar" : "en"));
   };
 
+  const getMetaTags = () => {
+    const currentPath = window.location.pathname;
+    if (currentPath.startsWith("/projects")) {
+      const projectId = currentPath.split("/")[2];
+      const project = projectsData.find((p) => p.id === parseInt(projectId));
+      if (project) {
+        const description = project.description || "A project by Legion Agency showcasing innovative tech solutions.";
+        return {
+          title: `${project.name} | Legion Agency`,
+          description: `Explore ${project.name} by Legion Agency - ${description.substring(0, 150)}...`,
+          keywords: `${project.name}, legion agency, ${project.technologies ? project.technologies.join(", ") : "web development, app development"}`,
+          canonical: `https://legionagency.tech/projects/${project.id}`,
+        };
+      }
+      return {
+        title: "Project Not Found | Legion Agency",
+        description: "This project could not be found. Explore our other web and app development solutions!",
+        keywords: "legion agency, web development, app development",
+        canonical: `https://legionagency.tech${currentPath}`,
+      };
+    }
+    return {
+      title: "Legion Agency | Web & App Development Solutions",
+      description: "Legion Agency offers expert web and app development services. Boost your business with innovative tech solutions!",
+      keywords: "legion agency, web development, app development, tech solutions, creative agency",
+      canonical: "https://legionagency.tech/",
+    };
+  };
+
+  const meta = getMetaTags();
+
   return (
-    <>
+    <HelmetProvider> {/* Wrap the app with HelmetProvider */}
       <Helmet>
         <html lang={language} />
-        <title>Legion Agency</title>
+        <title>{meta.title}</title>
+        <meta name="description" content={meta.description} />
+        <meta name="keywords" content={meta.keywords} />
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="description" content="Legion provides software solutions and services" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href={meta.canonical} />
       </Helmet>
 
       <div
@@ -123,22 +144,20 @@ function App() {
                     <Route path="/" element={<HomePage />} />
                     <Route path="/projects/:id" element={<ProjectDetails />} />
                   </Routes>
-                  <ScrollToTop /> {/* Add the ScrollToTop component here */}
+                  <ScrollToTop />
                 </motion.div>
               </Router>
             </ThemeProvider>
           </LanguageContext.Provider>
         </ThemeContext.Provider>
       </div>
-    </>
+    </HelmetProvider>
   );
 }
 
-// HomePage Component to handle hash-based navigation
 function HomePage() {
   const location = useLocation();
 
-  // Handle hash-based navigation
   useEffect(() => {
     const hash = location.hash;
     if (hash) {

@@ -1,76 +1,31 @@
 import React, { useState } from "react";
 import { useTheme, useLanguage } from "../App";
-import { FiExternalLink, FiMaximize } from "react-icons/fi"; // Import the full-screen icon
+import { FiExternalLink, FiMaximize } from "react-icons/fi";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { motion , AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useScreenSize } from "../hooks/useScreenSize";
 import { useParams, Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async"; // Updated import
 
-// Translation object
 const translations = {
   en: {
     backToProjects: "Back to Projects",
     technologiesUsed: "Technologies Used:",
     visitProject: "Visit Project",
     projectVideos: "Project Videos",
-    projectsData: [
-      {
-        id: 1,
-        name: "Sphinx Platform",
-        description:
-          "A dynamic web solution for a swimming school designed to track student progress and attendance. This system empowers parents to monitor their child's training performance and grades, ensuring clear communication and continuous improvement. Its intuitive interface streamlines administration while creating a supportive learning environment.",
-        technologies: ["Next.js", "Tailwind CSS", "PHP Laravel", "MySQL", "Bootstrap", "Material UI"],
-      },
-      {
-        id: 2,
-        name: "EGAC Portfolio",
-        description:
-          "A comprehensive web solution for a leading HVAC and home improvement company. This project features an intuitive website that showcases services, projects, and products, along with powerful administrative modules for content management, customer inquiries, and employee performance tracking. It streamlines operations and boosts customer engagement.",
-        technologies: ["React.js", "Tailwind CSS", "PHP Laravel", "MySQL", "Bootstrap", "Material UI"],
-      },
-      {
-        id: 3,
-        name: "Brainy Battalion Portfolio",
-        description:
-          "BrainyBattalion is a cybersecurity company that protects businesses from digital threats. We combine technical expertise with creative strategies to deliver strong security solutions.",
-        technologies: ["React.js", "Tailwind CSS", "PHP Laravel", "MySQL", "Bootstrap", "Material UI"],
-      },
-    ],
   },
   ar: {
     backToProjects: "العودة إلى المشاريع",
     technologiesUsed: "التقنيات المستخدمة:",
     visitProject: "زيارة المشروع",
     projectVideos: "فيديوهات المشروع",
-    projectsData: [
-      {
-        id: 1,
-        name: "منصة سفنكس",
-        description:
-          "حل ويب ديناميكي لمدرسة سباحة مصمم لتتبع تقدم الطلاب وحضورهم. تمكّن هذه النظام الآباء من مراقبة أداء أطفالهم التدريبي ودرجاتهم، مما يضمن تواصلًا واضحًا وتحسينًا مستمرًا. واجهته البديهية تعمل على تبسيط الإدارة مع خلق بيئة تعليمية داعمة.",
-        technologies: ["Next.js", "Tailwind CSS", "PHP Laravel", "MySQL", "Bootstrap", "Material UI"],
-      },
-      {
-        id: 2,
-        name: "منصة EGAC",
-        description:
-          "حل ويب متكامل لشركة رائدة في مجال التكييف المركزي وتحسين المنازل. يتميز هذا المشروع بموقع إلكتروني سهل الاستخدام يعرض الخدمات، المشاريع، والمنتجات، بالإضافة إلى لوحة تحكم متكاملة لإدارة المحتوى، استفسارات العملاء، وتتبع أداء الموظفين. يُسهم هذا الحل في تبسيط العمليات وتعزيز تفاعل العملاء",
-        technologies: ["React.js", "Tailwind CSS", "PHP Laravel", "MySQL", "Bootstrap", "Material UI"],
-      },
-      {
-        id: 3,
-        name: "منصة Brainy Battalion",
-       description: "شركة BrainyBattalion هي شركة متخصصة في الأمن السيبراني تحمي الشركات من التهديدات الرقمية. نحن نجمع بين الخبرة التقنية والاستراتيجيات الإبداعية لتقديم حلول أمنية قوية.",
-        technologies: ["React.js", "Tailwind CSS", "PHP Laravel", "MySQL", "Bootstrap", "Material UI"],
-      },
-    ],
   },
 };
 
-// Project data
 export const projectsData = [
   {
     id: 1,
+    name: "Sphinx Platform",
     image: "/images/sphinxLogin.png",
     category: "Web",
     link: "https://sphinx.legionagency.tech",
@@ -78,9 +33,13 @@ export const projectsData = [
     updated_at: "2024-01-10",
     images: ["/images/sphinxLogin.png", "/images/sphinxAdmin.png", "/images/sphinxAdminLight.png", "/images/sphinxSwimmer.png"],
     video: ["/videos/sphinxWeb.mp4", "/videos/sphinxMobile.mp4"],
+    description:
+      "A dynamic web solution for a swimming school designed to track student progress and attendance. This system empowers parents to monitor their child's training performance and grades, ensuring clear communication and continuous improvement.",
+    technologies: ["Next.js", "Tailwind CSS", "PHP Laravel", "MySQL", "Bootstrap", "Material UI"],
   },
   {
     id: 2,
+    name: "EGAC Portfolio",
     image: "/images/EgacPortfolio.png",
     category: "Portfolio",
     link: "https://HVAC.legionagency.tech",
@@ -88,9 +47,13 @@ export const projectsData = [
     updated_at: "2025-03-05",
     images: ["/images/egac1.png", "/images/egac2.png", "/images/egac3.png", "/images/egac4.png"],
     video: ["/videos/EgacPortfolio.mp4", "/videos/EgacAdmin.mp4"],
+    description:
+      "A comprehensive web solution for a leading HVAC and home improvement company. This project features an intuitive website that showcases services, projects, and products, along with powerful administrative modules.",
+    technologies: ["React.js", "Tailwind CSS", "PHP Laravel", "MySQL", "Bootstrap", "Material UI"],
   },
   {
     id: 3,
+    name: "Brainy Battalion Portfolio",
     image: "/images/brainy1.png",
     category: "Portfolio",
     link: "#",
@@ -98,31 +61,31 @@ export const projectsData = [
     updated_at: "2025-03-05",
     images: ["/images/brainy1.png", "/images/brainy2.png", "/images/brainy3.png"],
     video: ["/videos/brainy.mp4"],
+    description:
+      "BrainyBattalion is a cybersecurity company that protects businesses from digital threats. We combine technical expertise with creative strategies to deliver strong security solutions.",
+    technologies: ["React.js", "Tailwind CSS", "PHP Laravel", "MySQL", "Bootstrap", "Material UI"],
   },
 ];
 
 function ProjectDetails() {
   const { darkMode } = useTheme();
   const { language } = useLanguage();
-  const { isMobile, } = useScreenSize();
+  const { isMobile } = useScreenSize();
   const { id } = useParams();
   const [currentImage, setCurrentImage] = useState(0);
   const [direction, setDirection] = useState(1);
-  const [isFullScreen, setIsFullScreen] = useState(false); // Full-screen preview state
+  const [isFullScreen, setIsFullScreen] = useState(false);
 
   const t = translations[language];
-  const projectData = projectsData.find((p) => p.id === parseInt(id));
-  const projectTranslation = t.projectsData.find((p) => p.id === parseInt(id));
+  const project = projectsData.find((p) => p.id === parseInt(id));
 
-  if (!projectData || !projectTranslation) {
+  if (!project) {
     return (
       <h1 className="text-center text-red-500 text-3xl font-raleway py-16">
         {language === "en" ? "Project Not Found" : "المشروع غير موجود"}
       </h1>
     );
   }
-
-  const project = { ...projectData, ...projectTranslation };
 
   const nextImage = () => {
     setDirection(1);
@@ -147,25 +110,38 @@ function ProjectDetails() {
 
   return (
     <section
-      className={`py-30 transition-all duration-500 ${
-        darkMode ? "bg-gray-900 text-white" : "bg-gray-300 text-black"
-      }`}
+      className={`py-30 transition-all duration-500 ${darkMode ? "bg-gray-900 text-white" : "bg-gray-300 text-black"}`}
       dir={language === "ar" ? "rtl" : "ltr"}
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Back Link */}
-        <div className="mb-8">
-          <Link
-            to="/#projects"
-            className="text-yellow-500 text-sm md:text-base font-raleway flex items-center gap-2"
-          >
-            ← {t.backToProjects}
-          </Link>
-        </div>
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": project.name,
+            "description": project.description,
+            "url": `https://legionagency.tech/projects/${project.id}`,
+            "image": project.images[0],
+            "breadcrumb": {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://legionagency.tech/" },
+                { "@type": "ListItem", "position": 2, "name": "Projects", "item": "https://legionagency.tech/#projects" },
+                { "@type": "ListItem", "position": 3, "name": project.name, "item": `https://legionagency.tech/projects/${project.id}` },
+              ],
+            },
+          })}
+        </script>
+      </Helmet>
 
-        {/* Project Header */}
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <nav className="mb-8 text-xs sm:text-sm md:text-base">
+          <Link to="/" className="text-yellow-500 hover:underline">Home</Link> /
+          <Link to="/#projects" className="text-yellow-500 hover:underline">Projects</Link> / 
+          <span>{project.name}</span>
+        </nav>
+
         <div className={`flex flex-col ${isMobile ? "gap-6" : "md:flex-row md:gap-8"} items-center`}>
-          {/* Image Carousel */}
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
@@ -185,13 +161,12 @@ function ProjectDetails() {
                 >
                   <img
                     src={project.images[currentImage]}
-                    alt={project.name}
+                    alt={`${project.name} - Legion Agency Project`}
                     className="object-cover w-full h-full rounded-[20px]"
                     loading="lazy"
                   />
                 </motion.div>
               </AnimatePresence>
-              {/* Full-Screen Icon */}
               <button
                 aria-label="Full Screen"
                 onClick={() => setIsFullScreen(true)}
@@ -199,7 +174,6 @@ function ProjectDetails() {
               >
                 <FiMaximize size={20} />
               </button>
-              {/* Navigation Arrows */}
               <button
                 aria-label="Previous Image"
                 onClick={prevImage}
@@ -214,7 +188,6 @@ function ProjectDetails() {
               >
                 <ChevronRight size={20} />
               </button>
-              {/* Dots */}
               <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
                 {project.images.map((_, index) => (
                   <motion.div
@@ -231,7 +204,6 @@ function ProjectDetails() {
             </div>
           </motion.div>
 
-          {/* Project Details */}
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
@@ -239,23 +211,14 @@ function ProjectDetails() {
             className={`w-full ${isMobile ? "" : "md:w-1/2"}`}
           >
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold font-raleway">{project.name}</h1>
-            <p
-              className={`mt-4 text-xs sm:text-sm md:text-base ${
-                darkMode ? "text-gray-300" : "text-gray-700"
-              }`}
-            >
+            <p className={`mt-4 text-xs sm:text-sm md:text-base ${darkMode ? "text-gray-300" : "text-gray-700"}`}>
               {project.description}
             </p>
             <div className="mt-4">
-              <h3 className="text-sm sm:text-lg md:text-xl font-semibold font-raleway">
-                {t.technologiesUsed}
-              </h3>
+              <h3 className="text-sm sm:text-lg md:text-xl font-semibold font-raleway">{t.technologiesUsed}</h3>
               <ul className="flex gap-2 mt-2 flex-wrap">
                 {project.technologies.map((tech, index) => (
-                  <li
-                    key={index}
-                    className="bg-yellow-500 px-2 py-1 rounded-full text-black text-xs sm:text-sm"
-                  >
+                  <li key={index} className="bg-yellow-500 px-2 py-1 rounded-full text-black text-xs sm:text-sm">
                     {tech}
                   </li>
                 ))}
@@ -274,7 +237,6 @@ function ProjectDetails() {
           </motion.div>
         </div>
 
-        {/* Project Videos */}
         {Array.isArray(project.video) && project.video.length > 0 && (
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -282,16 +244,10 @@ function ProjectDetails() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="mt-10"
           >
-            <h3 className="text-xl sm:text-2xl md:text-3xl font-semibold font-raleway mb-4">
-              {t.projectVideos}
-            </h3>
+            <h3 className="text-xl sm:text-2xl md:text-3xl font-semibold font-raleway mb-4">{t.projectVideos}</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {project.video.map((videoSrc, index) => (
-                <div
-                  key={index}
-                  className="relative w-full overflow-hidden rounded-[20px] shadow-lg"
-                  style={{ paddingBottom: "56.25%" }} // 16:9 aspect ratio
-                >
+                <div key={index} className="relative w-full overflow-hidden rounded-[20px] shadow-lg" style={{ paddingBottom: "56.25%" }}>
                   <video
                     src={videoSrc}
                     controls
@@ -305,7 +261,6 @@ function ProjectDetails() {
         )}
       </div>
 
-      {/* Full-Screen Preview */}
       {isFullScreen && (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center p-4">
           <button
@@ -313,13 +268,9 @@ function ProjectDetails() {
             onClick={() => setIsFullScreen(false)}
             className="absolute top-4 right-4 text-white text-2xl"
           >
-            &times;
+            ×
           </button>
-          <img
-            src={project.images[currentImage]}
-            alt={project.name}
-            className="max-w-full max-h-full"
-          />
+          <img src={project.images[currentImage]} alt={`${project.name} - Full Screen`} className="max-w-full max-h-full" />
         </div>
       )}
     </section>
