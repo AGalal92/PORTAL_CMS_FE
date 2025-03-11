@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { useTheme, useLanguage } from "../App";
+import { useTheme, useLanguage } from "../../App";
 import { FiExternalLink, FiMaximize } from "react-icons/fi";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useScreenSize } from "../hooks/useScreenSize";
+import { useScreenSize } from "../../hooks/useScreenSize";
 import { useParams, Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async"; // Updated import
 

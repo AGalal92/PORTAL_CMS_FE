@@ -1,0 +1,98 @@
+.technologies_area {
+  padding: 40px 0; /* Reduced padding to match Services section */
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.technologies {
+  overflow: hidden;
+}
+
+.technologies_list {
+  white-space: nowrap;
+  overflow: hidden;
+  margin-bottom: 20px;
+  position: relative;
+  /* Apply gradient mask for blurry fade effect on left and right */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
+}
+
+.js-marquee-wrapper {
+  display: flex;
+  width: 200%; /* Double width for seamless looping */
+}
+
+.js-marquee {
+  display: flex;
+  align-items: center;
+}
+
+/* Keyframes for English (LTR) */
+[data-lang="en"] .js-marquee {
+  animation: marqueeAnimationEn 50s linear infinite;
+}
+
+@keyframes marqueeAnimationEn {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* Keyframes for Arabic (RTL) */
+[data-lang="ar"] .js-marquee {
+  animation: marqueeAnimationAr 50s linear infinite;
+}
+
+@keyframes marqueeAnimationAr {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+/* Direction-specific adjustments */
+[data-lang="en"] .marquee-left .js-marquee,
+[data-lang="ar"] .marquee-right .js-marquee {
+  animation-direction: reverse;
+}
+
+[data-lang="en"] .marquee-right .js-marquee,
+[data-lang="ar"] .marquee-left .js-marquee {
+  animation-direction: normal;
+}
+
+/* Pause animation on hover */
+.technologies_list:hover .js-marquee {
+  animation-play-state: paused;
+}
+
+.tech-item {
+  display: inline-flex;
+  transition: all 0.3s ease;
+}
+
+.tech-item:hover {
+  transform: scale(1.05);
+}

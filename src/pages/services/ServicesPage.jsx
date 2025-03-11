@@ -1,8 +1,8 @@
 import React from "react";
-import { useTheme, useLanguage } from "../App";
+import { useTheme, useLanguage } from "../../App";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { useScreenSize } from "../hooks/useScreenSize";
+import { useScreenSize } from "../../hooks/useScreenSize";
 import {
   Computer, // For Computer icon
   Apple, // For Apple Logo Icon
@@ -27,6 +27,8 @@ import {
   Storage, // For Database icon
   BarChart, // For Data Science
 } from "@mui/icons-material";
+import Technologies from "../../components/Technologies";
+import Contact from "../../components/Contact";
 
 // Translation object
 const translations = {
@@ -135,9 +137,10 @@ function Services() {
   const t = translations[language];
 
   return (
+    <>
     <section
       id="services"
-      className={`py-10 transition-all duration-500 ${
+      className={`py-20 transition-all duration-500 ${
         darkMode ? "bg-gray-900 text-white" : "bg-gray-300 text-black"
       }`}
       dir={language === "ar" ? "rtl" : "ltr"}
@@ -194,6 +197,10 @@ function Services() {
         ))}
       </div>
     </section>
+      <Technologies />
+      <Contact />
+        
+    </>
   );
 }
 

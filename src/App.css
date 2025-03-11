@@ -21,6 +21,7 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: "Cairo", sans-serif;
+  
 }
 
 /* Apply Cairo font to all text elements */

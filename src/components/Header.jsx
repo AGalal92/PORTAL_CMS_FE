@@ -27,9 +27,9 @@ function Header() {
 
   useEffect(() => {
     if (!isMobile) {
-      setMenuOpen(true); // Menu always open on desktop
+      setMenuOpen(true); // Vertical menu always open on desktop
     } else {
-      setMenuOpen(false); // Menu closed by default on mobile
+      setMenuOpen(false); // Vertical menu closed by default on mobile
     }
   }, [isMobile]);
 
@@ -64,15 +64,29 @@ function Header() {
     if (isMobile) setMenuOpen(false);
   };
 
-  // Navigation items with icons
-  const navItems = [
+  // Existing vertical nav items with icons
+  const verticalNavItems = [
     { id: "home", icon: <Home />, label: language === "en" ? "Home" : "الرئيسية" },
     { id: "about", icon: <Info />, label: language === "en" ? "About" : "من نحن" },
     { id: "services", icon: <Build />, label: language === "en" ? "Services" : "الخدمات" },
     { id: "projects", icon: <Work />, label: language === "en" ? "Projects" : "المشاريع" },
-    { id: "team", icon: <Group />, label: language === "en" ? "Team" : "الفريق" },
+    // { id: "team", icon: <Group />, label: language === "en" ? "Team" : "الفريق" },
     { id: "contact", icon: <Mail />, label: language === "en" ? "Contact" : "اتصل بنا" },
   ];
+
+  // New horizontal nav items with routes
+  const horizontalNavItems = [
+    { id: "about-us", path: "/about-us", label: language === "en" ? "About Us" : "من نحن" },
+    { id: "projects", path: "/projects", label: language === "en" ? "Projects" : "المشاريع" },
+    { id: "services", path: "/services", label: language === "en" ? "Services" : "الخدمات" },
+    { id: "contact", path: "/contact", label: language === "en" ? "Contact Us" : "اتصل بنا" },
+  ];
+
+  // List of paths where vertical nav should be hidden
+  const hideVerticalNavPaths = ["/projects", "/about-us", "/services", "/contact", "/projects/1", "/projects/2","/projects/3","/projects/4",];
+
+  // Check if current path is in the hide list
+  const shouldShowVerticalNav = !hideVerticalNavPaths.includes(location.pathname);
 
   return (
     <>
@@ -85,7 +99,7 @@ function Header() {
               : "backdrop-blur-md bg-gray-100/20 shadow-lg"
             : "bg-transparent"
         }`}
-        dir={language === "ar" ? "rtl" : "ltr"} // Apply direction to header
+        dir={language === "ar" ? "rtl" : "ltr"}
       >
         <div className="flex justify-between items-center px-4 py-2">
           {/* Logo */}
@@ -99,6 +113,25 @@ function Header() {
               />
             </Link>
           </div>
+
+          {/* Horizontal Navigation (visible on desktop, hidden on mobile) */}
+          <nav className="hidden md:flex items-center gap-6">
+            {horizontalNavItems.map((item) => (
+              <Link
+                key={item.id}
+                to={item.path}
+                className={`text-xlg font-medium transition-all duration-300 ${
+                  location.pathname === item.path
+                    ? "text-yellow-500 font-bold"
+                    : darkMode
+                    ? "text-gray-300 hover:text-yellow-500"
+                    : "text-gray-800 hover:text-yellow-500"
+                }`}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
 
           {/* Buttons */}
           <div className="flex items-center gap-2">
@@ -131,11 +164,41 @@ function Header() {
             )}
           </div>
         </div>
+
+        {/* Horizontal Navigation for Mobile (shown when menu is open) */}
+        {isMobile && menuOpen && (
+          <motion.nav
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className={`flex flex-col items-center gap-4 py-4 ${
+              darkMode ? "bg-gray-900/90" : "bg-gray-100/90"
+            } backdrop-blur-md`}
+          >
+            {horizontalNavItems.map((item) => (
+              <Link
+                key={item.id}
+                to={item.path}
+                onClick={() => setMenuOpen(false)} // Close menu on click
+                className={`text-sm font-medium transition-all duration-300 ${
+                  location.pathname === item.path
+                    ? "text-yellow-500 font-bold"
+                    : darkMode
+                    ? "text-gray-300 hover:text-yellow-500"
+                    : "text-gray-800 hover:text-yellow-500"
+                }`}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </motion.nav>
+        )}
       </header>
 
-      {/* Left/Right Vertical Navigation with Icons */}
+      {/* Vertical Navigation (hidden on specified paths) */}
       <AnimatePresence>
-        {(menuOpen || !isMobile) && (
+        {shouldShowVerticalNav && (menuOpen || !isMobile) && (
           <motion.nav
             initial={{ x: language === "ar" ? 250 : -250 }}
             animate={{ x: 0 }}
@@ -146,11 +209,11 @@ function Header() {
                 ? darkMode
                   ? "bg-gray-900/90 text-white backdrop-blur-md shadow-lg rounded-r-lg"
                   : "bg-gray-100/90 text-black backdrop-blur-md shadow-lg rounded-r-lg"
-                : "" // Transparent when not 'home'
+                : ""
             }`}
-            dir={language === "ar" ? "rtl" : "ltr"} // Apply direction to nav
+            dir={language === "ar" ? "rtl" : "ltr"}
           >
-            {navItems.map((item) => (
+            {verticalNavItems.map((item) => (
               <motion.a
                 key={item.id}
                 href={`/#${item.id}`}
