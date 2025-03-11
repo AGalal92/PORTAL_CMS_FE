@@ -197,6 +197,9 @@ function Header() {
       </header>
 
       {/* Vertical Navigation (hidden on specified paths) */}
+      
+      {   activeSection !== "home" &&
+      (
       <AnimatePresence>
         {shouldShowVerticalNav && (menuOpen || !isMobile) && (
           <motion.nav
@@ -236,6 +239,7 @@ function Header() {
           </motion.nav>
         )}
       </AnimatePresence>
+      )}
     </>
   );
 }

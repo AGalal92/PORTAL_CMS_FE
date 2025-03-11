@@ -151,7 +151,7 @@ const Technologies = () => {
               {t.technologies}
               <span
                 className={`absolute top-1/2 w-24 h-[2px] bg-yellow-500 ${
-                  language === "ar" ? "right-20" : "left-25"
+                  language === "ar" ? "right-20" : "left-40"
                 }`}
               ></span>
             </p>

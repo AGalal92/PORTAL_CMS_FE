@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { useTheme, useLanguage } from "../App";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useScreenSize } from "../hooks/useScreenSize";
 
-// Translation object
+// Translation object (unchanged)
 const translations = {
   en: {
     aboutUs: "About Us",
@@ -34,11 +34,31 @@ const translations = {
   },
 };
 
+// Slider data
+const sliderData = [
+  {
+    image: "/images/hero5.jpg",
+    alt: "About Legion",
+    altAr: "عن ليجيون",
+  },
+  {
+    image: "/images/hero7.jpg",
+    alt: "Our Work 1",
+    altAr: "عملنا 1",
+  },
+  {
+    image: "/images/hero1.jpg",
+    alt: "Our Work 2",
+    altAr: "عملنا 2",
+  },
+];
+
 function About() {
   const { darkMode } = useTheme();
   const { language } = useLanguage();
   const { isMobile, isTablet } = useScreenSize();
   const t = translations[language];
+  const [activeSlide, setActiveSlide] = useState(0);
 
   return (
     <section
@@ -55,7 +75,7 @@ function About() {
             {t.aboutUs}
             <span
               className={`absolute top-1/2 w-24 h-[2px] bg-yellow-500 ${
-                language === "ar" ? "right-22" : "left-27"
+                language === "ar" ? "right-20" : "left-20"
               }`}
             ></span>
           </p>
@@ -68,143 +88,124 @@ function About() {
           </h2>
         </div>
 
-        {/* Gallery Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Left Column: Single Large Image with Text */}
-          <div className="md:col-span-2">
-            <GalleryImageWithText
-              src="/images/hero5.jpg"
-              alt={language === "en" ? "About Legion" : "عن ليجيون"}
+        {/* Slider Layout */}
+        <div className="flex flex-col md:flex-row gap-6">
+          {/* Bullets (Vertical) */}
+          {!isMobile && (
+            <div className="flex flex-col justify-center items-center space-y-4 md:w-16">
+              {sliderData.map((_, index) => (
+                <motion.div
+                  key={index}
+                  className={`w-3 h-3 rounded-full cursor-pointer ${
+                    activeSlide === index
+                      ? "bg-yellow-500 scale-125"
+                      : darkMode
+                      ? "bg-gray-500"
+                      : "bg-gray-400"
+                  }`}
+                  onClick={() => setActiveSlide(index)}
+                  whileHover={{ scale: 1.5 }}
+                  transition={{ duration: 0.3 }}
+                />
+              ))}
+            </div>
+          )}
+
+          {/* Content */}
+          <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Text Content */}
+            <TextContent
               title1={t.weAreLegion}
               text1={t.weAreLegionText[0]}
               title2={t.ourMission}
-              text2={t.ourMissionText[0]}
+              text2={t.ourMissionText}
               darkMode={darkMode}
-              isMobile={isMobile}
-              isTablet={isTablet}
               language={language}
+              isMobile={isMobile}
+              activeSlide={activeSlide}
             />
-          </div>
 
-          {/* Right Column: Two Stacked Images */}
-          {!isMobile  && (<div className="flex flex-col gap-6">
-            <GalleryImage
-              src="/images/hero7.jpg"
-              alt={language === "en" ? "Our Work 1" : "عملنا 1"}
-              isMobile={isMobile}
-              isTablet={isTablet}
-            />
-            <GalleryImage
-              src="/images/hero1.jpg"
-              alt={language === "en" ? "Our Work 2" : "عملنا 2"}
-              isMobile={isMobile}
-              isTablet={isTablet}
-            />
-             {isTablet  && (<div className="flex flex-col gap-6">
-            <GalleryImage
-              src="/images/hero8.jpg"
-              alt={language === "en" ? "Our Work 1" : "عملنا 1"}
-              isMobile={isMobile}
-              isTablet={isTablet}
-            />
-           
-             
-          </div> )}
-          </div> )}
-         
+            {/* Image Slider */}
+            {!isMobile && (
+              <ImageSlider
+                slides={sliderData}
+                activeSlide={activeSlide}
+                language={language}
+                isTablet={isTablet}
+              />
+            )}
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
-const GalleryImageWithText = ({ src, alt, title1, text1, title2, text2, darkMode, isMobile, isTablet,language }) => {
+const TextContent = ({ title1, text1, title2, text2, darkMode, language, isMobile, activeSlide }) => {
   const { ref, inView } = useInView({
-    triggerOnce: true,
+    triggerOnce: false, // Trigger every time it comes into view
     threshold: isMobile ? 0.1 : 0.3,
   });
-
-  const width = isMobile ? 280 : isTablet ? 400 : 600;
-  const height = isMobile ? 180 : isTablet ? 250 : 650;
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 50 }}
-      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-      transition={{ duration: 0.8 }}
-      className="relative group flex flex-col"
+      initial={{ x: language === "ar" ? 100 : -100, opacity: 0 }}
+      animate={
+        inView
+          ? { x: 0, opacity: 1, y: -activeSlide * 20 } // Move up/down with slider
+          : { x: language === "ar" ? 100 : -100, opacity: 0 }
+      }
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      className="flex flex-col p-4"
     >
-      <img
-        src={src}
-        alt={alt}
-        width={width}
-        height={height}
-        style={{minHeight: height, borderRadius: width / 40}}
-        className={`rounded-t-[20px] shadow-lg object-cover w-full h-full transition-transform duration-300 ${
-          !isMobile ? "group-hover:scale-101" : ""
-        }`}
-        loading="lazy"
-      />
-
-      {isMobile || isTablet ? (
-        // Mobile: Static content below image
-        <div
-          className={`p-4 rounded-b-[20px] shadow-lg ${language === "ar" ? "rtl" : "ltr"}  ${
-            darkMode ? "bg-gray-800 text-white" : "bg-gray-200 text-black"
-          }`}
+      <h3 className="text-yellow-500 text-sm sm:text-lg md:text-xl font-semibold font-raleway mb-2">
+        | {title1}
+      </h3>
+      <p className={`${language === "ar" ? "text-right" : "text-left"} text-xs sm:text-sm md:text-base mb-6`}>
+        {text1}
+      </p>
+      <h3 className="text-yellow-500 text-sm sm:text-lg md:text-xl font-semibold font-raleway mb-2">
+        | {title2}
+      </h3>
+      {text2.map((paragraph, index) => (
+        <p
+          key={index}
+          className={`${language === "ar" ? "text-right" : "text-left"} text-xs sm:text-sm md:text-base mb-3`}
         >
-          <h3 className="  text-yellow-500 text-sm font-semibold font-raleway mb-1">| {title1}</h3>
-          <p className="text-xs mb-3">{text1}</p>
-          <h3 className="text-yellow-500 text-sm font-semibold font-raleway mb-1">| {title2}</h3>
-          <p className="text-xs">{text2}</p>
-        </div>
-      ) : (
-        // Desktop/Tablet: Overlay at bottom left
-        <motion.div
-          className={`${language === "ar" ? "rtl" : "ltr"} absolute bottom-0 left-0 p-4 w-full transition-all duration-300`}
-        >
-          <div
-            className={`bg-black/60 backdrop-blur-sm rounded-lg p-3 text-left ${
-              darkMode ? "text-white" : "text-white"
-            }`}
-          >
-            <h3 className={`${language === "ar" ? "rtl" : "ltr"} text-yellow-500 text-sm sm:text-lg md:text-xl font-semibold mb-1`}>| {title1}</h3>
-            <p className={`${language === "ar" ? "rtl" : "ltr"} text-xs sm:text-sm md:text-base`}>{text1}</p>
-            <h3 className={`${language === "ar" ? "rtl" : "ltr"} text-yellow-500 text-sm sm:text-lg md:text-xl font-semibold mt-3 mb-1 `}>| {title2}</h3>
-            <p className={`${language === "ar" ? "rtl" : "ltr"} text-xs sm:text-sm md:text-base `}>{text2}</p>
-          </div>
-        </motion.div>
-      )}
+          {paragraph}
+        </p>
+      ))}
     </motion.div>
   );
 };
 
-const GalleryImage = ({ src, alt, isMobile, isTablet }) => {
+const ImageSlider = ({ slides, activeSlide, language, isTablet }) => {
   const { ref, inView } = useInView({
-    triggerOnce: true,
-    threshold: isMobile ? 0.1 : 0.3,
+    triggerOnce: false,
+    threshold: 0.3,
   });
 
-  const width = isMobile ? 200 : isTablet ? 300 : 750;
-  const height = isMobile ? 150 : isTablet ? 200 : 250;
+  const width = isTablet ? 400 : 600;
+  const height = isTablet ? 500 : 650;
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 50 }}
-      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+      initial={{ opacity: 0, x: 50 }}
+      animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
       transition={{ duration: 0.8 }}
-      className="group"
+      className="relative overflow-hidden rounded-[20px] shadow-lg"
     >
-      <img
-        src={src}
-        alt={alt}
+      <motion.img
+        src={slides[activeSlide].image}
+        alt={language === "en" ? slides[activeSlide].alt : slides[activeSlide].altAr}
         width={width}
         height={height}
-        className={`rounded-[20px] shadow-lg object-cover  transition-transform duration-300 ${
-          !isMobile ? "group-hover:scale-101" : ""
-        }`}
+        className="object-cover w-full h-full"
+        animate={{ y: -activeSlide * 50 }} // Move up when slider goes down
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        style={{ minHeight: height, borderRadius: width / 40 }}
         loading="lazy"
       />
     </motion.div>

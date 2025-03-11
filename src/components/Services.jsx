@@ -149,7 +149,7 @@ function Services() {
             {t.services}
             <span
               className={`absolute top-1/2 w-24 h-[2px] bg-yellow-500 ${
-                language === "ar" ? "right-20" : "left-20"
+                language === "ar" ? "right-20" : "left-27"
               }`}
             ></span>
           </p>
@@ -174,7 +174,7 @@ function Services() {
             </h3>
             <p
               className={`text-sm md:text-base mb-6 ${
-                language === "ar" ? "text-center" : "text-center"
+                language === "ar" ? "text-right" : "text-left"
               } ${darkMode ? "text-gray-300" : "text-gray-700"}`}
             >
               {category.desc}

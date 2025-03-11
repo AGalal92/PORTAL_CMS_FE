@@ -10,6 +10,7 @@ import Team from "./components/Team";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import Technologies from "./components/Technologies";
+import SmartSlider from "./components/SmartSlider";
 
 function HomePage() {
     const location = useLocation();
@@ -28,8 +29,11 @@ function HomePage() {
     return (
       <>
         <section id="home" aria-label={language === "ar" ? "الصفحة الرئيسية" : "Home"}>
-          <Hero />
+          <SmartSlider />
         </section>
+        {/* <section id="home" aria-label={language === "ar" ? "الصفحة الرئيسية" : "Home"}>
+          <Hero />
+        </section> */}
         <section id="about" aria-label={language === "ar" ? "من نحن" : "About Us"}>
           <About />
         </section>

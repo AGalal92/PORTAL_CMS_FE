@@ -59,8 +59,10 @@ function Projects() {
   return (
     <section
       id="projects"
-      className={`py-10 transition-all duration-500 ${
-        darkMode ? "bg-gray-900 text-white" : "bg-gray-300 text-black"
+      className={`py-10 transition-all duration-500  ${
+        darkMode
+          ? "bg-gradient-to-br bg-gray-900 to-gray-800 text-white"
+          : "bg-gradient-to-br bg-gray-400 to-gray-100 text-black"
       }`}
       dir={language === "ar" ? "rtl" : "ltr"}
     >
@@ -71,7 +73,7 @@ function Projects() {
             {t.projects}
             <span
               className={`absolute top-1/2 w-24 h-[2px] bg-yellow-500 ${
-                language === "ar" ? "right-20" : "left-20"
+                language === "ar" ? "right-20" : "left-27"
               }`}
             ></span>
           </p>
