@@ -129,11 +129,12 @@ const Technologies = () => {
 
   return (
     <section
-      className={`technologies_area py-10 transition-all duration-500 ${
-        darkMode
-          ? "bg-gradient-to-br bg-gray-900 to-gray-800 text-white"
-          : "bg-gradient-to-br bg-gray-400 to-gray-100 text-black"
-      }`}
+      className={`technologies_area py-10 transition-all duration-500 `}
+      style={{
+        backgroundColor: 'var(--bg-color)',
+        color: 'var(--text-default-color)',
+        transition: 'var(--transition-default)',
+      }}
       dir={language === "ar" ? "rtl" : "ltr"}
       data-lang={language} // Add data-lang attribute to apply language-specific styles
     >
@@ -144,29 +145,33 @@ const Technologies = () => {
           initial={{ opacity: 0, y: 50 }}
           animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
           transition={{ duration: 0.8 }}
-          className={`mb-8 ${language === "ar" ? "text-right" : "text-left"}`}
+         className={`${language === "ar" ? "rtl" : "ltr"} container mx-auto px-4 sm:px-6 lg:px-8`}
         >
           <div className="mb-8">
-            <p className="text-xs uppercase font-light tracking-widest relative inline-block">
+          <p
+            className={`${language === "ar" ? "rtl" : "ltr"} text-xs uppercase font-light tracking-widest relative inline-block`}
+            style={{ color: 'var(--text-muted-color)' }}
+          > 
               {t.technologies}
               <span
-                className={`absolute top-1/2 w-24 h-[2px] bg-yellow-500 ${
-                  language === "ar" ? "right-20" : "left-40"
-                }`}
-              ></span>
+              className={`absolute top-1/2 w-24 h-[2px] ${
+                language === "ar" ? "right-24" : "left-40"
+              }`}
+              style={{ backgroundColor: 'var(--primary-color)' }}
+            ></span>
             </p>
             <h2
-              className={`text-3xl sm:text-4xl md:text-5xl font-extrabold font-raleway ${
-                darkMode ? "text-white" : "text-black"
-              }`}
-            >
+            className={`text-3xl sm:text-4xl md:text-5xl font-extrabold ${
+              language === "ar" ? "text-right" : "text-left"
+            } font-raleway`}
+            style={{ color: 'var(--text-heading-color)' }}
+          >
               {t.technologies}
             </h2>
             <p
-              className={`text-sm md:text-base mt-2 ${
-                darkMode ? "text-gray-300" : "text-gray-700"
-              }`}
-            >
+            className={`${language === "ar" ? "rtl" : "ltr"} text-xs uppercase font-light tracking-widest relative inline-block`}
+            style={{ color: 'var(--text-muted-color)' }}
+          >      
               {t.description}
             </p>
           </div>

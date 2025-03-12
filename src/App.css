@@ -5,18 +5,6 @@
   }
 }
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   color: var(--foreground);
   background: var(--background);
@@ -26,10 +14,61 @@ body {
 
 /* Apply Cairo font to all text elements */
 @layer base {
-  h1, h2, h3, h4, h5, h6, p, span, a, button, input, textarea, label, li, th, td, div {
+  h1, h2, h3, h4, h5, h6,  span, a, button, input, textarea, label, li, th, td, div {
     font-family: "Cairo", sans-serif;
   }
 }
+@layer base {
+  p  {
+    font-family: "Karla", sans-serif;
+    line-height:'1.8rem';
+    font-weight: '15px';
+  }
+}
+p{
+  line-height: 2;
+
+
+}
+
+/* index.css */
+:root {
+  /* Colors */
+  --primary-color: #eab308;
+  --secondary-color: #00152e;
+  --odd-bg-color: #f5faff;
+  --even-bg-color: #ffff;
+  --even-bg-color: #e5e7eb;
+  --bg-color: #d1d5db; /* Default to light mode; updated by applyTheme */
+  --card-bg: #e5e7eb;  /* Default to light mode; updated by applyTheme */
+  --text-color: #000000; /* Default to light mode; updated by applyTheme */
+  --overlay-bg: rgba(0, 0, 0, 0.6);
+  
+  /* Border */
+  --border-radius-sm: 8px;
+  --border-radius-md: 20px;
+  --border-radius-lg: 40px;
+  --border-color: #9ca3af; /* Default to light mode; updated by applyTheme */
+
+  /* Shadows */
+  --shadow-default: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+  /* Typography */
+  --heading-color: #000000; /* Default to light mode; updated by applyTheme */
+  --subheading-color: #eab308;
+
+  /* Transitions */
+  --transition-default: all 0.3s ease-in-out;
+  --transition-slow: all 0.5s ease-in-out;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
 
 /* Custom Dark Scrollbar */
 ::-webkit-scrollbar {
@@ -41,17 +80,17 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(245, 158, 11, 0.8); /* Yellow-500 with 80% opacity */
+  background: #81a3bb; /* Yellow-500 with 80% opacity */
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(245, 151, 11, 1); /* Fully opaque yellow on hover */
+  background:  #81a3bb; /* Fully opaque yellow on hover */
 }
 
 /* For Firefox */
 html {
-  scrollbar-color: rgba(245, 158, 11, 0.8) #1a1a1a;
+  scrollbar-color: #81a3bb #f5faff;
   scrollbar-width: thin;
   font-family: "Cairo", sans-serif;
 }

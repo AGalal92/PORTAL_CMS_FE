@@ -24,7 +24,7 @@ const Slider = () => {
       role: "Web designer.",
       description:
         "From wireframing to prototyping and everything in between, the ultimate designer tool has everything you need to create stunning websites and digital experiences.",
-      email: "Drop me a mail",
+      email: "Get a consultant",
       featuresTitle: "I design and make awesome products",
       featuresDescription:
         "From concept to creation, witness the process of turning your ideas into awesome products that exceed every expectation.",
@@ -102,12 +102,10 @@ const Slider = () => {
   };
 
   const handleDragEnd = (event, info) => {
-    const threshold = 50; // Minimum drag distance to trigger slide change
+    const threshold = isMobile ? 30 : 50; // Smaller threshold for mobile
     if (info.offset.x < -threshold) {
-      // Dragged left, go to next slide
       nextSlide();
     } else if (info.offset.x > threshold) {
-      // Dragged right, go to previous slide
       prevSlide();
     }
   };
@@ -131,13 +129,14 @@ const Slider = () => {
     {
       title: "Hero",
       content: (
-        <div className="slide-content flex flex-row items-center justify-between">
-          <div className="text-container">
+        <div className={`slide-content flex ${isMobile ? "flex-col" : "flex-row"} items-center justify-between`}>
+          <div className="text-container" style={{ width: isMobile ? "100%" : "50%" }}>
             <motion.h1
               initial={{ opacity: 0, x: language === "ar" ? -400 : 400 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
-              className="text-3xl sm:text-4xl md:text-5xl font-extrabold font-raleway"
+              className={`font-extrabold font-raleway ${isMobile ? "text-2xl" : isTablet ? "text-3xl" : "text-5xl"}`}
+              style={{ color: 'var(--tertiary-color)' }}
             >
               {t.heyo}
             </motion.h1>
@@ -145,7 +144,8 @@ const Slider = () => {
               initial={{ opacity: 0, x: language === "ar" ? -400 : 400 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-3xl sm:text-4xl md:text-5xl font-extrabold font-raleway"
+              className={`font-extrabold font-raleway ${isMobile ? "text-2xl" : isTablet ? "text-3xl" : "text-5xl"}`}
+              style={{ color: 'var(--tertiary-color)' }}
             >
               {t.intro}
             </motion.h1>
@@ -153,7 +153,8 @@ const Slider = () => {
               initial={{ opacity: 0, x: language === "ar" ? -400 : 400 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
-              className="text-3xl sm:text-4xl md:text-5xl font-extrabold font-raleway"
+              className={`font-extrabold font-raleway ${isMobile ? "text-2xl" : isTablet ? "text-3xl" : "text-5xl"}`}
+              style={{ color: 'var(--tertiary-color)' }}
             >
               {t.role}
             </motion.h1>
@@ -161,44 +162,40 @@ const Slider = () => {
               initial={{ opacity: 0, x: language === "ar" ? -400 : 400 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.6 }}
-              className="text-sm md:text-base max-w-lg"
+              className={`${isMobile ? "text-xs" : "text-sm md:text-base"} max-w-lg`}
+              style={{ color: 'var(--tertiary-color)' }}
             >
               {t.description}
             </motion.p>
             <motion.div
-              className="contact-links"
+              className={`contact-links ${isMobile ? "flex-col" : "flex-row"} flex gap-4 mt-4`}
               initial={{ opacity: 0, x: language === "ar" ? -400 : 400 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.8 }}
             >
               <button
                 onClick={handleEmailClick}
-                className="email-button flex items-center gap-2 text-[#0c59db] bg-transparent border border-[#0c59db] px-4 py-2 rounded hover:bg-[#0c59db] hover:text-white transition"
+                className="email-button flex items-center gap-2 bg-transparent border px-4 py-2 rounded transition"
+                style={{
+                  color: 'var(--primary-color)',
+                  borderColor: 'var(--primary-color)',
+                  transition: 'var(--transition-default)',
+                }}
               >
-                <EmailIcon fontSize="small" />
-                {t.email}
+                <EmailIcon style={{ color: 'var(--primary-color)' }} fontSize={isMobile ? "small" : "medium"} />
+                <h3 className={`${isMobile ? "text-xs" : "text-sm"}`}>{t.email}</h3>
               </button>
-              <div className="social-links">
-                <a href="https://github.com" target="_blank" rel="noopener noreferrer">
-                  <GitHubIcon fontSize="large" className="social-icon" />
-                </a>
-                <a href="https://dribbble.com" target="_blank" rel="noopener noreferrer">
-                  <SportsBasketballIcon fontSize="large" className="social-icon" />
-                </a>
-                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-                  <TwitterIcon fontSize="large" className="social-icon" />
-                </a>
-              </div>
             </motion.div>
           </div>
-          <div className="">
+          <div className={`${isMobile ? "mt-4 w-full" : "w-1/2"}`}>
             <motion.img
-              src="/images/hero9.png"
+              src="/images/human1.jpg"
               alt="John Artur"
               className="hero-image"
               initial={{ opacity: 0, y: -1200 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
+              style={{ maxWidth: isMobile ? "100%" : isTablet ? "80%" : "100%", height: "auto" }}
             />
           </div>
         </div>
@@ -207,13 +204,14 @@ const Slider = () => {
     {
       title: "Features",
       content: (
-        <div className="slide-content flex flex-row items-center justify-between">
-          <div className="text-container">
+        <div className={`slide-content flex ${isMobile ? "flex-col" : "flex-row"} items-center justify-between`}>
+          <div className="text-container" style={{ width: isMobile ? "100%" : "50%" }}>
             <motion.h1
               initial={{ opacity: 0, x: language === "ar" ? -400 : 400 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-3xl sm:text-4xl md:text-5xl font-extrabold font-raleway"
+              className={`font-extrabold font-raleway ${isMobile ? "text-2xl" : isTablet ? "text-3xl" : "text-5xl"}`}
+              style={{ color: 'var(--tertiary-color)' }}
             >
               {t.featuresTitle}
             </motion.h1>
@@ -221,48 +219,53 @@ const Slider = () => {
               initial={{ opacity: 0, x: language === "ar" ? -400 : 400 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
-              className="text-sm md:text-base max-w-lg"
+              className={`${isMobile ? "text-xs" : "text-sm md:text-base"} max-w-lg`}
+              style={{ color: 'var(--tertiary-color)' }}
             >
               {t.featuresDescription}
             </motion.p>
             <motion.button
               onClick={handleSeeWorksClick}
-              className="see-works-button flex items-center gap-2 text-yellow-500 bg-transparent border border-yellow-500 px-2 py-2 rounded hover:bg-yellow-500 hover:text-white transition custom-width" // Added custom-width
+              className="see-works-button flex items-center gap-2 bg-transparent border px-2 py-2 rounded transition custom-width mt-4"
+              style={{
+                color: 'var(--primary-color)',
+                borderColor: 'var(--primary-color)',
+                transition: 'var(--transition-default)',
+              }}
               initial={{ opacity: 0, x: language === "ar" ? -400 : 400 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.6 }}
             >
               {t.seeWorks}
-              <ArrowForwardIcon fontSize="small" />
+              <ArrowForwardIcon fontSize={isMobile ? "small" : "medium"} style={{ color: 'var(--primary-color)' }} />
             </motion.button>
-           
           </div>
-          <div className="image-container flex flex-col items-end relative">
-          <motion.div
-              className="features-grid"
+          <div className={`image-container flex flex-col items-end relative ${isMobile ? "mt-4 w-full" : "w-1/2"}`}>
+            <motion.div
+              className={`features-grid ${isMobile ? "grid grid-cols-1 gap-4" : "grid grid-cols-2 gap-6"}`}
               initial={{ opacity: 0, x: language === "ar" ? 400 : -400 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
               <div>
-                <img src="/images/iconbutton_rocket.png" alt="Website" width="48" height="48" />
-                <h3 className="text-lg font-semibold font-raleway text-yellow-500">| {t.website}</h3>
-                <p className="text-xs md:text-sm">{t.websiteText}</p>
+                <img src="/images/iconbutton_rocket.png" alt="Website" width={isMobile ? 32 : 48} height={isMobile ? 32 : 48} />
+                <h3 className={`font-semibold font-raleway ${isMobile ? "text-sm" : "text-lg"}`} style={{ color: 'var(--primary-color)' }}>| {t.website}</h3>
+                <p className={`${isMobile ? "text-xs" : "text-sm"}`} style={{ color: 'var(--tertiary-color)' }}>{t.websiteText}</p>
               </div>
               <div>
-                <img src="/images/iconbutton_email.png" alt="Email" width="48" height="48" />
-                <h3 className="text-lg font-semibold font-raleway text-yellow-500">| {t.emailTemplates}</h3>
-                <p className="text-xs md:text-sm">{t.emailText}</p>
+                <img src="/images/iconbutton_email.png" alt="Email" width={isMobile ? 32 : 48} height={isMobile ? 32 : 48} />
+                <h3 className={`font-semibold font-raleway ${isMobile ? "text-sm" : "text-lg"}`} style={{ color: 'var(--primary-color)' }}>| {t.emailTemplates}</h3>
+                <p className={`${isMobile ? "text-xs" : "text-sm"}`} style={{ color: 'var(--tertiary-color)' }}>{t.emailText}</p>
               </div>
               <div>
-                <img src="/images/iconbutton_spark.png" alt="Video" width="48" height="48" />
-                <h3 className="text-lg font-semibold font-raleway text-yellow-500">| {t.videoEffects}</h3>
-                <p className="text-xs md:text-sm">{t.videoText}</p>
+                <img src="/images/iconbutton_spark.png" alt="Video" width={isMobile ? 32 : 48} height={isMobile ? 32 : 48} />
+                <h3 className={`font-semibold font-raleway ${isMobile ? "text-sm" : "text-lg"}`} style={{ color: 'var(--primary-color)' }}>| {t.videoEffects}</h3>
+                <p className={`${isMobile ? "text-xs" : "text-sm"}`} style={{ color: 'var(--tertiary-color)' }}>{t.videoText}</p>
               </div>
               <div>
-                <img src="/images/iconbutton_image.png" alt="Graphics" width="48" height="48" />
-                <h3 className="text-lg font-semibold font-raleway text-yellow-500">| {t.graphics}</h3>
-                <p className="text-xs md:text-sm">{t.graphicsText}</p>
+                <img src="/images/iconbutton_image.png" alt="Graphics" width={isMobile ? 32 : 48} height={isMobile ? 32 : 48} />
+                <h3 className={`font-semibold font-raleway ${isMobile ? "text-sm" : "text-lg"}`} style={{ color: 'var(--primary-color)' }}>| {t.graphics}</h3>
+                <p className={`${isMobile ? "text-xs" : "text-sm"}`} style={{ color: 'var(--tertiary-color)' }}>{t.graphicsText}</p>
               </div>
             </motion.div>
           </div>
@@ -272,44 +275,45 @@ const Slider = () => {
     {
       title: "Content",
       content: (
-        <div className="slide-content">
-          <div className="text-container">
+        <div className={`slide-content flex ${isMobile ? "flex-col" : "flex-row"} items-center justify-between`}>
+          <div className="text-container" style={{ width: isMobile ? "100%" : "50%" }}>
             <motion.div
-              className="stats-grid"
+              className={`stats-grid ${isMobile ? "grid grid-cols-2 gap-4" : "grid grid-cols-2 md:grid-cols-4 gap-6"}`}
               initial={{ opacity: 0, x: language === "ar" ? -400 : 400 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
               <div>
-                <h2 className="text-2xl md:text-3xl font-extrabold font-raleway">8k+</h2>
-                <h3 className="text-lg font-semibold font-raleway text-yellow-500">| {t.companies}</h3>
-                <p className="text-xs md:text-sm">{t.companiesText}</p>
+                <h2 className={`font-extrabold font-raleway ${isMobile ? "text-xl" : "text-2xl md:text-3xl"}`} style={{ color: 'var(--tertiary-color)' }}>8k+</h2>
+                <h3 className={`font-semibold font-raleway ${isMobile ? "text-sm" : "text-lg"}`} style={{ color: 'var(--primary-color)' }}>| {t.companies}</h3>
+                <p className={`${isMobile ? "text-xs" : "text-sm"}`} style={{ color: 'var(--tertiary-color)' }}>{t.companiesText}</p>
               </div>
               <div>
-                <h2 className="text-2xl md:text-3xl font-extrabold font-raleway">140k+</h2>
-                <h3 className="text-lg font-semibold font-raleway text-yellow-500">| {t.downloads}</h3>
-                <p className="text-xs md:text-sm">{t.downloadsText}</p>
+                <h2 className={`font-extrabold font-raleway ${isMobile ? "text-xl" : "text-2xl md:text-3xl"}`} style={{ color: 'var(--tertiary-color)' }}>140k+</h2>
+                <h3 className={`font-semibold font-raleway ${isMobile ? "text-sm" : "text-lg"}`} style={{ color: 'var(--primary-color)' }}>| {t.downloads}</h3>
+                <p className={`${isMobile ? "text-xs" : "text-sm"}`} style={{ color: 'var(--tertiary-color)' }}>{t.downloadsText}</p>
               </div>
               <div>
-                <h2 className="text-2xl md:text-3xl font-extrabold font-raleway">98%</h2>
-                <h3 className="text-lg font-semibold font-raleway text-yellow-500">| {t.satisfaction}</h3>
-                <p className="text-xs md:text-sm">{t.satisfactionText}</p>
+                <h2 className={`font-extrabold font-raleway ${isMobile ? "text-xl" : "text-2xl md:text-3xl"}`} style={{ color: 'var(--tertiary-color)' }}>98%</h2>
+                <h3 className={`font-semibold font-raleway ${isMobile ? "text-sm" : "text-lg"}`} style={{ color: 'var(--primary-color)' }}>| {t.satisfaction}</h3>
+                <p className={`${isMobile ? "text-xs" : "text-sm"}`} style={{ color: 'var(--tertiary-color)' }}>{t.satisfactionText}</p>
               </div>
               <div>
-                <h2 className="text-2xl md:text-3xl font-extrabold font-raleway">112k+</h2>
-                <h3 className="text-lg font-semibold font-raleway text-yellow-500">| {t.tickets}</h3>
-                <p className="text-xs md:text-sm">{t.ticketsText}</p>
+                <h2 className={`font-extrabold font-raleway ${isMobile ? "text-xl" : "text-2xl md:text-3xl"}`} style={{ color: 'var(--tertiary-color)' }}>112k+</h2>
+                <h3 className={`font-semibold font-raleway ${isMobile ? "text-sm" : "text-lg"}`} style={{ color: 'var(--primary-color)' }}>| {t.tickets}</h3>
+                <p className={`${isMobile ? "text-xs" : "text-sm"}`} style={{ color: 'var(--tertiary-color)' }}>{t.ticketsText}</p>
               </div>
             </motion.div>
           </div>
-          <div className="image-container">
+          <div className={`${isMobile ? "mt-4 w-full" : "w-1/2"}`}>
             <motion.img
-              src="/images/monolith_image_fullfull.png"
+              src="/images/human2.jpg"
               alt="Monolith"
               className="content-image"
               initial={{ opacity: 0, x: language === "ar" ? 400 : -400 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
+              style={{ maxWidth: isMobile ? "100%" : isTablet ? "80%" : "100%", height: "auto" }}
             />
           </div>
         </div>
@@ -319,11 +323,13 @@ const Slider = () => {
 
   return (
     <section
-      className={`slider transition-all duration-500 cursor-grab  ${
-        darkMode
-          ? "bg-gradient-to-br bg-gray-900 to-gray-800 text-white"
-          : "bg-gradient-to-br bg-gray-400 to-gray-100 text-black"
-      }`}
+      className={`slider transition-all duration-500 cursor-grab`}
+      style={{
+        backgroundColor: 'var(--secondary-color)',
+        color: 'var(--text-default-color)',
+        transition: 'var(--transition-default)',
+        padding: isMobile ? "1rem" : "2rem",
+      }}
       dir={language === "ar" ? "rtl" : "ltr"}
     >
       {/* Animated Background Layer */}
@@ -348,12 +354,12 @@ const Slider = () => {
         </motion.div>
       </AnimatePresence>
 
-      <div className="arrows">
+      <div className="arrows" style={{ marginTop: isMobile ? "1rem" : "2rem" }}>
         <ArrowButton direction="prev" onClick={prevSlide} />
         <ArrowButton direction="next" onClick={nextSlide} />
       </div>
 
-      <div className="bullets">
+      <div className="bullets" style={{ marginTop: isMobile ? "1rem" : "2rem" }}>
         {slides.map((_, index) => (
           <div
             key={index}
@@ -361,6 +367,7 @@ const Slider = () => {
             onClick={() => goToSlide(index)}
             role="button"
             aria-label={slides[index].title}
+            style={{ width: isMobile ? "8px" : "10px", height: isMobile ? "8px" : "10px" }}
           />
         ))}
       </div>

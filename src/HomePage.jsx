@@ -38,8 +38,8 @@ function HomePage() {
           <About />
         </section>
         <section id="services" aria-label={language === "ar" ? "الخدمات" : "Services"}>
-          <Technologies />
           <Services />
+          <Technologies />
         </section>
         <section id="projects" aria-label={language === "ar" ? "المشاريع" : "Projects"}>
           <Projects />

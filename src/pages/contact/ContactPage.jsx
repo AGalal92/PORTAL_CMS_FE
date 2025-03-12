@@ -80,26 +80,34 @@ function Contact() {
   return (
     <section
       id="contact"
-      className={`py-30 min-h-screen transition-all duration-500 ${
-        darkMode ? "bg-gray-900 text-white" : "bg-gray-300 text-black"
-      }`}
+      className="py-30 min-h-screen"
+      style={{
+        backgroundColor: 'var(--bg-color)',
+        color: 'var(--text-default-color)',
+        transition: 'var(--transition-default)',
+      }}
       dir={language === "ar" ? "rtl" : "ltr"}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Title */}
         <div className="mb-8">
-          <p className="text-xs uppercase font-light tracking-widest relative inline-block">
+          <p
+            className="text-xs uppercase font-light tracking-widest relative inline-block"
+            style={{ color: 'var(--text-muted-color)' }}
+          >
             {t.contactUs}
             <span
-              className={`absolute top-1/2 w-24 h-[2px] bg-yellow-500 ${
-                language === "ar" ? "right-20" : "left-20"
+              className={`absolute top-1/2 w-24 h-[2px] ${
+                language === "ar" ? "right-24" : "left-37"
               }`}
+              style={{ backgroundColor: 'var(--primary-color)' }}
             ></span>
           </p>
           <h2
             className={`text-3xl sm:text-4xl md:text-5xl font-extrabold ${
               language === "ar" ? "text-right" : "text-left"
-            } font-raleway ${darkMode ? "text-white" : "text-black"}`}
+            } font-raleway`}
+            style={{ color: 'var(--text-heading-color)' }}
           >
             {t.weWillReachYou}
           </h2>
@@ -112,13 +120,14 @@ function Contact() {
           transition={{ duration: 0.8 }}
           className="rounded-[20px] shadow-lg p-6"
           style={{
-            background: darkMode ? "rgba(255, 255, 255, 0.1)" : "rgba(255, 255, 255, 0.3)",
-            backdropFilter: "blur(15px)",
-            border: "1px solid rgba(255, 255, 255, 0.2)",
+            backgroundColor: 'var(--card-bg)',
+            borderRadius: 'var(--border-radius-md)',
+            boxShadow: 'var(--shadow-default)',
+            border: '1px solid var(--border-color)',
           }}
         >
           <form onSubmit={handleSubmit} className="space-y-6">
-            <div className={` ${isMobile ? "" : "grid-cols-2 grid"} gap-2`}>
+            <div className={`${isMobile ? "" : "grid-cols-2 grid"} gap-2`}>
               <FormField
                 label={t.formFields.name}
                 name="name"
@@ -166,11 +175,12 @@ function Contact() {
             <motion.button
               type="submit"
               disabled={loading}
-              className={`w-full py-3 rounded-full font-raleway text-sm md:text-base font-semibold transition-all duration-300 ${
-                darkMode
-                  ? "bg-yellow-500 text-black hover:bg-yellow-600"
-                  : "bg-yellow-500 text-black hover:bg-yellow-400"
-              }`}
+              className="w-full py-3 rounded-full font-raleway text-sm md:text-base font-semibold cursor-pointer"
+              style={{
+                backgroundColor: 'var(--primary-color)',
+                color: 'var(--text-default-color)',
+                transition: 'var(--transition-default)',
+              }}
               whileHover={{ scale: 1.01 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -220,7 +230,11 @@ const FormField = ({
       transition={{ duration: 0.8 }}
       className={`${fullWidth ? "col-span-2" : "col-span-1"}`}
     >
-      <label className="block text-xs sm:text-sm font-raleway mb-1" htmlFor={name}>
+      <label
+        className="block text-xs sm:text-sm font-raleway mb-1"
+        htmlFor={name}
+        style={{ color: 'var(--text-muted-color)' }}
+      >
         {label}
       </label>
       {multiline ? (
@@ -231,11 +245,14 @@ const FormField = ({
           value={value}
           onChange={handleChange}
           required
-          className={`w-full p-3 rounded-[10px] shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 transition-all duration-300 ${
-            darkMode
-              ? "bg-gray-800 text-white placeholder-gray-400"
-              : "bg-white text-black placeholder-gray-500"
-          }`}
+          className="w-full p-3 shadow-sm focus:outline-none"
+          style={{
+            backgroundColor: 'var(--card-bg)',
+            color: 'var(--text-default-color)',
+            borderRadius: 'var(--border-radius-sm)',
+            border: '1px solid var(--border-color)',
+            transition: 'var(--transition-default)',
+          }}
           placeholder={label}
         />
       ) : (
@@ -246,11 +263,14 @@ const FormField = ({
           value={value}
           onChange={handleChange}
           required
-          className={`w-full p-3 rounded-[10px] shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 transition-all duration-300 ${
-            darkMode
-              ? "bg-gray-800 text-white placeholder-gray-400"
-              : "bg-white text-black placeholder-gray-500"
-          }`}
+          className="w-full p-3 shadow-sm focus:outline-none"
+          style={{
+            backgroundColor: 'var(--card-bg)',
+            color: 'var(--text-default-color)',
+            borderRadius: 'var(--border-radius-sm)',
+            border: '1px solid var(--border-color)',
+            transition: 'var(--transition-default)',
+          }}
           placeholder={label}
         />
       )}

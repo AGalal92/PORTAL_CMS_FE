@@ -31,7 +31,7 @@ function ScrollToTop() {
     <>
       {isVisible && (
         <Fab
-          color="primary"
+          color='var(--text-heading-color)'
           onClick={scrollToTop}
           style={{
             position: "fixed",
@@ -40,7 +40,7 @@ function ScrollToTop() {
             zIndex: 1000,
           }}
         >
-          <KeyboardArrowUpIcon />
+          <KeyboardArrowUpIcon fontSize='large' style={{ color: 'var(--text-heading-color)' }} />
         </Fab>
       )}
     </>

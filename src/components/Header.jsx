@@ -92,109 +92,147 @@ function Header() {
     <>
       {/* Top Header */}
       <header
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-          isScrolled
-            ? darkMode
-              ? "backdrop-blur-md bg-gray-900/20 shadow-lg"
-              : "backdrop-blur-md bg-gray-100/20 shadow-lg"
-            : "bg-transparent"
-        }`}
-        dir={language === "ar" ? "rtl" : "ltr"}
+  className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+    isScrolled
+      ? darkMode
+        ? "backdrop-blur-md shadow-lg"
+        : "backdrop-blur-md shadow-lg"
+      : "bg-transparent"
+  }`}
+  style={{
+    backgroundColor: isScrolled
+      ? darkMode
+        ? "var(--bg-white-color)" // Use card background for dark mode
+        : "var(--bg-white-color)" // Use card background for light mode
+      : "transparent",
+    transition: "var(--transition-default)", // Use default transition from the theme
+  }}
+  dir={language === "ar" ? "rtl" : "ltr"}
+>
+  <div className="flex justify-between items-center px-4 py-2">
+    {/* Logo */}
+    <div className="w-40">
+      <Link to="/">
+        <img
+          src={darkMode ? "/images/logoDark.png" : "/images/logoLight.png"}
+          alt="Legion Logo"
+          loading="lazy"
+          className="w-full h-auto"
+        />
+      </Link>
+    </div>
+
+    {/* Horizontal Navigation (visible on desktop, hidden on mobile) */}
+    <nav className="hidden md:flex items-center gap-6">
+      {horizontalNavItems.map((item) => (
+        <Link
+          key={item.id}
+          to={item.path}
+          className={`text-xlg font-medium transition-all duration-300 ${
+            location.pathname === item.path
+              ? "font-bold"
+              : ""
+          }`}
+          style={{
+            color:
+              location.pathname === item.path
+                ? "var(--primary-color)" // Use primary color for active link
+                : darkMode
+                ? "var(--text-muted-color)" // Use muted text color for dark mode
+                : isScrolled ? "var(--text-heading-color)" : "var(--tertiary-color)", // Use primary color for light mode
+            transition: "var(--transition-default)", // Use default transition from the theme
+          }}
+        >
+          {item.label}
+        </Link>
+      ))}
+    </nav>
+
+    {/* Buttons */}
+    <div className="flex items-center gap-2">
+      {/* <motion.button
+        title="Toggle Dark Mode"
+        onClick={(e) => toggleDarkMode(e)}
+        className="p-2 rounded-full shadow-lg transition-all duration-300"
+        style={{
+          backgroundColor: "var(--bg-color)", // Use primary color for button background
+          color: "var(--text-default-color)", // Use default text color for button text
+          transition: "var(--transition-default)", // Use default transition from the theme
+        }}
+        whileTap={{ scale: 0.9 }}
       >
-        <div className="flex justify-between items-center px-4 py-2">
-          {/* Logo */}
-          <div className="w-40">
-            <Link to="/">
-              <img
-                src={darkMode ? "/images/logoDark.png" : "/images/logoLight.png"}
-                alt="Legion Logo"
-                loading="lazy"
-                className="w-full h-auto"
-              />
-            </Link>
-          </div>
+        {darkMode ? "🌞" : "🌙"}
+      </motion.button> */}
 
-          {/* Horizontal Navigation (visible on desktop, hidden on mobile) */}
-          <nav className="hidden md:flex items-center gap-6">
-            {horizontalNavItems.map((item) => (
-              <Link
-                key={item.id}
-                to={item.path}
-                className={`text-xlg font-medium transition-all duration-300 ${
-                  location.pathname === item.path
-                    ? "text-yellow-500 font-bold"
-                    : darkMode
-                    ? "text-gray-300 hover:text-yellow-500"
-                    : "text-gray-800 hover:text-yellow-500"
-                }`}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
+      <motion.button
+        title="Toggle Language"
+        onClick={toggleLanguage}
+        className="p-2 rounded-full shadow-lg transition-all duration-300"
+        style={{
+          backgroundColor: "var(--bg-color)", // Use primary color for button background
+          color: isScrolled ? "var(--text-heading-color)" : "var(--tertiary-color)", // Use default text color for button text
+          transition: "var(--transition-default)", // Use default transition from the theme
+        }}
+        whileTap={{ scale: 0.9 }}
+      >
+        {language === "en" ? "AR" : "EN"}
+      </motion.button>
 
-          {/* Buttons */}
-          <div className="flex items-center gap-2">
-            <motion.button
-              title="Toggle Dark Mode"
-              onClick={(e) => toggleDarkMode(e)}
-              className="p-2 bg-gray-700 text-white rounded-full shadow-lg transition-all duration-300"
-              whileTap={{ scale: 0.9 }}
-            >
-              {darkMode ? "🌞" : "🌙"}
-            </motion.button>
+      {isMobile && (
+        <motion.button
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="p-2 rounded-full shadow-lg transition-all duration-300"
+          style={{
+            backgroundColor: "var(--primary-color)", // Use primary color for button background
+            color: "var(--text-default-color)", // Use default text color for button text
+            transition: "var(--transition-default)", // Use default transition from the theme
+          }}
+          whileTap={{ scale: 0.9 }}
+        >
+          {menuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+        </motion.button>
+      )}
+    </div>
+  </div>
 
-            <motion.button
-              title="Toggle Language"
-              onClick={toggleLanguage}
-              className="p-2 bg-gray-700 text-white rounded-full shadow-lg transition-all duration-300"
-              whileTap={{ scale: 0.9 }}
-            >
-              {language === "en" ? "AR" : "EN"}
-            </motion.button>
-
-            {isMobile && (
-              <motion.button
-                onClick={() => setMenuOpen(!menuOpen)}
-                className="p-2 bg-gray-700 text-white rounded-full shadow-lg transition-all duration-300"
-                whileTap={{ scale: 0.9 }}
-              >
-                {menuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
-              </motion.button>
-            )}
-          </div>
-        </div>
-
-        {/* Horizontal Navigation for Mobile (shown when menu is open) */}
-        {isMobile && menuOpen && (
-          <motion.nav
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-            className={`flex flex-col items-center gap-4 py-4 ${
-              darkMode ? "bg-gray-900/90" : "bg-gray-100/90"
-            } backdrop-blur-md`}
-          >
-            {horizontalNavItems.map((item) => (
-              <Link
-                key={item.id}
-                to={item.path}
-                onClick={() => setMenuOpen(false)} // Close menu on click
-                className={`text-sm font-medium transition-all duration-300 ${
-                  location.pathname === item.path
-                    ? "text-yellow-500 font-bold"
-                    : darkMode
-                    ? "text-gray-300 hover:text-yellow-500"
-                    : "text-gray-800 hover:text-yellow-500"
-                }`}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </motion.nav>
-        )}
-      </header>
+  {/* Horizontal Navigation for Mobile (shown when menu is open) */}
+  {isMobile && menuOpen && (
+    <motion.nav
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.3 }}
+      className="flex flex-col items-center gap-4 py-4 backdrop-blur-md"
+      style={{
+        backgroundColor: darkMode ? "var(--card-bg)" : "var(--card-bg)", // Use card background for mobile menu
+      }}
+    >
+      {horizontalNavItems.map((item) => (
+        <Link
+          key={item.id}
+          to={item.path}
+          onClick={() => setMenuOpen(false)} // Close menu on click
+          className={`text-xlg font-medium transition-all duration-300 ${
+            location.pathname === item.path
+              ? "font-bold"
+              : ""
+          }`}
+          style={{
+            color:
+              location.pathname === item.path
+                ? "var(--primary-color)" // Use primary color for active link
+                : darkMode
+                ? "var(--text-muted-color)" // Use muted text color for dark mode
+                : "var(--text-default-color)", // Use default text color for light mode
+            transition: "var(--transition-default)", // Use default transition from the theme
+          }}
+        >
+          {item.label}
+        </Link>
+      ))}
+    </motion.nav>
+  )}
+</header>
 
       {/* Vertical Navigation (hidden on specified paths) */}
       
@@ -223,11 +261,32 @@ function Header() {
                 onClick={(e) => handleSmoothScroll(e, item.id)}
                 className={`flex items-center justify-center p-2 rounded-full cursor-pointer transition-all duration-300 ${
                   activeSection === item.id
-                    ? "bg-yellow-500 text-white shadow-md"
-                    : darkMode
-                    ? "text-gray-300 hover:bg-gray-700"
-                    : "text-gray-800 hover:bg-gray-200"
+                    ? "shadow-[var(--shadow-default)]" // Use default shadow for active state
+                    : ""
                 }`}
+                style={{
+                  backgroundColor:
+                    activeSection === item.id
+                      ? "var(--primary-color)" // Use primary color for active state
+                      : darkMode
+                      ? "transparent" // No background for inactive state in dark mode
+                      : "transparent", // No background for inactive state in light mode
+                  color:
+                    activeSection === item.id
+                      ? "var(--text-default-color)" // Use default text color for active state
+                      : darkMode
+                      ? "var(--text-muted-color)" // Use muted text color for dark mode
+                      : "var(--text-default-color)", // Use default text color for light mode
+                  transition: "var(--transition-default)", // Use default transition from the theme
+                  ":hover": {
+                    backgroundColor:
+                      activeSection !== item.id
+                        ? darkMode
+                          ? "var(--card-bg)" // Use card background for hover in dark mode
+                          : "var(--card-bg)" // Use card background for hover in light mode
+                        : "var(--primary-color)", // Keep primary color for active state
+                  },
+                }}
                 whileHover={{ scale: 1.2 }}
                 title={item.label}
               >

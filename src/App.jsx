@@ -6,11 +6,13 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import "./App.css";
 import AppContent from "./AppContent";
+import { applyTheme } from './theme/theme'; // Import the applyTheme function
 
 const ThemeContext = createContext();
 export function useTheme() {
   return useContext(ThemeContext);
 }
+
 const LanguageContext = createContext();
 export function useLanguage() {
   return useContext(LanguageContext);
@@ -26,19 +28,22 @@ function App() {
     return localStorage.getItem("language") || "en";
   });
 
+  // Sync dark mode and language with localStorage
   useEffect(() => {
     localStorage.setItem("darkMode", JSON.stringify(darkMode));
+    applyTheme(); // Apply theme whenever darkMode changes
   }, [darkMode]);
 
   useEffect(() => {
     localStorage.setItem("language", language);
   }, [language]);
 
+  // MUI theme configuration
   const theme = createTheme({
     palette: {
       mode: darkMode ? "dark" : "light",
-      primary: { main: "#0D47A1" },
-      background: { default: darkMode ? "#121212" : "#ffffff" },
+      primary: { main: "#eab308" }, // Match your theme.js primary color
+      background: { default: darkMode ? "#111827" : "#d1d5db" }, // Match theme.js background colors
     },
   });
 
@@ -60,9 +65,12 @@ function App() {
   return (
     <HelmetProvider>
       <div
-        className={`${darkMode ? "dark bg-black text-white" : "bg-white text-black"} transition-colors duration-300 ${
-          language === "ar" ? "rtl" : "ltr"
-        }`}
+        className={`${language === "ar" ? "rtl" : "ltr"}`}
+        style={{
+          backgroundColor: 'var(--bg-color)', // Use theme variable
+          color: 'var(--text-color)', // Use theme variable
+          transition: 'var(--transition-default)', // Use theme transition
+        }}
       >
         <ThemeContext.Provider value={{ darkMode, toggleDarkMode }}>
           <LanguageContext.Provider value={{ language, toggleLanguage }}>

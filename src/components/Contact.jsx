@@ -33,72 +33,70 @@ function Contact() {
 
   return (
     <section
-      id="contact"
-      className={`py-20 flex flex-col justify-center items-center transition-all duration-500 ${
-        darkMode ? "bg-gray-900 text-white" : "bg-gray-300 text-black"
-      }`} // Gradient background
-      dir={language === "ar" ? "rtl" : "ltr"}
-     
-    >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 50 }}
-          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-          transition={{ duration: 0.8 }}
-          className="space-y-8 backdrop-blur-sm bg-opacity-30 rounded-[20px] p-8 shadow-lg"
-          style={{
-            background: darkMode ? "rgba(255, 255, 255, 0.1)" : "rgba(255, 255, 255, 0.3)",
-            border: "1px solid rgba(255, 255, 255, 0.2)",
-          }}
-        >
-          {/* Title */}
-          <div className="mb-8  ">
-            {/* <p className="text-xs uppercase font-light tracking-widest relative inline-block">
-              {t.contactUs}
-              <span
-                className={`absolute top-1/2 w-24 h-[2px] bg-yellow-500 ${
-                  language === "ar" ? "right-20" : "left-20"
-                }`}
-              ></span>
-            </p> */}
-            <h2
-              className={`mt-4 text-4xl sm:text-5xl md:text-6xl font-extrabold font-raleway ${
-                darkMode ? "text-yellow-400" : "text-yellow-400"
-              }`}
-            >
-              {t.letsGetStarted}
-            </h2>
-          </div>
-
-          {/* Description */}
-          <p
-            className={`text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed ${
-              darkMode ? "text-gray-300" : "text-gray-700"
-            }`}
+    id="contact"
+    className="py-10"
+    style={{
+      backgroundColor: 'var(--bg-white-color)',
+      color: 'var(--text-default-color)',
+      transition: 'var(--transition-default)',
+    }}
+    dir={language === "ar" ? "rtl" : "ltr"}
+  >
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <motion.div
+        ref={ref}
+        initial={{ opacity: 0, y: 50 }}
+        animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+        transition={{ duration: 0.8 }}
+        className="space-y-8 backdrop-blur-sm bg-opacity-30 p-8"
+        style={{
+          background:  'var(--card-bg)',
+          border: `var(--border-color)`, // Using border color from the theme
+          borderRadius: 'var(--border-radius-md)', // Using the large border radius from the theme
+          boxShadow: 'var(--shadow-default)', // Using the default shadow from the theme
+        }}
+      >
+        {/* Title */}
+        <div className="mb-8">
+          <h2
+            className={`mt-4 text-4xl sm:text-5xl md:text-6xl font-extrabold `}
+            style={{ color: 'var(--text-heading-color)' }}
+          >
+            {t.letsGetStarted}
+          </h2>
+        </div>
+        <div className="mb-8">
+          <h5
+            className={`mt-4 text-lg sm:text-2xl md:text-3xl font-medium `}
+            style={{ color: 'var(--primary-color)' }}
           >
             {t.description}
-          </p>
+          </h5>
+        </div>
+  
+     
+       
+  
+        {/* Schedule a Call Button */}
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <Link to="/contact">
+            <motion.button
+              className={`px-8 py-3 cursor-pointer rounded-full  text-lg font-semibold transition-all duration-300`}
+              style={{
+                backgroundColor: 'var(--primary-color)',
+                color: 'var(--tertiary-color)',
+                borderRadius: 'var(--border-radius-small)',
+                boxShadow: 'var(--shadow-hover)',
 
-          {/* Schedule a Call Button */}
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-            <Link to="/contact">
-              <motion.button
-                className={`px-8 py-3 rounded-full font-raleway text-lg font-semibold transition-all duration-300 ${
-                  darkMode
-                    ? "bg-yellow-500 text-black hover:bg-yellow-600"
-                    : "bg-yellow-500 text-black hover:bg-yellow-400"
-                }`}
-              >
-                {t.scheduleCall}
-              </motion.button>
-            </Link>
-          </motion.div>
-
-         
+              }}
+            >
+              {t.scheduleCall}
+            </motion.button>
+          </Link>
         </motion.div>
-      </div>
-    </section>
+      </motion.div>
+    </div>
+  </section>
   );
 }
 

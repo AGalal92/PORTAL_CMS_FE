@@ -19,6 +19,7 @@ const translations = {
       { id: 1, name: "Sphinx Platform", image: "/images/sphinxLogin.png", category: "web" },
       { id: 2, name: "EGAC Platform", image: "/images/EgacPortfolio.png", category: "portfolio" },
       { id: 3, name: "Brainy Battalion Platform", image: "/images/brainy1.png", category: "portfolio" },
+      
       // Add more projects here
     ],
   },
@@ -58,30 +59,34 @@ function Projects() {
   return (
     <section
       id="projects"
-      className={`min-h-screen flex flex-col justify-center items-center transition-all duration-500 ${
-        darkMode ? "bg-gray-900 text-white" : "bg-gray-300 text-black"
-      } `}
+      className="py-20 min-h-screen"
+      style={{
+        backgroundColor: 'var(--bg-color)',
+        color: 'var(--text-default-color)',
+        transition: 'var(--transition-default)',
+      }}
       dir={language === "ar" ? "rtl" : "ltr"}
     >
-      <div
-        className={` mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-left ${
-          isMobile ? "mt-26 mb-10" : "" // Add margin-top only on mobile
-        }`}
-      >
+      <div className={`${language === "ar" ? "rtl" : "ltr"} container mx-auto px-4 sm:px-6 lg:px-8`}>
         {/* Title */}
-        <div className={`mb-8 ${language === "ar" ? "text-right" : "text-left"}`}>
-          <p className="text-xs uppercase font-light tracking-widest relative inline-block">
+        <div className="mb-8">
+        <p
+            className={`${language === "ar" ? "rtl" : "ltr"} text-xs uppercase font-light tracking-widest relative inline-block`}
+            style={{ color: 'var(--text-muted-color)' }}
+          >      
             {t.projects}
             <span
-              className={`absolute top-1/2 w-24 h-[2px] bg-yellow-500 ${
-                language === "ar" ? "right-20" : "left-20"
+              className={`absolute top-1/2 w-24 h-[2px] ${
+                language === "ar" ? "right-22" : "left-27"
               }`}
+              style={{ backgroundColor: 'var(--primary-color)' }}
             ></span>
           </p>
           <h2
-            className={`text-3xl sm:text-4xl md:text-5xl font-extrabold font-raleway ${
-              darkMode ? "text-white" : "text-black"
-            }`}
+            className={`text-3xl sm:text-4xl md:text-5xl font-extrabold ${
+              language === "ar" ? "text-right" : "text-left"
+            } font-raleway`}
+            style={{ color: 'var(--text-heading-color)' }}
           >
             {t.checkOurProjects}
           </h2>
@@ -95,10 +100,10 @@ function Projects() {
               onClick={() => setSelectedCategory(category.id)}
               className={`px-4 py-2 rounded-full font-raleway text-sm md:text-base transition-all duration-300 ${
                 selectedCategory === category.id
-                  ? "bg-yellow-500 text-white shadow-md"
+                  ? "bg-[var(--primary-color)] text-[var(--text-default-color)] shadow-[var(--shadow-default)]"
                   : darkMode
-                  ? "bg-gray-700 text-gray-300 hover:bg-gray-600"
-                  : "bg-gray-200 text-gray-800 hover:bg-gray-300"
+                  ? "bg-[var(--card-bg)] text-[var(--text-muted-color)] hover:bg-[var(--overlay-bg)]"
+                  : "bg-[var(--card-bg)] text-[var(--text-default-color)] hover:bg-[var(--overlay-bg)]"
               }`}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -109,7 +114,7 @@ function Projects() {
         </div>
 
         {/* Gallery Layout */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full max-w-6xl">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {filteredProjects.map((project) => (
             <ProjectCard
               key={project.id}
@@ -136,38 +141,54 @@ const ProjectCard = ({ project, darkMode, isMobile, isTablet }) => {
 
   return (
     <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 50 }}
-      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-      transition={{ duration: 0.8 }}
-      className="relative group rounded-[20px] shadow-lg overflow-hidden"
-    >
-      <img
-        src={project.image}
-        alt={project.name}
-        width={width}
-        height={height}
-        className="rounded-[20px] object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
-        loading="lazy"
-      />
-      {/* Hover Overlay */}
+  ref={ref}
+  initial={{ opacity: 0, y: 50 }}
+  animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+  transition={{ duration: 0.8 }}
+  className="relative group overflow-hidden"
+  style={{
+    borderRadius: 'var(--border-radius-md)',
+    boxShadow: 'var(--shadow-default)',
+  }}
+>
+  <img
+    src={project.image}
+    alt={project.name}
+    width={width}
+    height={height}
+    className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
+    style={{
+      borderRadius: 'var(--border-radius-md)',
+    }}
+    loading="lazy"
+  />
+  {/* Hover Overlay */}
+  <motion.div
+    className="absolute inset-0 backdrop-blur-sm flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+    style={{
+      backgroundColor: 'var(--overlay-bg)',
+    }}
+  >
+    <h3 className="text-sm sm:text-lg md:text-xl font-semibold font-raleway mb-2" style={{ color: 'var(--primary-color)' }}>
+      {project.name}
+    </h3>
+    <a href={`/projects/${project.id}`} className="mt-2">
       <motion.div
-        className= " absolute inset-0 bg-black/60 backdrop-blur-sm flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        className="p-2 rounded-full shadow-lg cursor-pointer"
+        style={{
+          backgroundColor: 'var(--primary-color)',
+          color: 'var(--text-default-color)',
+          borderRadius: 'var(--border-radius-small)',
+          boxShadow: 'var(--shadow-hover)',
+        }}
+        whileHover={{ scale: 1.2 }}
+        transition={{ duration: 0.3 }}
       >
-        <h3 className="text-white text-sm sm:text-lg md:text-xl font-semibold font-raleway mb-2">
-          {project.name}
-        </h3>
-        <a href={`/projects/${project.id}`} className="mt-2">
-          <motion.div
-            className="bg-yellow-500 text-black p-2 rounded-full shadow-lg cursor-pointer"
-            whileHover={{ scale: 1.2 }}
-            transition={{ duration: 0.3 }}
-          >
-            <FiExternalLink size={20} />
-          </motion.div>
-        </a>
+        <FiExternalLink size={20} />
       </motion.div>
-    </motion.div>
+    </a>
+  </motion.div>
+</motion.div>
   );
 };
 
