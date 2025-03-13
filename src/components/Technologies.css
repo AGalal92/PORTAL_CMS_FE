@@ -1,5 +1,7 @@
+
 .technologies_area {
   padding: 40px 0; /* Reduced padding to match Services section */
+  background-image: url(../images/video-bg.jpg);
 }
 
 .container {

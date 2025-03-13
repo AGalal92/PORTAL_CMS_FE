@@ -17,7 +17,7 @@ export const theme = {
 
     // Backgrounds
     background: {
-      light: '#f5faff', 
+      light: '#ffffff', 
       dark: '#111827',  
     },
 

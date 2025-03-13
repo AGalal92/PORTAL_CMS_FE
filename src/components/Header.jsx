@@ -76,6 +76,7 @@ function Header() {
 
   // New horizontal nav items with routes
   const horizontalNavItems = [
+    { id: "home", path: "/#home", label: language === "en" ? "Home" : "الرئيسية" },
     { id: "about-us", path: "/about-us", label: language === "en" ? "About Us" : "من نحن" },
     { id: "projects", path: "/projects", label: language === "en" ? "Projects" : "المشاريع" },
     { id: "services", path: "/services", label: language === "en" ? "Services" : "الخدمات" },
@@ -236,7 +237,7 @@ function Header() {
 
       {/* Vertical Navigation (hidden on specified paths) */}
       
-      {   activeSection !== "home" &&
+      {/* {   activeSection !== "home" &&
       (
       <AnimatePresence>
         {shouldShowVerticalNav && (menuOpen || !isMobile) && (
@@ -298,7 +299,7 @@ function Header() {
           </motion.nav>
         )}
       </AnimatePresence>
-      )}
+      )} */}
     </>
   );
 }
