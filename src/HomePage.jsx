@@ -10,6 +10,7 @@ import Team from "./components/Team";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import Technologies from "./components/Technologies";
+import TeamProcess from "./components/TeamProcess";
 import SmartSlider from "./components/SmartSlider";
 
 function HomePage() {
@@ -39,10 +40,13 @@ function HomePage() {
         </section>
         <section id="services" aria-label={language === "ar" ? "الخدمات" : "Services"}>
           <Services />
-          <Technologies />
         </section>
         <section id="projects" aria-label={language === "ar" ? "المشاريع" : "Projects"}>
           <Projects />
+        </section>
+          <section id="team-process" aria-label={language === "ar" ? "عملية الفريق" : "Team Process"}>
+          <TeamProcess />
+          <Technologies />
         </section>
         {/* <section id="team" aria-label={language === "ar" ? "الفريق" : "Team"}>
           <Team />

@@ -1,11 +1,10 @@
 
 .technologies_area {
   padding: 40px 0; /* Reduced padding to match Services section */
-  background-image: url(../images/video-bg.jpg);
 }
 
 .container {
-  max-width: 1400px;
+  max-width: 1500px;
   margin: 0 auto;
   padding: 0 20px;
 }
@@ -18,6 +17,7 @@
   white-space: nowrap;
   overflow: hidden;
   margin-bottom: 20px;
+  padding:4px;
   position: relative;
   /* Apply gradient mask for blurry fade effect on left and right */
   -webkit-mask-image: linear-gradient(

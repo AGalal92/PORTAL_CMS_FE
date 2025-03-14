@@ -53,8 +53,8 @@ function About() {
       <div className={`${language === "ar" ? "rtl" : "ltr"} container mx-auto px-4 sm:px-6 lg:px-8`}>
         <div className="mb-8">
           <p
-            className={`${language === "ar" ? "rtl" : "ltr"} text-xs uppercase font-bold  tracking-widest relative inline-block`}
-            style={{ color: 'var(--text-words-color)' }}
+            className={`${language === "ar" ? "rtl" : "ltr"} text-xs uppercase font-extrabold  tracking-widest relative inline-block`}
+            style={{ color: 'var(--text-muted-color)' }}
           >
             {t.aboutUs}
             <span
@@ -118,7 +118,7 @@ const TextContent = ({ title1, text1, title2, text2, darkMode, isMobile, isTable
       }}
     >
       <h3
-        style={{ color: 'var(--text-subheading-color)' }}
+        style={{ color: 'var(--text-heading-color)' }}
         className="text-lg sm:text-xl md:text-2xl font-semibold font-raleway mb-2"
       >
         | {title1}
@@ -127,7 +127,7 @@ const TextContent = ({ title1, text1, title2, text2, darkMode, isMobile, isTable
         {text1}
       </p>
       <h3
-        style={{ color: 'var(--text-subheading-color)' }}
+        style={{ color: 'var(--text-heading-color)' }}
         className="text-lg sm:text-xl md:text-2xl font-semibold font-raleway mb-2"
       >
         | {title2}

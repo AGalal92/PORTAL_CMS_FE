@@ -3,6 +3,8 @@ import { useTheme, useLanguage } from "../../App";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useScreenSize } from "../../hooks/useScreenSize";
+import Team from "../../components/Team";
+import TeamProcess from "../../components/TeamProcess";
 
 const translations = {
   en: {
@@ -40,9 +42,10 @@ function About() {
   const t = translations[language];
 
   return (
+    <>  
     <section
       id="about"
-      className="py-20"
+      className="py-30"
       style={{
         backgroundColor: 'var(--bg-color)',
         color: 'var(--text-default-color)',
@@ -50,123 +53,128 @@ function About() {
       }}
       dir={language === "ar" ? "rtl" : "ltr"}
     >
-      <div className={`${language === "ar" ? "rtl" : "ltr"} container mx-auto px-4 sm:px-6 lg:px-8`}>
-        <div className="mb-8">
-          <p
-            className={`${language === "ar" ? "rtl" : "ltr"} text-xs uppercase font-light tracking-widest relative inline-block`}
-            style={{ color: 'var(--text-muted-color)' }}
-          >
-            {t.aboutUs}
-            <span
-              className={`absolute top-1/2 w-24 h-[2px] ${
-                language === "ar" ? "right-22" : "left-27"
-              }`}
-              style={{ backgroundColor: 'var(--primary-color)' }}
-            ></span>
-          </p>
-          <h2
-            className={`text-3xl sm:text-4xl md:text-5xl font-extrabold ${
-              language === "ar" ? "text-right" : "text-left"
-            } font-raleway`}
-            style={{ color: 'var(--text-heading-color)' }}
-          >
-            {t.whoWeAre}
-          </h2>
-        </div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Left Side: Text Content */}
-          <TextContent
-            title1={t.weAreLegion}
-            text1={t.weAreLegionText[0]}
-            title2={t.ourMission}
-            text2={t.ourMissionText[0]}
-            darkMode={darkMode}
-            isMobile={isMobile}
-            isTablet={isTablet}
-            language={language}
-          />
-          {/* Right Side: Single Cover Image */}
-          {!isMobile && (
-            <CoverImage
-              src="/images/human1.jpg"
-              alt={language === "en" ? "About Legion" : "عن ليجيون"}
-              isMobile={isMobile}
-              isTablet={isTablet}
-            />
-          )}
-        </div>
-      </div>
+       <div className={`${language === "ar" ? "rtl" : "ltr"} container mx-auto px-4 sm:px-6 lg:px-8`}>
+             <div className="mb-8">
+               <p
+                 className={`${language === "ar" ? "rtl" : "ltr"} text-xs uppercase font-extrabold  tracking-widest relative inline-block`}
+                 style={{ color: 'var(--text-muted-color)' }}
+               >
+                 {t.aboutUs}
+                 <span
+                   className={`absolute top-1/2 w-24 h-[2px] ${
+                     language === "ar" ? "right-22" : "left-27"
+                   }`}
+                   style={{ backgroundColor: 'var(--primary-color)' }}
+                 ></span>
+               </p>
+               <h2
+                 className={`text-3xl sm:text-4xl md:text-5xl font-extrabold ${
+                   language === "ar" ? "text-right" : "text-left"
+                 } font-raleway`}
+                 style={{ color: 'var(--text-heading-color)' }}
+               >
+                 {t.whoWeAre}
+               </h2>
+             </div>
+             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+               {/* Left Side: Text Content */}
+               <TextContent
+                 title1={t.weAreLegion}
+                 text1={t.weAreLegionText[0]}
+                 title2={t.ourMission}
+                 text2={t.ourMissionText[0]}
+                 darkMode={darkMode}
+                 isMobile={isMobile}
+                 isTablet={isTablet}
+                 language={language}
+               />
+               {/* Right Side: Single Cover Image */}
+               {!isMobile && (
+                 <CoverImage
+                   src="/images/human1.jpg"
+                   alt={language === "en" ? "About Legion" : "عن ليجيون"}
+                   isMobile={isMobile}
+                   isTablet={isTablet}
+                 />
+               )}
+             </div>
+           </div>
     </section>
-  );
-}
-
-const TextContent = ({ title1, text1, title2, text2, darkMode, isMobile, isTablet, language }) => {
-  const { ref, inView } = useInView({ triggerOnce: true, threshold: isMobile ? 0.1 : 0.3 });
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 50 }}
-      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-      transition={{ duration: 0.8 }}
-      className="flex flex-col p-4"
-      style={{
-        backgroundColor: 'var(--card-bg)',
-        color: 'var(--text-default-color)',
-        borderRadius: 'var(--border-radius-md)',
-        boxShadow: 'var(--shadow-default)',
-      }}
-    >
-      <h3
-        style={{ color: 'var(--text-subheading-color)' }}
-        className="text-lg sm:text-xl md:text-2xl font-semibold font-raleway mb-2"
-      >
-        | {title1}
-      </h3>
-      <p style={{ color: 'var(--text-muted-color)' }} className="text-sm sm:text-base md:text-lg mb-4">
-        {text1}
-      </p>
-      <h3
-        style={{ color: 'var(--text-subheading-color)' }}
-        className="text-lg sm:text-xl md:text-2xl font-semibold font-raleway mb-2"
-      >
-        | {title2}
-      </h3>
-      <p style={{ color: 'var(--text-muted-color)' }} className="text-sm sm:text-base md:text-lg">
-        {text2}
-      </p>
-    </motion.div>
-  );
-};
-
-const CoverImage = ({ src, alt, isMobile, isTablet }) => {
-  const { ref, inView } = useInView({ triggerOnce: true, threshold: isMobile ? 0.1 : 0.3 });
-  const width = isTablet ? 400 : 800; // Adjust width for tablet and desktop
-  const height = isTablet ? 300 : 700; // Adjust height for tablet and desktop
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 50 }}
-      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-      transition={{ duration: 0.8 }}
-      className="group h-full"
-    >
-      <img
-        src={src}
-        alt={alt}
-        width={width}
-        height={height}
-        style={{
-          borderRadius: 'var(--border-radius-md)',
-          marginTop: -120,
-          objectFit: 'cover', // Ensures the image covers the area
-        }}
-        className="shadow-[var(--shadow-default)] transition-transform duration-300 group-hover:scale-101"
-        loading="lazy"
-      />
-    </motion.div>
-  );
-};
-
-export default About;
+        <TeamProcess />
+        <Team />
+         </>
+       );
+     }
+     
+     const TextContent = ({ title1, text1, title2, text2, darkMode, isMobile, isTablet, language }) => {
+       const { ref, inView } = useInView({ triggerOnce: true, threshold: isMobile ? 0.1 : 0.3 });
+     
+       return (
+         <motion.div
+           ref={ref}
+           initial={{ opacity: 0, y: 50 }}
+           animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+           transition={{ duration: 0.8 }}
+           className="flex flex-col p-4"
+           style={{
+             color: 'var(--text-default-color)',
+             borderRadius: 'var(--border-radius-md)',
+             borderLeft: '15px solid var(--tertiary-color)',
+             borderBottom: '15px solid var(--tertiary-color)',
+           }}
+         >
+           <h3
+             style={{ color: 'var(--text-heading-color)' }}
+             className="text-lg sm:text-xl md:text-2xl font-semibold font-raleway mb-2"
+           >
+             | {title1}
+           </h3>
+           <p style={{ color: 'var(--text-muted-color)' }} className="text-sm sm:text-base md:text-lg">
+             {text1}
+           </p>
+           <h3
+             style={{ color: 'var(--text-heading-color)' }}
+             className="text-lg sm:text-xl md:text-2xl font-semibold font-raleway mb-2"
+           >
+             | {title2}
+           </h3>
+           <p style={{ color: 'var(--text-muted-color)' }} className="text-sm sm:text-base md:text-lg">
+             {text2}
+           </p>
+         </motion.div>
+       );
+     };
+     
+     const CoverImage = ({ src, alt, isMobile, isTablet }) => {
+       const { ref, inView } = useInView({ triggerOnce: true, threshold: isMobile ? 0.1 : 0.3 });
+       const width = isTablet ? 400 : 800; // Adjust width for tablet and desktop
+       const height = isTablet ? 300 : 700; // Adjust height for tablet and desktop
+     
+       return (
+         <motion.div
+           ref={ref}
+           initial={{ opacity: 0, y: 50 }}
+           animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+           transition={{ duration: 0.8 }}
+           className="group h-full"
+         >
+           <img
+             src={src}
+             alt={alt}
+             width={width}
+             height={height}
+             style={{
+               borderRadius: 'var(--border-radius-md)',
+               borderTop: '10px solid var(--tertiary-color)',
+               borderRight: '10px solid var(--tertiary-color)',
+               marginTop: -120,
+               objectFit: 'cover', // Ensures the image covers the area
+             }}
+             className="shadow-[var(--shadow-default)] transition-transform duration-300 group-hover:scale-101"
+             loading="lazy"
+           />
+         </motion.div>
+       );
+     };
+     
+     export default About;

@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FiMenu, FiX } from "react-icons/fi";
 import { Home, Info, Build, Work, Group, Mail } from "@mui/icons-material";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import LanguageIcon from '@mui/icons-material/Language';
 
 function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -14,6 +15,10 @@ function Header() {
   const [isMobile, setIsMobile] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+
+  // Define paths where header should have a black background
+  const blackBackgroundPaths = ["/about-us", "/projects", "/services", "/contact"];
+  const shouldHaveBlackBackground = blackBackgroundPaths.includes(location.pathname);
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -84,7 +89,7 @@ function Header() {
   ];
 
   // List of paths where vertical nav should be hidden
-  const hideVerticalNavPaths = ["/projects", "/about-us", "/services", "/contact", "/projects/1", "/projects/2","/projects/3","/projects/4",];
+  const hideVerticalNavPaths = ["/projects", "/about-us", "/services", "/contact", "/projects/1", "/projects/2", "/projects/3", "/projects/4"];
 
   // Check if current path is in the hide list
   const shouldShowVerticalNav = !hideVerticalNavPaths.includes(location.pathname);
@@ -93,213 +98,155 @@ function Header() {
     <>
       {/* Top Header */}
       <header
-  className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-    isScrolled
-      ? darkMode
-        ? "backdrop-blur-md shadow-lg"
-        : "backdrop-blur-md shadow-lg"
-      : "bg-transparent"
-  }`}
-  style={{
-    backgroundColor: isScrolled
-      ? darkMode
-        ? "var(--bg-white-color)" // Use card background for dark mode
-        : "var(--bg-white-color)" // Use card background for light mode
-      : "transparent",
-    transition: "var(--transition-default)", // Use default transition from the theme
-  }}
-  dir={language === "ar" ? "rtl" : "ltr"}
->
-  <div className="flex justify-between items-center px-4 py-2">
-    {/* Logo */}
-    <div className="w-40">
-      <Link to="/">
-        <img
-          src={darkMode ? "/images/logoDark.png" : "/images/logoLight.png"}
-          alt="Legion Logo"
-          loading="lazy"
-          className="w-full h-auto"
-        />
-      </Link>
-    </div>
-
-    {/* Horizontal Navigation (visible on desktop, hidden on mobile) */}
-    <nav className="hidden md:flex items-center gap-6">
-      {horizontalNavItems.map((item) => (
-        <Link
-          key={item.id}
-          to={item.path}
-          className={`text-xlg font-medium transition-all duration-300 ${
-            location.pathname === item.path
-              ? "font-bold"
-              : ""
-          }`}
-          style={{
-            color:
-              location.pathname === item.path
-                ? "var(--primary-color)" // Use primary color for active link
-                : darkMode
-                ? "var(--text-muted-color)" // Use muted text color for dark mode
-                : isScrolled ? "var(--text-heading-color)" : "var(--tertiary-color)", // Use primary color for light mode
-            transition: "var(--transition-default)", // Use default transition from the theme
-          }}
-        >
-          {item.label}
-        </Link>
-      ))}
-    </nav>
-
-    {/* Buttons */}
-    <div className="flex items-center gap-2">
-      {/* <motion.button
-        title="Toggle Dark Mode"
-        onClick={(e) => toggleDarkMode(e)}
-        className="p-2 rounded-full shadow-lg transition-all duration-300"
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+          isScrolled || shouldHaveBlackBackground
+            ? darkMode
+              ? 'bg-white'
+              : 'bg-white'
+            : "bg-transparent"
+        }`}
         style={{
-          backgroundColor: "var(--bg-color)", // Use primary color for button background
-          color: "var(--text-default-color)", // Use default text color for button text
+          backgroundColor:
+            shouldHaveBlackBackground
+              ? "#fff" // Black background for specified paths
+              : isScrolled
+              ? darkMode
+                ? "var(--bg-white-color)" // Use card background for dark mode
+                : "var(--bg-white-color)" // Use card background for light mode
+              : "transparent",
           transition: "var(--transition-default)", // Use default transition from the theme
         }}
-        whileTap={{ scale: 0.9 }}
+        dir={language === "ar" ? "rtl" : "ltr"}
       >
-        {darkMode ? "🌞" : "🌙"}
-      </motion.button> */}
+        <div className="flex justify-between items-center px-4 py-2">
+          {/* Logo */}
+          <div className="w-60">
+            <Link to="/">
+              <img
+                src={
+                  shouldHaveBlackBackground || isScrolled
+                    ? "/images/logoLight.png" // Use logoLight.png for black background or when scrolled
+                    : "/images/logoDark.png"
+                }
+                alt="Legion Logo"
+                loading="lazy"
+                className="w-full h-auto"
+              />
+            </Link>
+          </div>
 
-      <motion.button
-        title="Toggle Language"
-        onClick={toggleLanguage}
-        className="p-2 rounded-full shadow-lg transition-all duration-300"
-        style={{
-          backgroundColor: "var(--bg-color)", // Use primary color for button background
-          color: isScrolled ? "var(--text-heading-color)" : "var(--tertiary-color)", // Use default text color for button text
-          transition: "var(--transition-default)", // Use default transition from the theme
-        }}
-        whileTap={{ scale: 0.9 }}
-      >
-        {language === "en" ? "AR" : "EN"}
-      </motion.button>
-
-      {isMobile && (
-        <motion.button
-          onClick={() => setMenuOpen(!menuOpen)}
-          className="p-2 rounded-full shadow-lg transition-all duration-300"
-          style={{
-            backgroundColor: "var(--primary-color)", // Use primary color for button background
-            color: "var(--text-default-color)", // Use default text color for button text
-            transition: "var(--transition-default)", // Use default transition from the theme
-          }}
-          whileTap={{ scale: 0.9 }}
-        >
-          {menuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
-        </motion.button>
-      )}
-    </div>
-  </div>
-
-  {/* Horizontal Navigation for Mobile (shown when menu is open) */}
-  {isMobile && menuOpen && (
-    <motion.nav
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.3 }}
-      className="flex flex-col items-center gap-4 py-4 backdrop-blur-md"
-      style={{
-        backgroundColor: darkMode ? "var(--card-bg)" : "var(--card-bg)", // Use card background for mobile menu
-      }}
-    >
-      {horizontalNavItems.map((item) => (
-        <Link
-          key={item.id}
-          to={item.path}
-          onClick={() => setMenuOpen(false)} // Close menu on click
-          className={`text-xlg font-medium transition-all duration-300 ${
-            location.pathname === item.path
-              ? "font-bold"
-              : ""
-          }`}
-          style={{
-            color:
-              location.pathname === item.path
-                ? "var(--primary-color)" // Use primary color for active link
-                : darkMode
-                ? "var(--text-muted-color)" // Use muted text color for dark mode
-                : "var(--text-default-color)", // Use default text color for light mode
-            transition: "var(--transition-default)", // Use default transition from the theme
-          }}
-        >
-          {item.label}
-        </Link>
-      ))}
-    </motion.nav>
-  )}
-</header>
-
-      {/* Vertical Navigation (hidden on specified paths) */}
-      
-      {/* {   activeSection !== "home" &&
-      (
-      <AnimatePresence>
-        {shouldShowVerticalNav && (menuOpen || !isMobile) && (
-          <motion.nav
-            initial={{ x: language === "ar" ? 250 : -250 }}
-            animate={{ x: 0 }}
-            exit={{ x: language === "ar" ? 250 : -250 }}
-            transition={{ duration: 0.3 }}
-            className={`fixed ${language === "ar" ? "right-0" : "left-0"} top-1/2 transform -translate-y-1/2 z-40 flex flex-col gap-4 px-4 py-6 w-20 ${
-              activeSection === "home"
-                ? darkMode
-                  ? "bg-gray-900/90 text-white backdrop-blur-md shadow-lg rounded-r-lg"
-                  : "bg-gray-100/90 text-black backdrop-blur-md shadow-lg rounded-r-lg"
-                : ""
-            }`}
-            dir={language === "ar" ? "rtl" : "ltr"}
-          >
-            {verticalNavItems.map((item) => (
-              <motion.a
+          {/* Horizontal Navigation (visible on desktop, hidden on mobile) */}
+          <nav className="hidden md:flex items-center gap-6">
+            {horizontalNavItems.map((item) => (
+              <Link
                 key={item.id}
-                href={`/#${item.id}`}
-                onClick={(e) => handleSmoothScroll(e, item.id)}
-                className={`flex items-center justify-center p-2 rounded-full cursor-pointer transition-all duration-300 ${
-                  activeSection === item.id
-                    ? "shadow-[var(--shadow-default)]" // Use default shadow for active state
-                    : ""
+                to={item.path}
+                className={`text-xlg font-medium transition-all duration-300 ${
+                  location.pathname === item.path ? "font-bold" : ""
                 }`}
                 style={{
-                  backgroundColor:
-                    activeSection === item.id
-                      ? "var(--primary-color)" // Use primary color for active state
-                      : darkMode
-                      ? "transparent" // No background for inactive state in dark mode
-                      : "transparent", // No background for inactive state in light mode
                   color:
-                    activeSection === item.id
-                      ? "var(--text-default-color)" // Use default text color for active state
+                    location.pathname === item.path
+                      ? "var(--primary-color)" // Use primary color for active link
+                      : darkMode
+                      ? "var(--text-muted-color)" // Use muted text color for dark mode
+                      : isScrolled || shouldHaveBlackBackground
+                      ? "var(--text-heading-color)" // Use heading color when scrolled or black background
+                      : "var(--tertiary-color)", // Use tertiary color for light mode
+                  transition: "var(--transition-default)", // Use default transition from the theme
+                }}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Buttons */}
+          <div className="flex items-center gap-2">
+            <motion.button
+              title={language === "en" ? "العربية" : "English"}
+              onClick={toggleLanguage}
+              className="p-2 rounded-full transition-all duration-300 cursor-pointer"
+              style={{
+                color:
+                  isScrolled || shouldHaveBlackBackground
+                    ? "var(--text-heading-color)"
+                    : "var(--secondary-color)", // Adjust color based on background
+                transition: "var(--transition-default)", // Use default transition from the theme
+              }}
+              whileTap={{ scale: 0.9 }}
+            >
+              <h3
+                className="text-xlg font-medium"
+                style={{ color: "var(--secondary-color)" }}
+              >
+                <LanguageIcon
+                  fontSize="large"
+                  style={{
+                    color:
+                      !isScrolled && !shouldHaveBlackBackground
+                        ? "var(--bg-white-color)"
+                        : "var(--secondary-color)"}}
+                />
+              </h3>
+            </motion.button>
+
+            {isMobile && (
+              <motion.button
+                onClick={() => setMenuOpen(!menuOpen)}
+                className="p-2 rounded-full shadow-lg transition-all duration-300"
+                style={{
+                  backgroundColor: "var(--secondary-color)", // Use primary color for button background
+                  color: "var(--bg-white-color)", // Use default text color for button text
+                  transition: "var(--transition-default)", // Use default transition from the theme
+                }}
+                whileTap={{ scale: 0.9 }}
+              >
+                {menuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+              </motion.button>
+            )}
+          </div>
+        </div>
+
+        {/* Horizontal Navigation for Mobile (shown when menu is open) */}
+        {isMobile && menuOpen && (
+          <motion.nav
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className="flex flex-col items-center gap-4 py-4 backdrop-blur-md"
+            style={{
+              backgroundColor: darkMode ? "var(--card-bg)" : "var(--card-bg)", // Use card background for mobile menu
+            }}
+          >
+            {horizontalNavItems.map((item) => (
+              <Link
+                key={item.id}
+                to={item.path}
+                onClick={() => setMenuOpen(false)} // Close menu on click
+                className={`text-xlg font-medium transition-all duration-300 ${
+                  location.pathname === item.path ? "font-bold" : ""
+                }`}
+                style={{
+                  color:
+                    location.pathname === item.path
+                      ? "var(--primary-color)" // Use primary color for active link
                       : darkMode
                       ? "var(--text-muted-color)" // Use muted text color for dark mode
                       : "var(--text-default-color)", // Use default text color for light mode
                   transition: "var(--transition-default)", // Use default transition from the theme
-                  ":hover": {
-                    backgroundColor:
-                      activeSection !== item.id
-                        ? darkMode
-                          ? "var(--card-bg)" // Use card background for hover in dark mode
-                          : "var(--card-bg)" // Use card background for hover in light mode
-                        : "var(--primary-color)", // Keep primary color for active state
-                  },
                 }}
-                whileHover={{ scale: 1.2 }}
-                title={item.label}
               >
-                {React.cloneElement(item.icon, {
-                  style: { fontSize: "28px" },
-                })}
-              </motion.a>
+                {item.label}
+              </Link>
             ))}
           </motion.nav>
         )}
-      </AnimatePresence>
-      )} */}
+      </header>
+
+      {/* Vertical Navigation (hidden on specified paths) */}
+      {/* ... (unchanged vertical navigation code) ... */}
     </>
   );
 }

@@ -36,7 +36,7 @@ function Contact() {
     id="contact"
     className="py-10"
     style={{
-      backgroundColor: 'var(--bg-white-color)',
+      backgroundColor: 'var(--tertiary-color)',
       color: 'var(--text-default-color)',
       transition: 'var(--transition-default)',
     }}
@@ -50,10 +50,8 @@ function Contact() {
         transition={{ duration: 0.8 }}
         className="space-y-8 backdrop-blur-sm bg-opacity-30 p-8"
         style={{
-          background:  'var(--card-bg)',
-          border: `var(--border-color)`, // Using border color from the theme
           borderRadius: 'var(--border-radius-md)', // Using the large border radius from the theme
-          boxShadow: 'var(--shadow-default)', // Using the default shadow from the theme
+          border: '15px solid var(--bg-color)',
         }}
       >
         {/* Title */}
@@ -80,17 +78,27 @@ function Contact() {
         {/* Schedule a Call Button */}
         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
           <Link to="/contact">
-            <motion.button
-              className={`px-8 py-3 cursor-pointer rounded-full  text-lg font-semibold transition-all duration-300`}
-              style={{
-                backgroundColor: 'var(--primary-color)',
-                color: 'var(--tertiary-color)',
-                borderRadius: 'var(--border-radius-small)',
-                boxShadow: 'var(--shadow-hover)',
-
-              }}
-            >
-              {t.scheduleCall}
+           <motion.button
+                        custom={2}
+                        initial="hidden"
+                        animate="visible"
+                        style={{
+                          backgroundColor: "#0c59db",
+                          color: "var(--secondary-color, #ffffff)",
+                          transition: "all 0.3s ease",
+                          fontSize: isMobile ? "1.25rem" : "1.5rem",
+                          fontWeight: "bold",
+                          padding: "1rem 2.5rem",
+                          cursor: "pointer",
+                        }}
+                        whileHover={{
+                          scale: 1.05,
+                          backgroundColor: "var(--secondary-color, #ffffff)",
+                          color: "white",
+                        }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                 <h3 style={{ color:"white" }}>{t.scheduleCall}</h3>
             </motion.button>
           </Link>
         </motion.div>

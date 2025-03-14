@@ -86,26 +86,33 @@ function Team() {
   return (
     <section
       id="team"
-      className={`py-10 transition-all duration-500 ${
-        darkMode ? "bg-gray-900 text-white" : "bg-gray-300 text-black"
-      }`}
+      style={{
+        backgroundColor: 'var(--tertiary-color)',
+        color: 'var(--text-default-color)',
+        transition: 'var(--transition-default)',
+      }}
       dir={language === "ar" ? "rtl" : "ltr"}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Title */}
         <div className="mb-8">
-          <p className="text-xs uppercase font-light tracking-widest relative inline-block">
+        <p
+            className={`${language === "ar" ? "rtl" : "ltr"} text-xs uppercase font-extrabold  tracking-widest relative inline-block`}
+            style={{ color: 'var(--text-muted-color)' }}
+          >
             {t.team}
             <span
-              className={`absolute top-1/2 w-24 h-[2px] bg-yellow-500 ${
-                language === "ar" ? "right-20" : "left-20"
+              className={`absolute top-1/2 w-24 h-[2px] ${
+                language === "ar" ? "right-22" : "left-27"
               }`}
+              style={{ backgroundColor: 'var(--primary-color)' }}
             ></span>
           </p>
           <h2
             className={`text-3xl sm:text-4xl md:text-5xl font-extrabold ${
               language === "ar" ? "text-right" : "text-left"
-            } font-raleway ${darkMode ? "text-white" : "text-black"}`}
+            } font-raleway`}
+            style={{ color: 'var(--text-heading-color)' }}
           >
             {t.checkOurTeam}
           </h2>
@@ -145,7 +152,8 @@ const TeamCard = ({ member, darkMode, isMobile, isTablet, language }) => {
       initial={{ opacity: 0, y: 50 }}
       animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
       transition={{ duration: 0.8 }}
-      className={`relative rounded-[20px] shadow-lg overflow-hidden group flex flex-col ${
+     
+      className={`relative overflow-hidden group flex flex-col mb-10 ${
         isMobile ? "max-w-[150px] mx-auto" : "w-full"
       }`}
     >
@@ -155,7 +163,7 @@ const TeamCard = ({ member, darkMode, isMobile, isTablet, language }) => {
         alt={member.name}
         width={width}
         height={height}
-        className="rounded-t-[20px] object-cover w-full transition-transform duration-300 group-hover:scale-105"
+        className=" object-cover w-full transition-transform duration-300 group-hover:scale-105"
         loading="lazy"
       />
 

@@ -6,6 +6,7 @@ import { useScreenSize } from "../../hooks/useScreenSize";
 import emailjs from "emailjs-com";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import TeamProcess from "../../components/TeamProcess";
 
 // Translation object
 const translations = {
@@ -78,27 +79,28 @@ function Contact() {
   };
 
   return (
+    <>
     <section
       id="contact"
-      className="py-30 min-h-screen"
+      className="py-30 "
       style={{
-        backgroundColor: 'var(--bg-color)',
+        backgroundColor: 'var(--tertiary-color)',
         color: 'var(--text-default-color)',
         transition: 'var(--transition-default)',
       }}
       dir={language === "ar" ? "rtl" : "ltr"}
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className={`${language === "ar" ? "rtl" : "ltr"} container mx-auto px-4 sm:px-6 lg:px-8`}>
         {/* Title */}
         <div className="mb-8">
-          <p
-            className="text-xs uppercase font-light tracking-widest relative inline-block"
+        <p
+            className={`${language === "ar" ? "rtl" : "ltr"} text-xs uppercase font-extrabold  tracking-widest relative inline-block`}
             style={{ color: 'var(--text-muted-color)' }}
           >
             {t.contactUs}
             <span
               className={`absolute top-1/2 w-24 h-[2px] ${
-                language === "ar" ? "right-24" : "left-37"
+                language === "ar" ? "right-22" : "left-27"
               }`}
               style={{ backgroundColor: 'var(--primary-color)' }}
             ></span>
@@ -118,12 +120,9 @@ function Contact() {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="rounded-[20px] shadow-lg p-6"
+          className="p-6"
           style={{
-            backgroundColor: 'var(--card-bg)',
-            borderRadius: 'var(--border-radius-md)',
-            boxShadow: 'var(--shadow-default)',
-            border: '1px solid var(--border-color)',
+            border: '15px solid var(--bg-white-color)',
           }}
         >
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -175,7 +174,7 @@ function Contact() {
             <motion.button
               type="submit"
               disabled={loading}
-              className="w-full py-3 rounded-full font-raleway text-sm md:text-base font-semibold cursor-pointer"
+              className="w-full py-3 font-raleway text-sm md:text-base font-semibold cursor-pointer"
               style={{
                 backgroundColor: 'var(--primary-color)',
                 color: 'var(--text-default-color)',
@@ -184,7 +183,7 @@ function Contact() {
               whileHover={{ scale: 1.01 }}
               whileTap={{ scale: 0.95 }}
             >
-              {loading ? t.sending : t.sendMessage}
+             <h3 style={{ color: 'white' }}> {loading ? t.sending : t.sendMessage}</h3>
             </motion.button>
           </form>
         </motion.div>
@@ -204,6 +203,8 @@ function Contact() {
         theme={darkMode ? "dark" : "light"}
       />
     </section>
+    <TeamProcess />
+    </>
   );
 }
 
@@ -245,11 +246,10 @@ const FormField = ({
           value={value}
           onChange={handleChange}
           required
-          className="w-full p-3 shadow-sm focus:outline-none"
+          className="w-full p-3  focus:outline-none"
           style={{
             backgroundColor: 'var(--card-bg)',
             color: 'var(--text-default-color)',
-            borderRadius: 'var(--border-radius-sm)',
             border: '1px solid var(--border-color)',
             transition: 'var(--transition-default)',
           }}
@@ -263,11 +263,10 @@ const FormField = ({
           value={value}
           onChange={handleChange}
           required
-          className="w-full p-3 shadow-sm focus:outline-none"
+          className="w-full p-3  focus:outline-none"
           style={{
             backgroundColor: 'var(--card-bg)',
             color: 'var(--text-default-color)',
-            borderRadius: 'var(--border-radius-sm)',
             border: '1px solid var(--border-color)',
             transition: 'var(--transition-default)',
           }}

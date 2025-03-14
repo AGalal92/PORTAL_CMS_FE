@@ -140,7 +140,7 @@ function Services() {
     <>
     <section
       id="services"
-      className="py-20"
+      className="py-30"
       style={{
         backgroundColor: 'var(--bg-color)',
         color: 'var(--text-default-color)',
@@ -148,13 +148,13 @@ function Services() {
       }}
       dir={language === "ar" ? "rtl" : "ltr"}
     >
-      <div className={`${language === "ar" ? "rtl" : "ltr"} container mx-auto px-4 sm:px-6 lg:px-8`}>
+       <div className={`${language === "ar" ? "rtl" : "ltr"} container mx-auto px-4 sm:px-6 lg:px-8`}>
       {/* Title */}
         <div className="mb-8">
         <p
-            className={`${language === "ar" ? "rtl" : "ltr"} text-xs uppercase font-light tracking-widest relative inline-block`}
+            className={`${language === "ar" ? "rtl" : "ltr"} text-xs uppercase font-extrabold  tracking-widest relative inline-block`}
             style={{ color: 'var(--text-muted-color)' }}
-          >            
+          >   
           {t.services}
           <span
               className={`absolute top-1/2 w-24 h-[2px] ${
@@ -182,13 +182,14 @@ function Services() {
             >
               {category.title}
             </h3>
-            <p
-              className={`text-sm md:text-base mb-6 ${
-                language === "ar" ? "text-right" : "text-left"
-              } ${darkMode ? "text-gray-300" : 'var(--primary-color)'}`}
+            <h3
+             className={` mt-2 mb-3 font-normal text-center font-raleway`}
+            style={{ color: 'var(--text-heading-color)',
+              fontSize: '1.1rem',
+             }}
             >
               {category.desc}
-            </p>
+            </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
               {category.subServices.map((service, subIndex) => (
                 <ServiceCard
@@ -211,7 +212,6 @@ function Services() {
     </>
   );
 }
-
 const ServiceCard = ({ service, darkMode, isMobile, isTablet }) => {
   const { ref, inView } = useInView({
     triggerOnce: true,
@@ -233,11 +233,12 @@ const ServiceCard = ({ service, darkMode, isMobile, isTablet }) => {
       }}
     >
       <div className="mb-4">{service.icon}</div>
-      <h3 className="text-sm sm:text-lg md:text-xl font-semibold font-raleway mb-2 text-center " style={{ color: 'var(--text-color)' }}>
+      <h3 className="text-sm sm:text-lg md:text-xl font-semibold font-raleway mb-2 text-center " style={{ color: 'var(--text-heading-color)' }}>
         {service.title}
       </h3>
     </motion.div>
   );
 };
+
 
 export default Services;

@@ -38,7 +38,7 @@ export const theme = {
         dark: '#d1d5db',  // gray-300
       },
       words: { // small headers
-        light: '#063B7C', // gray-600
+        light: '#0c59db', // gray-600
         dark: '#d1d5db',  // gray-300
       },
       heading: {
@@ -82,7 +82,7 @@ export const theme = {
   // Shadows
   shadows: {
     none: 'none',
-    default: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+    default: ' 0 4px 6px rgba(0, 0, 0, 0.1);',
     hover: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
   },
 

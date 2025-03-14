@@ -1,41 +1,33 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useTheme, useLanguage } from "../App";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useScreenSize } from "../hooks/useScreenSize";
-import { FiExternalLink } from "react-icons/fi";
+import { Link } from "react-router-dom";
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
-// Translation object
+// Translation object with only logos
 const translations = {
   en: {
-    projects: "Projects",
-    checkOurProjects: "CHECK OUR PROJECTS",
-    categories: [
-      { id: "all", name: "All" },
-      { id: "web", name: "Web" },
-      { id: "portfolio", name: "Portfolio" },
-    ],
+    projects: "Clients",
+    checkOurProjects: "CHECK OUR CLIENTS",
     projectsData: [
-      { id: 1, name: "Sphinx Platform", image: "/images/sphinxLogin.png", category: "web" },
-      { id: 2, name: "EGAC Platform", image: "/images/EgacPortfolio.png", category: "portfolio" },
-      { id: 3, name: "Brainy Battalion Platform", image: "/images/brainy1.png", category: "portfolio" },
+      { id: 1, name: "Sphinx Platform", logo: "/images/sphinxLogo.png" },
+      { id: 2, name: "EGAC Platform", logo: "/images/EgAcLogo.png" },
+      { id: 4, name: "Madex", logo: "/images/madexLogo.png" },
+      { id: 3, name: "Brainy Battalion Platform", logo: "/images/brainLogo.png" },
       
-      // Add more projects here
+      
     ],
   },
   ar: {
-    projects: "المشاريع",
-    checkOurProjects: "تحقق من مشاريعنا",
-    categories: [
-      { id: "all", name: "الكل" },
-      { id: "web", name: "الويب" },
-      { id: "portfolio", name: "محفظة" },
-    ],
+    projects: "العملاء",
+    checkOurProjects: "تحقق من عملائنا",
     projectsData: [
-      { id: 1, name: "منصة سفنكس", image: "/images/sphinxLogin.png", category: "web" },
-      { id: 2, name: "منصة EGAC", image: "/images/EgacPortfolio.png", category: "portfolio" },
-      { id: 3, name: "منصة Brainy Battalion", image: "/images/brainy1.png", category: "portfolio" },
-      // Add more projects here
+      { id: 1, name: "منصة سفنكس", logo: "/images/sphinxLogo.png" },
+      { id: 2, name: "منصة EGAC", logo: "/images/EgAcLogo.png" },
+      { id: 3, name: "منصة Brainy Battalion", logo: "/images/brainLogo.png" },
+      { id: 4, name: "مادكس", logo: "/images/madexLogo.png" },
     ],
   },
 };
@@ -45,23 +37,42 @@ function Projects() {
   const { language } = useLanguage();
   const { isMobile, isTablet } = useScreenSize();
   const t = translations[language];
-  const [selectedCategory, setSelectedCategory] = useState(t.categories[0].id);
+  const sliderRef = useRef(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const logosPerSlide = isMobile ? 2 : isTablet ? 3 : 4; // Number of logos visible at once
+  const totalSlides = Math.ceil(t.projectsData.length / logosPerSlide);
 
+  // Scroll to the current slide
   useEffect(() => {
-    setSelectedCategory(t.categories[0].id); // Reset to 'all' when language changes
-  }, [language, t.categories]);
+    if (sliderRef.current) {
+      const slideWidth = sliderRef.current.offsetWidth;
+      sliderRef.current.scrollTo({
+        left: slideWidth * currentSlide,
+        behavior: "smooth",
+      });
+    }
+  }, [currentSlide]);
 
-  const filteredProjects =
-    selectedCategory === "all"
-      ? t.projectsData
-      : t.projectsData.filter((p) => p.category === selectedCategory);
+  // Arrow handlers
+  const handlePrev = () => {
+    setCurrentSlide((prev) => Math.max(prev - 1, 0));
+  };
+
+  const handleNext = () => {
+    setCurrentSlide((prev) => Math.min(prev + 1, totalSlides - 1));
+  };
+
+  // Bullet handler
+  const handleBulletClick = (index) => {
+    setCurrentSlide(index);
+  };
 
   return (
     <section
       id="projects"
-      className="py-10 bg-white"
+      className="py-12"
       style={{
-      
+        backgroundColor: 'var(--bg-white-color)',
         color: 'var(--text-default-color)',
         transition: 'var(--transition-default)',
       }}
@@ -71,8 +82,8 @@ function Projects() {
         {/* Title */}
         <div className="mb-8">
         <p
-            className={`${language === "ar" ? "rtl" : "ltr"} text-xs uppercase  tracking-widest relative inline-block`}
-            style={{ color: 'var(--text-muted-color)', fontWeight: '700px' }}
+            className={`${language === "ar" ? "rtl" : "ltr"} text-xs uppercase font-extrabold  tracking-widest relative inline-block`}
+            style={{ color: 'var(--text-muted-color)' }}
           >
             {t.projects}
             <span
@@ -92,38 +103,75 @@ function Projects() {
           </h2>
         </div>
 
-        {/* Category Buttons */}
-        <div className="flex justify-center mb-8 gap-4 flex-wrap">
-          {t.categories.map((category) => (
-            <motion.button
-              key={category.id}
-              onClick={() => setSelectedCategory(category.id)}
-              className={`px-4 py-2 rounded-full font-raleway text-sm md:text-base transition-all duration-300 ${
-                selectedCategory === category.id
-                  ? "bg-[var(--primary-color)] text-[var(--text-default-color)] shadow-[var(--shadow-default)]"
-                  : darkMode
-                  ? "bg-[var(--card-bg)] text-[var(--text-muted-color)] hover:bg-[var(--overlay-bg)]"
-                  : "bg-[var(--card-bg)] text-[var(--text-default-color)] hover:bg-[var(--overlay-bg)]"
-              }`}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              {category.name}
-            </motion.button>
-          ))}
-        </div>
+        {/* Slider Container */}
+        <div className="relative">
+          <div
+            ref={sliderRef}
+            className="flex snap-x snap-mandatory overflow-hidden"
+            style={{
+              scrollBehavior: 'smooth',
+            }}
+          >
+            {Array.from({ length: totalSlides }).map((_, slideIndex) => (
+              <div
+                key={slideIndex}
+                className="flex-shrink-0 w-full flex justify-center space-x-6"
+              >
+                {t.projectsData
+                  .slice(slideIndex * logosPerSlide, (slideIndex + 1) * logosPerSlide)
+                  .map((project) => (
+                    <ProjectCard
+                      key={project.id}
+                      project={project}
+                      darkMode={darkMode}
+                      isMobile={isMobile}
+                      isTablet={isTablet}
+                    />
+                  ))}
+              </div>
+            ))}
+          </div>
 
-        {/* Gallery Layout */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {filteredProjects.map((project) => (
-            <ProjectCard
-              key={project.id}
-              project={project}
-              darkMode={darkMode}
-              isMobile={isMobile}
-              isTablet={isTablet}
-            />
-          ))}
+          {/* Navigation (Arrows and Bullets) */}
+          <div className="flex items-center justify-center mt-6 space-x-4">
+            <motion.button
+              onClick={handlePrev}
+              disabled={currentSlide === 0}
+              className="p-2 rounded-full bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-md disabled:opacity-50 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-300"
+              whileHover={{ scale: currentSlide === 0 ? 1 : 1.1 }}
+              whileTap={{ scale: currentSlide === 0 ? 1 : 0.95 }}
+            >
+              <FiChevronLeft size={18} />
+            </motion.button>
+
+            {/* Bullets */}
+            <div className="flex space-x-2">
+              {Array.from({ length: totalSlides }).map((_, index) => (
+                <motion.button
+                  key={index}
+                  onClick={() => handleBulletClick(index)}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                    currentSlide === index
+                      ? 'bg-[var(--primary-color)] scale-125'
+                      : 'bg-gray-300 dark:bg-gray-600'
+                  }`}
+                  whileHover={{ scale: 1.2 }}
+                  whileTap={{ scale: 0.9 }}
+                />
+              ))}
+            </div>
+
+            <motion.button
+              onClick={handleNext}
+              disabled={currentSlide === totalSlides - 1}
+              style={{ backgroundColor: 'var(--primary-color)', color: 'var(--bg-white-color)', opacity: currentSlide === totalSlides - 1 ? 0.5 : 1 }}
+              className="p-2 rounded-full dark:text-white shadow-md disabled:opacity-50 transition-all duration-300"
+              whileHover={{ scale: currentSlide === totalSlides - 1 ? 1 : 1.1 }}
+              whileTap={{ scale: currentSlide === totalSlides - 1 ? 1 : 0.95 }}
+            >
+              <FiChevronRight size={24} />
+            </motion.button>
+          </div>
         </div>
       </div>
     </section>
@@ -136,59 +184,28 @@ const ProjectCard = ({ project, darkMode, isMobile, isTablet }) => {
     threshold: isMobile ? 0.1 : 0.3,
   });
 
-  const width = isMobile ? 250 : isTablet ? 300 : 350;
-  const height = isMobile ? 200 : isTablet ? 250 : 300;
+  const width = isMobile ? 150 : isTablet ? 200 : 250;
 
   return (
     <motion.div
-  ref={ref}
-  initial={{ opacity: 0, y: 50 }}
-  animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-  transition={{ duration: 0.8 }}
-  className="relative group overflow-hidden"
-  style={{
-    borderRadius: 'var(--border-radius-md)',
-    boxShadow: 'var(--shadow-default)',
-  }}
->
-  <img
-    src={project.image}
-    alt={project.name}
-    width={width}
-    height={height}
-    className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
-    style={{
-      borderRadius: 'var(--border-radius-md)',
-    }}
-    loading="lazy"
-  />
-  {/* Hover Overlay */}
-  <motion.div
-    className="absolute inset-0 backdrop-blur-sm flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-    style={{
-      backgroundColor: 'var(--overlay-bg)',
-    }}
-  >
-    <h3 className="text-sm sm:text-lg md:text-xl font-semibold font-raleway mb-2" style={{ color: 'var(--primary-color)' }}>
-      {project.name}
-    </h3>
-    <a href={`/projects/${project.id}`} className="mt-2">
-      <motion.div
-        className="p-2 rounded-full shadow-lg cursor-pointer"
-        style={{
-          backgroundColor: 'var(--primary-color)',
-          color: 'var(--text-default-color)',
-          borderRadius: 'var(--border-radius-small)',
-          boxShadow: 'var(--shadow-hover)',
-        }}
-        whileHover={{ scale: 1.2 }}
-        transition={{ duration: 0.3 }}
-      >
-        <FiExternalLink size={20} />
-      </motion.div>
-    </a>
-  </motion.div>
-</motion.div>
+      ref={ref}
+      initial={{ opacity: 0, y: 50 }}
+      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+      transition={{ duration: 0.8 }}
+      className="flex-shrink-0 "
+      style={{
+        width: `${width}px`,
+      }}
+    >
+      <Link to={`/projects/${project.id}`}>
+        <img
+          src={project.logo}
+          alt={project.name}
+          className="object-contain w-full h-auto transition-all duration-300 filter grayscale hover:filter-none cursor-pointer"
+          loading="lazy"
+        />
+      </Link>
+    </motion.div>
   );
 };
 

@@ -1,48 +1,432 @@
-import React from 'react';
-import { useLanguage } from '../App'; // Import useLanguage
+import React from "react";
+import { useLanguage } from "../App";
+import { LinkedIn, Facebook, Twitter } from "@mui/icons-material";
+
+// Custom hook for screen size detection
+const useScreen = () => {
+  const [screenSize, setScreenSize] = React.useState({
+    isMobile: window.innerWidth <= 768,
+    isTablet: window.innerWidth > 768 && window.innerWidth <= 1024,
+    isDesktop: window.innerWidth > 1024,
+  });
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      setScreenSize({
+        isMobile: window.innerWidth <= 768,
+        isTablet: window.innerWidth > 768 && window.innerWidth <= 1024,
+        isDesktop: window.innerWidth > 1024,
+      });
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  return screenSize;
+};
 
 // Translation object
 const translations = {
   en: {
-    copyright: '© {year} <span className="font-bold text-yellow-500">Legion</span> Software. All Rights Reserved.',
+    paragraph: "Legion Software provides innovative solutions for your business.",
+    contactInfo: {
+      phone: "Phone: +201115067610",
+      email: "Email: info@legionagency.tech",
+    },
+    copyright:
+      '© {year} <span style="font-weight: bold; color: #81a3bb;">Legion</span> Software. All Rights Reserved.',
     socials: [
-      { label: 'LinkedIn', icon: '🔗', href: '#' },
-      { label: 'Facebook', icon: '📘', href: '#' },
-      { label: 'Twitter', icon: '🐦', href: '#' },
+      { label: "LinkedIn", icon: <LinkedIn />, href: "#" },
+      { label: "Facebook", icon: <Facebook />, href: "#" },
+      { label: "Twitter", icon: <Twitter />, href: "#" },
     ],
   },
   ar: {
-    copyright: '© {year} <span className="font-bold text-yellow-500">ليجيون</span> للبرمجيات. جميع الحقوق محفوظة.',
+    paragraph: "تقدم ليجيون للبرمجيات حلولًا مبتكرة لأعمالك.",
+    contactInfo: {
+      phone: "الهاتف: +201115067610",
+      email: "البريد الإلكتروني: info@legionagency.tech",
+    },
+    copyright:
+      '© {year} <span style="font-weight: bold; color: #81a3bb;">ليجيون</span> للبرمجيات. جميع الحقوق محفوظة.',
     socials: [
-      { label: 'لينكد إن', icon: '🔗', href: '#' },
-      { label: 'فيسبوك', icon: '📘', href: '#' },
-      { label: 'تويتر', icon: '🐦', href: '#' },
+      { label: "لينكد إن", icon: <LinkedIn />, href: "#" },
+      { label: "فيسبوك", icon: <Facebook />, href: "#" },
+      { label: "تويتر", icon: <Twitter />, href: "#" },
     ],
   },
 };
 
+// Header links
+const headerLinks = [
+  { id: "home", path: "/#home", labelEn: "Home", labelAr: "الرئيسية" },
+  { id: "about-us", path: "/#about-us", labelEn: "About Us", labelAr: "من نحن" },
+  { id: "projects", path: "/#projects", labelEn: "Projects", labelAr: "المشاريع" },
+  { id: "services", path: "/#services", labelEn: "Services", labelAr: "الخدمات" },
+  { id: "contact", path: "/#contact", labelEn: "Contact Us", labelAr: "اتصل بنا" },
+];
+
 function Footer() {
-  const { language } = useLanguage(); // Access language from context
-  const t = translations[language]; // Select translations based on language
-  const year = new Date().getFullYear(); // Get current year
+  const { language } = useLanguage();
+  const t = translations[language];
+  const { isMobile, isTablet, isDesktop } = useScreen();
+  const year = new Date().getFullYear();
+
+  // Function to handle smooth scrolling
+  const handleScroll = (e, path) => {
+    e.preventDefault();
+    const targetId = path.split("#")[1];
+    const targetElement = document.getElementById(targetId);
+
+    if (targetElement) {
+      targetElement.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  };
 
   return (
-    <footer className="bg-gray-900 text-white py-6">
-      <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
-        <p
-          className="text-sm"
-          dangerouslySetInnerHTML={{ __html: t.copyright.replace('{year}', year) }}
-        />
-        <div className="flex space-x-4">
-          {t.socials.map((social, index) => (
-            <a
-              key={index}
-              href={social.href}
-              className="hover:text-blue-400"
+    <footer
+      style={{
+        backgroundColor: "Var(--secondary-color)",
+        color: "#FFFFFF",
+        padding: isMobile ? "2rem 0" : "2.5rem 0",
+        direction: language === "ar" ? "rtl" : "ltr",
+      }}
+    >
+      <div
+        style={{
+          maxWidth: "1480px",
+          marginLeft: "auto",
+          marginRight: "auto",
+          paddingLeft: isMobile ? "1rem" : "1.5rem",
+          paddingRight: isMobile ? "1rem" : "1.5rem",
+        }}
+      >
+        {/* Main Footer Content */}
+        {isMobile ? (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "2rem",
+            }}
+          >
+            {/* Logo and Paragraph Section */}
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+                gap: "1rem",
+              }}
             >
-              {/* {social.icon} {social.label} */}
-            </a>
-          ))}
+              <img
+                src="/images/logoFooter.png" // Replace with your logo path
+                alt="Legion Logo"
+                style={{
+                  width: "10rem",
+                  flexShrink: 0,
+                }}
+              />
+              <p
+                style={{
+                  fontSize: "0.875rem",
+                  color: "#81a3bb",
+                  textAlign: "left",
+                  marginLeft: "1rem",
+                  flexGrow: 1,
+                }}
+              >
+                {t.paragraph}
+              </p>
+            </div>
+
+            {/* Pages and Contact Us Section */}
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "flex-start",
+                gap: "1rem",
+              }}
+            >
+              {/* Pages Section (Left on Mobile) */}
+              <div
+                style={{
+                  width: "50%",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "flex-start",
+                }}
+              >
+                <h3
+                  style={{
+                    fontSize: "1.125rem",
+                    fontWeight: "600",
+                    marginBottom: "1rem",
+                    color: "#81a3bb",
+                  }}
+                >
+                  {language === "en" ? "Pages" : "الصفحات"}
+                </h3>
+                <ul
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "0.75rem",
+                    fontSize: "0.875rem",
+                    textAlign: "left",
+                  }}
+                >
+                  {headerLinks.map((link) => (
+                    <li key={link.id}>
+                      <a
+                        href={link.path}
+                        onClick={(e) => handleScroll(e, link.path)}
+                        style={{
+                          color: "#FFFFFF",
+                          transition: "color 0.3s",
+                        }}
+                        onMouseEnter={(e) => (e.target.style.color = "#60A5FA")}
+                        onMouseLeave={(e) => (e.target.style.color = "#FFFFFF")}
+                      >
+                        {language === "en" ? link.labelEn : link.labelAr}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Contact Us Section (Right on Mobile) */}
+              <div
+                style={{
+                  width: "50%",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "flex-start",
+                }}
+              >
+                <h3
+                  style={{
+                    fontSize: "1.125rem",
+                    fontWeight: "600",
+                    marginBottom: "1rem",
+                    color: "#81a3bb",
+                  }}
+                >
+                  {language === "en" ? "Contact Us" : "اتصل بنا"}
+                </h3>
+                <div
+                  style={{
+                    fontSize: "0.875rem",
+                    color: "#D1D5DB",
+                    marginBottom: "1rem",
+                    textAlign: "left",
+                  }}
+                >
+                  <p>{t.contactInfo.phone}</p>
+                  <p>{t.contactInfo.email}</p>
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "1rem",
+                  }}
+                >
+                  {t.socials.map((social, index) => (
+                    <a
+                      key={index}
+                      href={social.href}
+                      style={{
+                        color: "#FFFFFF",
+                        transition: "color 0.3s",
+                      }}
+                      title={social.label}
+                      onMouseEnter={(e) => (e.target.style.color = "#60A5FA")}
+                      onMouseLeave={(e) => (e.target.style.color = "#FFFFFF")}
+                    >
+                      {React.cloneElement(social.icon, {
+                        style: { fontSize: "28px" },
+                      })}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "flex-start",
+              gap: "1rem",
+            }}
+          >
+            {/* Left Section: Logo and Paragraph */}
+            <div
+              style={{
+                width: "33.33%",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+              }}
+            >
+              <img
+                src="/images/logoFooter.png" // Replace with your logo path
+                alt="Legion Logo"
+                style={{
+                  width: isTablet ? "14rem" : "16rem",
+                  flexShrink: 0,
+                }}
+              />
+              <p
+                style={{
+                  fontSize: "1.125rem",
+                  color: "#81a3bb",
+                  padding: "0.75rem",
+                  textAlign: "left",
+
+                }}
+              >
+                {t.paragraph}
+              </p>
+            </div>
+
+            {/* Pages Section */}
+            <div
+              style={{
+                width: "33.33%",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "left",
+              }}
+            >
+              <h3
+                style={{
+                  fontSize: "1.5rem",
+                  fontWeight: "600",
+                  marginBottom: "1rem",
+                  color: "#81a3bb",
+                }}
+              >
+                {language === "en" ? "Pages" : "الصفحات"}
+              </h3>
+              <ul
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.75rem",
+                  fontSize: "1.125rem",
+                  textAlign: "left",
+                }}
+              >
+                {headerLinks.map((link) => (
+                  <li key={link.id}>
+                    <a
+                      href={link.path}
+                      onClick={(e) => handleScroll(e, link.path)}
+                      style={{
+                        color: "#FFFFFF",
+                        transition: "color 0.3s",
+                      }}
+                      onMouseEnter={(e) => (e.target.style.color = "#60A5FA")}
+                      onMouseLeave={(e) => (e.target.style.color = "#FFFFFF")}
+                    >
+                      {language === "en" ? link.labelEn : link.labelAr}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Contact Us Section */}
+            <div
+              style={{
+                width: "33.33%",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "left",
+              }}
+            >
+              <h3
+                style={{
+                  fontSize: "1.5rem",
+                  fontWeight: "600",
+                  marginBottom: "1rem",
+                  color: "#81a3bb",
+                }}
+              >
+                {language === "en" ? "Contact Us" : "اتصل بنا"}
+              </h3>
+              <div
+                style={{
+                  fontSize: "1.125rem",
+                  color: "#D1D5DB",
+                  marginBottom: "1rem",
+                  textAlign: "left",
+                }}
+              >
+                <p>{t.contactInfo.phone}</p>
+                <p>{t.contactInfo.email}</p>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  gap: "2rem",
+                }}
+              >
+                {t.socials.map((social, index) => (
+                  <a
+                    key={index}
+                    href={social.href}
+                    style={{
+                      color: "#FFFFFF",
+                      transition: "color 0.3s",
+                    }}
+                    title={social.label}
+                    onMouseEnter={(e) => (e.target.style.color = "#60A5FA")}
+                    onMouseLeave={(e) => (e.target.style.color = "#FFFFFF")}
+                  >
+                    {React.cloneElement(social.icon, {
+                      style: { fontSize: "36px" },
+                    })}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* HR Line and Copyright */}
+        <hr
+          style={{
+            margin: isMobile ? "2rem 0" : "2.5rem 0",
+            borderColor: "var(--tertiary-color)",
+            borderWidth: "1px",
+          }}
+        />
+        <div
+          style={{
+            textAlign: "center",
+          }}
+        >
+          <p
+            style={{
+              fontSize: isMobile ? "0.875rem" : "1.125rem",
+              color: "#FFFFFF",
+            }}
+            dangerouslySetInnerHTML={{
+              __html: t.copyright.replace("{year}", year),
+            }}
+          />
         </div>
       </div>
     </footer>

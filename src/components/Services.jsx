@@ -139,7 +139,7 @@ function Services() {
       id="services"
       className="py-10"
       style={{
-        backgroundColor: 'var(--bg-color)',
+        backgroundColor: 'var(--tertiary-color)',
         color: 'var(--text-default-color)',
         transition: 'var(--transition-default)',
       }}
@@ -149,9 +149,9 @@ function Services() {
       {/* Title */}
         <div className="mb-8">
         <p
-            className={`${language === "ar" ? "rtl" : "ltr"} text-xs uppercase  tracking-widest relative inline-block`}
-            style={{ color: 'var(--text-muted-color)', fontWeight: '700px' }}
-          >       
+            className={`${language === "ar" ? "rtl" : "ltr"} text-xs uppercase font-extrabold  tracking-widest relative inline-block`}
+            style={{ color: 'var(--text-muted-color)' }}
+          >   
           {t.services}
           <span
               className={`absolute top-1/2 w-24 h-[2px] ${
@@ -181,7 +181,7 @@ function Services() {
             </h3>
             <h3
              className={` mt-2 mb-3 font-normal text-center font-raleway`}
-            style={{ color: 'var(--text-muted-color)',
+            style={{ color: 'var(--text-heading-color)',
               fontSize: '1.1rem',
              }}
             >
@@ -226,7 +226,7 @@ const ServiceCard = ({ service, darkMode, isMobile, isTablet }) => {
       }}
     >
       <div className="mb-4">{service.icon}</div>
-      <h3 className="text-sm sm:text-lg md:text-xl font-semibold font-raleway mb-2 text-center " style={{ color: 'var(--text-subheading-color)' }}>
+      <h3 className="text-sm sm:text-lg md:text-xl font-semibold font-raleway mb-2 text-center " style={{ color: 'var(--text-heading-color)' }}>
         {service.title}
       </h3>
     </motion.div>

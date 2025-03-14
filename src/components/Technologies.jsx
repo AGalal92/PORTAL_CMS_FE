@@ -131,7 +131,7 @@ const Technologies = () => {
     <section
       className={`technologies_area py-10 transition-all duration-500 `}
       style={{
-        backgroundColor: 'var(--bg-color)',
+        backgroundColor: 'var(--tertiary-color)',
         color: 'var(--text-default-color)',
         transition: 'var(--transition-default)',
       }}
@@ -149,9 +149,9 @@ const Technologies = () => {
         >
           <div className="mb-8">
           <p
-            className={`${language === "ar" ? "rtl" : "ltr"} text-xs uppercase font-light tracking-widest relative inline-block`}
+            className={`${language === "ar" ? "rtl" : "ltr"} text-xs uppercase font-extrabold  tracking-widest relative inline-block`}
             style={{ color: 'var(--text-muted-color)' }}
-          > 
+          >   
               {t.technologies}
               <span
               className={`absolute top-1/2 w-24 h-[2px] ${
@@ -168,12 +168,12 @@ const Technologies = () => {
           >
               {t.technologies}
             </h2>
-            <p
+            {/* <p
             className={`${language === "ar" ? "rtl" : "ltr"} text-xs uppercase font-light tracking-widest relative inline-block`}
             style={{ color: 'var(--text-muted-color)' }}
           >      
               {t.description}
-            </p>
+            </p> */}
           </div>
         </motion.div>
 
@@ -192,7 +192,7 @@ const Technologies = () => {
                   {techList.map((tech, techIndex) => (
                     <div
                       key={techIndex}
-                      className="tech-item rounded-[20px] shadow-lg p-4 mx-2 flex items-center justify-center"
+                      className="tech-item rounded-[10px] shadow-sm p-4 mx-2 flex items-center justify-center"
                       style={{
                         background: darkMode
                           ? "rgba(255, 255, 255, 0.1)"
@@ -203,8 +203,10 @@ const Technologies = () => {
                     >
                       <h3
                         className={`text-sm sm:text-lg font-semibold font-raleway ${
-                          darkMode ? "text-white" : "text-black"
+                          darkMode ? "text-white" : "var(--secondary-color)"
                         }`}
+                        style={{ color: 'var(--secondary-color)' }}
+
                       >
                         {tech}
                       </h3>
@@ -215,7 +217,7 @@ const Technologies = () => {
                   {techList.map((tech, techIndex) => (
                     <div
                       key={techIndex}
-                      className="tech-item rounded-[20px] shadow-lg p-4 mx-2 flex items-center justify-center"
+                      className="tech-item rounded-[10px] shadow-sm p-4 mx-2 flex items-center justify-center"
                       style={{
                         background: darkMode
                           ? "rgba(255, 255, 255, 0.1)"
@@ -226,8 +228,9 @@ const Technologies = () => {
                     >
                       <h3
                         className={`text-sm sm:text-lg font-semibold font-raleway ${
-                          darkMode ? "text-white" : "text-black"
+                          darkMode ? "text-white" : "var(--secondary-color)"
                         }`}
+                        style={{ color: 'var(--secondary-color)' }}
                       >
                         {tech}
                       </h3>
