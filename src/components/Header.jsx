@@ -118,7 +118,7 @@ function Header() {
         }}
         dir={language === "ar" ? "rtl" : "ltr"}
       >
-        <div className="flex justify-between items-center px-30 py-3">
+        <div className={`flex justify-between items-center  ${isMobile ? "px-5 py-3" : "px-30 py-5"}`}>
           {/* Logo */}
           <div className="w-36">
             <Link to="/">

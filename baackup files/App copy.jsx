@@ -1,8 +1,9 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import { HelmetProvider } from "react-helmet-async";
+import { AnimatePresence, motion } from "framer-motion";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 import "./App.css";
 import AppContent from "./AppContent";
 import { applyTheme } from './theme/theme'; // Import the applyTheme function
@@ -19,13 +20,12 @@ export function useLanguage() {
 
 function App() {
   const [darkMode, setDarkMode] = useState(() => {
-    // Clear localStorage for darkMode and force it to false initially
-    localStorage.removeItem("darkMode");
-    return false; // Force darkMode to false on initial load
+    const savedMode = localStorage.getItem("darkMode");
+    return savedMode !== null ? JSON.parse(savedMode) : false;
   });
   const [animation, setAnimation] = useState(null);
   const [language, setLanguage] = useState(() => {
-    return localStorage.getItem("language") || "en"; // Keep language as is
+    return localStorage.getItem("language") || "en";
   });
 
   // Sync dark mode and language with localStorage

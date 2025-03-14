@@ -173,7 +173,7 @@ const TeamCard = ({ member, darkMode, isMobile, isTablet, language }) => {
         <div
           className={`p-2 flex flex-col items-center ${
             darkMode ? "bg-gray-800 text-white" : "bg-gray-200 text-black"
-          } rounded-b-[20px]`}
+          } `}
         >
           <h3 className="text-xs font-semibold font-raleway mb-1">{member.name}</h3>
           <p className="text-[10px]">{member.role}</p>

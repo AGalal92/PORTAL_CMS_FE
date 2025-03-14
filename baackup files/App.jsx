@@ -3,9 +3,8 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { HelmetProvider } from "react-helmet-async";
-import "./App.css";
 import AppContent from "./AppContent";
-import { applyTheme } from './theme/theme'; // Import the applyTheme function
+import "./App.css";
 
 const ThemeContext = createContext();
 export function useTheme() {
@@ -19,19 +18,17 @@ export function useLanguage() {
 
 function App() {
   const [darkMode, setDarkMode] = useState(() => {
-    // Clear localStorage for darkMode and force it to false initially
-    localStorage.removeItem("darkMode");
-    return false; // Force darkMode to false on initial load
+    const savedMode = localStorage.getItem("darkMode");
+    return savedMode !== null ? JSON.parse(savedMode) : false;
   });
   const [animation, setAnimation] = useState(null);
   const [language, setLanguage] = useState(() => {
-    return localStorage.getItem("language") || "en"; // Keep language as is
+    return localStorage.getItem("language") || "en";
   });
 
   // Sync dark mode and language with localStorage
   useEffect(() => {
     localStorage.setItem("darkMode", JSON.stringify(darkMode));
-    applyTheme(); // Apply theme whenever darkMode changes
   }, [darkMode]);
 
   useEffect(() => {
@@ -42,8 +39,8 @@ function App() {
   const theme = createTheme({
     palette: {
       mode: darkMode ? "dark" : "light",
-      primary: { main: "#eab308" }, // Match your theme.js primary color
-      background: { default: darkMode ? "#111827" : "#d1d5db" }, // Match theme.js background colors
+      primary: { main: "#eab308" },
+      background: { default: darkMode ? "#111827" : "#d1d5db" },
     },
   });
 
@@ -67,9 +64,9 @@ function App() {
       <div
         className={`${language === "ar" ? "rtl" : "ltr"}`}
         style={{
-          backgroundColor: 'var(--bg-color)', // Use theme variable
-          color: 'var(--text-color)', // Use theme variable
-          transition: 'var(--transition-default)', // Use theme transition
+          backgroundColor: darkMode ? "#111827" : "#d1d5db",
+          color: darkMode ? "#ffffff" : "#000000",
+          transition: "background-color 0.3s ease",
         }}
       >
         <ThemeContext.Provider value={{ darkMode, toggleDarkMode }}>

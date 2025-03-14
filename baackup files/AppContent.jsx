@@ -34,19 +34,18 @@ function AppContent({ darkMode, animation, setAnimation, language, toggleLanguag
   
     // Define getMetaTags with if-else instead of switch
     const getMetaTags = () => {
-      const currentPath = location.pathname.replace(/\/$/, "");
+      const currentPath = location.pathname.replace(/\/$/, ""); // Normalize by removing trailing slash
       const isArabic = language === "ar";
   
       const baseStructuredData = {
         "@context": "https://schema.org",
         "@type": "Organization",
-        "name": "Legion Agency",
-        "alternateName": ["Legion Tech", "LegionAgency"],
-        "url": "https://legionagency.tech",
-        "logo": "https://legionagency.tech/images/logoLight.png",
-        "description": isArabic
+        name: "Legion Agency",
+        url: "https://legionagency.tech",
+        logo: "https://legionagency.tech/images/logoDark.png",
+        description: isArabic
           ? "وكالة ليجون تقدم حلول تطوير الويب والتطبيقات المبتكرة."
-          : "Legion Agency provides innovative web and app development solutions.",
+          : "Legion Agency offers innovative web and app development solutions.",
       };
   
       if (currentPath.startsWith("/projects/")) {
@@ -57,16 +56,16 @@ function AppContent({ darkMode, animation, setAnimation, language, toggleLanguag
           return {
             title: `${project.name} | Legion Agency`,
             description: `${isArabic ? "استكشف" : "Explore"} ${project.name} ${isArabic ? "من وكالة ليجون -" : "by Legion Agency -"} ${description.substring(0, 150)}...`,
-            keywords: `${project.name}, legion agency, legion tech, ${project.technologies ? project.technologies.join(", ") : "web development, app development, tech solutions"}`,
+            keywords: `${project.name}, legion agency, ${project.technologies ? project.technologies.join(", ") : "web development, app development, tech solutions"}`,
             canonical: `https://legionagency.tech/projects/${project.id}`,
             structuredData: {
               "@context": "https://schema.org",
               "@type": "CreativeWork",
-              "name": project.name,
-              "url": `https://legionagency.tech/projects/${project.id}`,
-              "description": description,
-              "creator": baseStructuredData,
-              "image": project.images[0],
+              name: project.name,
+              url: `https://legionagency.tech/projects/${project.id}`,
+              description: description,
+              creator: baseStructuredData,
+              image: project.images[0],
             },
           };
         }
@@ -75,7 +74,7 @@ function AppContent({ darkMode, animation, setAnimation, language, toggleLanguag
           description: isArabic
             ? "لم يتم العثور على هذا المشروع. استكشف حلول تطوير الويب والتطبيقات الأخرى لدينا!"
             : "This project could not be found. Explore our other web and app development solutions!",
-          keywords: "legion agency, legion tech, web development, app development, tech solutions",
+          keywords: "legion agency, web development, app development, tech solutions",
           canonical: `https://legionagency.tech${currentPath}`,
           structuredData: baseStructuredData,
         };
@@ -84,15 +83,15 @@ function AppContent({ darkMode, animation, setAnimation, language, toggleLanguag
           title: isArabic ? "من نحن | وكالة ليجون" : "About Us | Legion Agency",
           description: isArabic
             ? "تعرف على وكالة ليجون، حيث تلتقي التكنولوجيا المبتكرة بالإبداع. حلول تقنية متميزة من فريقنا."
-            : "Learn about Legion Agency, where innovative tech meets creativity. Tech solutions from Legion Tech.",
-          keywords: "legion agency, legion tech, about us, web development team, tech solutions, creative agency",
+            : "Learn about Legion Agency, where innovative tech meets creativity. Tech solutions from our team.",
+          keywords: "legion agency, about us, web development team, tech solutions, creative agency",
           canonical: "https://legionagency.tech/about-us",
           structuredData: {
             ...baseStructuredData,
             "@type": "AboutPage",
-            "description": isArabic
+            description: isArabic
               ? "صفحة تعريفية عن وكالة ليجون وخدماتها التقنية المبتكرة."
-              : "About Legion Agency and its innovative tech services.",
+              : "An about page for Legion Agency and its innovative tech services.",
           },
         };
       } else if (currentPath === "/projects") {
@@ -100,13 +99,13 @@ function AppContent({ darkMode, animation, setAnimation, language, toggleLanguag
           title: isArabic ? "المشاريع | وكالة ليجون" : "Projects | Legion Agency",
           description: isArabic
             ? "استكشف مشاريع وكالة ليجون، حيث تلتقي التكنولوجيا المبتكرة بالإبداع في تطوير الويب والتطبيقات."
-            : "Explore Legion Agency projects, where Legion Tech delivers innovative web and app development.",
-          keywords: "legion agency, legion tech, projects, portfolio, web development, app development",
+            : "Explore Legion Agency projects, where innovative tech meets creativity in web and app development.",
+          keywords: "legion agency, projects, portfolio, web development, app development",
           canonical: "https://legionagency.tech/projects",
           structuredData: {
             ...baseStructuredData,
             "@type": "CollectionPage",
-            "description": isArabic
+            description: isArabic
               ? "مجموعة من مشاريع وكالة ليجون التقنية المبتكرة."
               : "A collection of Legion Agency's innovative tech projects.",
           },
@@ -116,14 +115,14 @@ function AppContent({ darkMode, animation, setAnimation, language, toggleLanguag
           title: isArabic ? "الخدمات | وكالة ليجون" : "Services | Legion Agency",
           description: isArabic
             ? "اكتشف خدمات وكالة ليجون، حيث تلتقي التكنولوجيا المبتكرة بالإبداع في حلول الويب والتطبيقات."
-            : "Discover Legion Agency services, where Legion Tech offers innovative web and app solutions.",
-          keywords: "legion agency, legion tech, services, tech solutions, web development, app development",
+            : "Discover Legion Agency services, where innovative tech meets creativity in web and app solutions.",
+          keywords: "legion agency, services, tech solutions, web development, app development",
           canonical: "https://legionagency.tech/services",
           structuredData: {
             ...baseStructuredData,
             "@type": "Service",
-            "serviceType": isArabic ? "تطوير الويب والتطبيقات" : "Web and App Development",
-            "provider": baseStructuredData,
+            serviceType: isArabic ? "تطوير الويب والتطبيقات" : "Web and App Development",
+            provider: baseStructuredData,
           },
         };
       } else if (currentPath === "/contact") {
@@ -131,31 +130,31 @@ function AppContent({ darkMode, animation, setAnimation, language, toggleLanguag
           title: isArabic ? "اتصل بنا | وكالة ليجون" : "Contact Us | Legion Agency",
           description: isArabic
             ? "تواصل مع وكالة ليجون، شريكك التقني والإبداعي، لتلبية احتياجات مشروعك."
-            : "Contact Legion Agency, your Legion Tech partner, for your project needs.",
-          keywords: "legion agency, legion tech, contact, support, web development, app development",
+            : "Contact Legion Agency, your tech and creative partner, for your project needs.",
+          keywords: "legion agency, contact, support, web development, app development",
           canonical: "https://legionagency.tech/contact",
           structuredData: {
             ...baseStructuredData,
             "@type": "ContactPage",
-            "description": isArabic
+            description: isArabic
               ? "صفحة التواصل مع وكالة ليجون للحلول التقنية."
               : "Contact page for Legion Agency tech solutions.",
           },
         };
       } else {
         return {
-          title: isArabic ? "وكالة ليجون | حلول تقنية وإبداعية" : "Legion Agency | Tech & Creative Solutions",
+          title: isArabic ? "وكالة ليجون | حلول تطوير الويب والتطبيقات" : "Legion Agency | Web & App Development Solutions",
           description: isArabic
-            ? "وكالة ليجون، شريكك في حلول تطوير الويب والتطبيقات المبتكرة من ليجون تك."
-            : "Legion Agency, your partner for innovative web and app development solutions by Legion Tech.",
-          keywords: "legion, legion agency, legionagency, legion tech, tech solutions, creative agency, web development, app development",
+            ? "وكالة ليجون، شريكك التقني والإبداعي، تقدم حلول تطوير الويب والتطبيقات المبتكرة."
+            : "Legion Agency, your tech and creative partner, offers innovative web and app development solutions.",
+          keywords: "legion agency, web development, app development, tech solutions, creative agency",
           canonical: "https://legionagency.tech/",
           structuredData: {
             ...baseStructuredData,
             "@type": "WebSite",
-            "potentialAction": {
+            potentialAction: {
               "@type": "SearchAction",
-              "target": "https://legionagency.tech/search?q={search_term_string}",
+              target: "https://legionagency.tech/search?q={search_term_string}",
               "query-input": "required name=search_term_string",
             },
           },
@@ -182,12 +181,12 @@ function AppContent({ darkMode, animation, setAnimation, language, toggleLanguag
           <meta property="og:description" content={meta.description} />
           <meta property="og:url" content={meta.canonical} />
           <meta property="og:type" content="website" />
-          <meta property="og:image" content="https://legionagency.tech/images/logoLight.png" />
+          <meta property="og:image" content="https://legionagency.tech/images/logoDark.png" />
           <meta property="og:locale" content={language === "ar" ? "ar_AR" : "en_US"} />
           <meta name="twitter:card" content="summary_large_image" />
           <meta name="twitter:title" content={meta.title} />
           <meta name="twitter:description" content={meta.description} />
-          <meta name="twitter:image" content="https://legionagency.tech/images/logoLight.png" />
+          <meta name="twitter:image" content="https://legionagency.tech/images/logoDark.png" />
           <script type="application/ld+json">{JSON.stringify(meta.structuredData)}</script>
           <link rel="alternate" href="https://legionagency.tech/" hrefLang="en" />
           <link rel="alternate" href="https://legionagency.tech/" hrefLang="ar" />

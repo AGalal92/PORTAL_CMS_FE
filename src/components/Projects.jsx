@@ -16,22 +16,7 @@ const translations = {
       { id: 2, name: "EGAC Platform", logo: "/images/EgAcLogo.png" },
       { id: 4, name: "Madex", logo: "/images/madexLogo.png" },
       { id: 3, name: "Brainy Battalion Platform", logo: "/images/brainLogo.png" },
-      { id: 5, name: "Sphinx Platform", logo: "/images/sphinxLogo.png" },
-      { id: 6, name: "EGAC Platform", logo: "/images/EgAcLogo.png" },
-      { id: 7, name: "Madex", logo: "/images/madexLogo.png" },
-      { id: 8, name: "Brainy Battalion Platform", logo: "/images/brainLogo.png" },
-      { id: 9, name: "Sphinx Platform", logo: "/images/sphinxLogo.png" },
-      { id: 10, name: "EGAC Platform", logo: "/images/EgAcLogo.png" },
-      { id: 11, name: "Madex", logo: "/images/madexLogo.png" },
-      { id: 12, name: "Brainy Battalion Platform", logo: "/images/brainLogo.png" },
-      { id: 13, name: "Sphinx Platform", logo: "/images/sphinxLogo.png" },
-      { id: 14, name: "EGAC Platform", logo: "/images/EgAcLogo.png" },
-      { id: 15, name: "Madex", logo: "/images/madexLogo.png" },
-      { id: 16, name: "Brainy Battalion Platform", logo: "/images/brainLogo.png" },
-      { id: 17, name: "Sphinx Platform", logo: "/images/sphinxLogo.png" },
-      { id: 18, name: "EGAC Platform", logo: "/images/EgAcLogo.png" },
-      { id: 19, name: "Madex", logo: "/images/madexLogo.png" },
-      { id: 20, name: "Brainy Battalion Platform", logo: "/images/brainLogo.png" },
+    
     ],
   },
   ar: {
@@ -170,10 +155,10 @@ function Projects() {
                   border: "2px solid var(--primary-color)",
                 }}
               >
-                <FiChevronLeft size={24} />
+                <FiChevronLeft size={14} />
               </motion.button>
 
-              <span
+              {/* <span
                 className="text-sm font-medium"
                 style={{
                   color: "var(--text-default-color)",
@@ -183,7 +168,7 @@ function Projects() {
                 }}
               >
                 {logoRange}
-              </span>
+              </span> */}
 
               <motion.button
                 onClick={handleNext}
@@ -195,7 +180,7 @@ function Projects() {
                   border: "2px solid var(--primary-color)",
                 }}
               >
-                <FiChevronRight size={24} />
+                <FiChevronRight size={14} />
               </motion.button>
             </div>
           )}

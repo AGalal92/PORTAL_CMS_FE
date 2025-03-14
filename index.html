@@ -4,52 +4,87 @@
     <meta charset="UTF-8" />
     <!-- SEO-Optimized Title (under 60 chars) -->
     <title>Legion Agency | Tech Solutions & Creative Services</title>
-    <meta name="description" content="Legion Agency - Leading tech solutions and creative services at LegionAgency. Discover Legion Tech expertise today!" />
-    <meta name="keywords" content="legion, legion agency, legionagency, legion tech, legion agency tech, tech solutions, creative agency" />
+    <meta name="description" content="Legion Agency offers top tech solutions and creative services at LegionAgency. Explore Legion Tech expertise now!" />
+    <meta name="keywords" content="legion, legion agency, legionagency, legion tech, legion agency tech, tech solutions, creative agency, web development, app development" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="index, follow" />
+    <meta name="author" content="Legion Agency" />
     <link rel="canonical" href="https://legionagency.tech/" />
-    <!-- Preload critical assets (updated paths for Vite build) -->
+    <!-- Preload critical assets -->
     <link rel="preload" href="/src/App.css" as="style" />
     <link rel="preload" href="/src/main.jsx" as="script" />
-    <!-- Favicon (moved to /public in Vite) -->
+    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <!-- CSS (will be bundled by Vite, keep as is for dev) -->
+    <!-- CSS -->
     <link href="/src/App.css" rel="stylesheet" />
     <!-- Font preconnects -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Harmattan:wght@400;500;600;700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
-      rel="stylesheet"
-    />
-    <link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Harmattan:wght@400;500;600;700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet" />
     <!-- Open Graph Tags -->
     <meta property="og:title" content="Legion Agency | Tech Solutions & Creative Services" />
-    <meta property="og:description" content="Explore LegionAgency for innovative tech and creative solutions. Your partner in success!" />
+    <meta property="og:description" content="LegionAgency delivers innovative tech solutions and creative services. Partner with Legion Tech today!" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://legionagency.tech/" />
-    <!-- Add og:image if you have it -->
-    <meta property="og:image" content="https://legionagency.tech/og-image.jpg" />
-    <!-- Structured Data -->
+    <meta property="og:image" content="https://legionagency.tech/images/og-image.jpg" />
+    <meta property="og:locale" content="en_US" />
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Legion Agency | Tech Solutions & Creative Services" />
+    <meta name="twitter:description" content="LegionAgency delivers innovative tech solutions and creative services. Partner with Legion Tech today!" />
+    <meta name="twitter:image" content="https://legionagency.tech/images/og-image.jpg" />
+    <!-- Structured Data for Organization -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "Organization",
         "name": "Legion Agency",
+        "alternateName": ["Legion Tech", "LegionAgency"],
         "url": "https://legionagency.tech",
         "logo": "https://legionagency.tech/images/logoDark.png",
-        "description": "Legion Agency provides innovative web and app development solutions.",
+        "description": "Legion Agency provides innovative tech solutions and creative services including web and app development.",
+        "sameAs": [
+          "https://twitter.com/legionagency",
+          "https://linkedin.com/company/legionagency",
+          "https://facebook.com/legionagency"
+        ],
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+1-123-456-7890",
+          "contactType": "Customer Service",
+          "email": "contact@legionagency.tech"
+        }
+      }
+    </script>
+    <!-- Structured Data for Website -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Legion Agency",
+        "url": "https://legionagency.tech",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://legionagency.tech/search?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
       }
     </script>
   </head>
   <body>
     <div id="root"></div>
-    <!-- Main script (will be replaced by Vite in production) -->
     <script type="module" src="/src/main.jsx"></script>
     <noscript>
       <header>
         <h1>Legion Agency - Your Tech & Creative Partner</h1>
+        <nav>
+          <a href="/">Home</a>
+          <a href="/about-us">About Us</a>
+          <a href="/services">Services</a>
+          <a href="/projects">Projects</a>
+          <a href="/contact">Contact</a>
+        </nav>
       </header>
       <section>
         <h2>Legion Tech Solutions</h2>
