@@ -21,7 +21,7 @@ export function useLanguage() {
 function App() {
   const [darkMode, setDarkMode] = useState(() => {
     const savedMode = localStorage.getItem("darkMode");
-    return savedMode !== null ? JSON.parse(savedMode) : true;
+    return savedMode !== null ? JSON.parse(savedMode) : false;
   });
   const [animation, setAnimation] = useState(null);
   const [language, setLanguage] = useState(() => {

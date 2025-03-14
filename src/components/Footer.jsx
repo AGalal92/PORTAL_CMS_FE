@@ -1,6 +1,7 @@
 import React from "react";
 import { useLanguage } from "../App";
 import { LinkedIn, Facebook, Twitter } from "@mui/icons-material";
+import { Link } from "react-router-dom"; // Import Link from react-router-dom
 
 // Custom hook for screen size detection
 const useScreen = () => {
@@ -60,10 +61,10 @@ const translations = {
 // Header links
 const headerLinks = [
   { id: "home", path: "/#home", labelEn: "Home", labelAr: "الرئيسية" },
-  { id: "about-us", path: "/#about-us", labelEn: "About Us", labelAr: "من نحن" },
-  { id: "projects", path: "/#projects", labelEn: "Projects", labelAr: "المشاريع" },
-  { id: "services", path: "/#services", labelEn: "Services", labelAr: "الخدمات" },
-  { id: "contact", path: "/#contact", labelEn: "Contact Us", labelAr: "اتصل بنا" },
+  { id: "about-us", path: "/about-us", labelEn: "About Us", labelAr: "من نحن" },
+  { id: "projects", path: "/projects", labelEn: "Projects", labelAr: "المشاريع" },
+  { id: "services", path: "/services", labelEn: "Services", labelAr: "الخدمات" },
+  { id: "contact", path: "/contact", labelEn: "Contact Us", labelAr: "اتصل بنا" },
 ];
 
 function Footer() {
@@ -71,20 +72,6 @@ function Footer() {
   const t = translations[language];
   const { isMobile, isTablet, isDesktop } = useScreen();
   const year = new Date().getFullYear();
-
-  // Function to handle smooth scrolling
-  const handleScroll = (e, path) => {
-    e.preventDefault();
-    const targetId = path.split("#")[1];
-    const targetElement = document.getElementById(targetId);
-
-    if (targetElement) {
-      targetElement.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }
-  };
 
   return (
     <footer
@@ -186,18 +173,18 @@ function Footer() {
                 >
                   {headerLinks.map((link) => (
                     <li key={link.id}>
-                      <a
-                        href={link.path}
-                        onClick={(e) => handleScroll(e, link.path)}
+                      <Link
+                        to={link.path}
                         style={{
                           color: "#FFFFFF",
                           transition: "color 0.3s",
+                          textDecoration: "none",
                         }}
                         onMouseEnter={(e) => (e.target.style.color = "#60A5FA")}
                         onMouseLeave={(e) => (e.target.style.color = "#FFFFFF")}
                       >
                         {language === "en" ? link.labelEn : link.labelAr}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -293,7 +280,6 @@ function Footer() {
                   color: "#81a3bb",
                   padding: "0.75rem",
                   textAlign: "left",
-
                 }}
               >
                 {t.paragraph}
@@ -330,18 +316,18 @@ function Footer() {
               >
                 {headerLinks.map((link) => (
                   <li key={link.id}>
-                    <a
-                      href={link.path}
-                      onClick={(e) => handleScroll(e, link.path)}
+                    <Link
+                      to={link.path}
                       style={{
                         color: "#FFFFFF",
                         transition: "color 0.3s",
+                        textDecoration: "none",
                       }}
                       onMouseEnter={(e) => (e.target.style.color = "#60A5FA")}
                       onMouseLeave={(e) => (e.target.style.color = "#FFFFFF")}
                     >
                       {language === "en" ? link.labelEn : link.labelAr}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>

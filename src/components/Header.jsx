@@ -118,9 +118,9 @@ function Header() {
         }}
         dir={language === "ar" ? "rtl" : "ltr"}
       >
-        <div className="flex justify-between items-center px-4 py-2">
+        <div className="flex justify-between items-center px-30 py-3">
           {/* Logo */}
-          <div className="w-60">
+          <div className="w-36">
             <Link to="/">
               <img
                 src={

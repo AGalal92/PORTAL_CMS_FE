@@ -28,7 +28,7 @@ function AppContent({ darkMode, animation, setAnimation, language, toggleLanguag
   
     useEffect(() => {
       setLoading(true);
-      const timer = setTimeout(() => setLoading(false), 1000); // Set loading duration to 2 seconds
+      const timer = setTimeout(() => setLoading(false), 1500); // Set loading duration to 2 seconds
       return () => clearTimeout(timer);
     }, [location.pathname]);
   
