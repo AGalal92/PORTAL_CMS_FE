@@ -95,7 +95,7 @@ const HomePage = () => {
         backgroundImage: "url(images/background.jpg)",
         backgroundSize: "cover",
         backgroundPosition: "center",
-        backgroundAttachment: "fixed",
+        // backgroundAttachment: "fixed",
         position: "relative",
         display: "flex",
         alignItems: "center",

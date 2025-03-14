@@ -61,7 +61,7 @@ function Projects() {
   // Animation variants for smooth sliding
   const slideVariants = {
     initial: () => ({
-      x: slideDirection === "right" ? 300 : -300, // Slide from right when going next, left when going prev
+      x: slideDirection === "right" ? 10 : -10, // Slide from right when going next, left when going prev
       opacity: 0,
     }),
     animate: {
@@ -73,7 +73,7 @@ function Projects() {
       },
     },
     exit: () => ({
-      x: slideDirection === "right" ? -300 : 300, // Slide to left when going next, right when going prev
+      x: slideDirection === "right" ? -10 : 10, // Slide to left when going next, right when going prev
       opacity: 0,
       transition: {
         x: { duration: 0.7, ease: [0.25, 0.1, 0.25, 1] },
@@ -201,9 +201,6 @@ const ProjectCard = ({ project, darkMode, isMobile, isTablet }) => {
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 50 }}
-      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-      transition={{ duration: 0.8 }}
       className="flex-shrink-0"
       style={{
         width: `${width}px`,
@@ -213,7 +210,7 @@ const ProjectCard = ({ project, darkMode, isMobile, isTablet }) => {
         <img
           src={project.logo}
           alt={project.name}
-          className="object-contain w-full h-auto transition-all duration-300 cursor-pointer"
+          className="object-contain  h-auto transition-all duration-300 cursor-pointer"
           style={{
             WebkitFilter: "grayscale(100%)", // Safari prefix
             filter: "grayscale(100%)", // Standard
