@@ -138,7 +138,7 @@ function TeamProcess() {
               </Link>
             </motion.div>
             <img
-              src="https://x-team.com/hubfs/2024-assets/step_img.png"
+              src="images/step_img.webp"
               alt="process illustration"
               className="mt-6 w-full"
             />

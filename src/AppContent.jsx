@@ -18,6 +18,7 @@ import AboutPage from "./pages/about-us/AboutPage";
 import ServicesPage from "./pages/services/ServicesPage";
 import ProjectsPage from "./pages/projects/ProjectsPage";
 import ContactPage from "./pages/contact/ContactPage";
+import TermsCondition from "./pages/terms-condition/TermsCondition";
 import ProjectDetails, { projectsData } from "./pages/projects/SignleProject";
 
 import ScrollToTop from "./hooks/ScrollToTop";
@@ -232,6 +233,7 @@ function AppContent({ darkMode, animation, setAnimation, language, toggleLanguag
               <Route path="/projects" element={<ProjectsPage />} />
               <Route path="/services" element={<ServicesPage />} />
               <Route path="/contact" element={<ContactPage />} />
+              <Route path="/terms-condition" element={<TermsCondition />} />
               <Route path="/projects/:id" element={<ProjectDetails />} />
             </Routes>
             <Footer />

@@ -17,7 +17,7 @@ function Header() {
   const navigate = useNavigate();
 
   // Define paths where header should have a black background
-  const blackBackgroundPaths = ["/about-us", "/projects", "/services", "/contact"];
+  const blackBackgroundPaths = ["/about-us", "/projects", "/services", "/contact", "/terms-condition"];
   const shouldHaveBlackBackground = blackBackgroundPaths.includes(location.pathname);
 
   useEffect(() => {

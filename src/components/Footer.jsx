@@ -1,7 +1,7 @@
 import React from "react";
 import { useLanguage } from "../App";
 import { LinkedIn, Facebook, Twitter } from "@mui/icons-material";
-import { Link } from "react-router-dom"; // Import Link from react-router-dom
+import { Link } from "react-router-dom";
 
 // Custom hook for screen size detection
 const useScreen = () => {
@@ -36,6 +36,7 @@ const translations = {
     },
     copyright:
       '© {year} <span style="font-weight: bold; color: #81a3bb;">Legion</span> Software. All Rights Reserved.',
+    termsAndPolicies: "Terms and Policies",
     socials: [
       { label: "LinkedIn", icon: <LinkedIn />, href: "#" },
       { label: "Facebook", icon: <Facebook />, href: "#" },
@@ -50,6 +51,7 @@ const translations = {
     },
     copyright:
       '© {year} <span style="font-weight: bold; color: #81a3bb;">ليجيون</span> للبرمجيات. جميع الحقوق محفوظة.',
+    termsAndPolicies: "الشروط والسياسات",
     socials: [
       { label: "لينكد إن", icon: <LinkedIn />, href: "#" },
       { label: "فيسبوك", icon: <Facebook />, href: "#" },
@@ -112,7 +114,7 @@ function Footer() {
               }}
             >
               <img
-                src="/images/logoFooter.png" // Replace with your logo path
+                src="/images/logoFooter.png"
                 alt="Legion Logo"
                 style={{
                   width: "10rem",
@@ -267,7 +269,7 @@ function Footer() {
               }}
             >
               <img
-                src="/images/logoFooter.png" // Replace with your logo path
+                src="/images/logoFooter.png"
                 alt="Legion Logo"
                 style={{
                   width: isTablet ? "14rem" : "16rem",
@@ -328,7 +330,7 @@ function Footer() {
                     >
                       {language === "en" ? link.labelEn : link.labelAr}
                     </Link>
-                  </li>
+                    </li>
                 ))}
               </ul>
             </div>
@@ -413,6 +415,21 @@ function Footer() {
               __html: t.copyright.replace("{year}", year),
             }}
           />
+          <Link
+            to="/terms-condition"
+            style={{
+              fontSize: isMobile ? "0.875rem" : "1rem",
+              color: "#FFFFFF",
+              transition: "color 0.3s",
+              textDecoration: "none",
+              marginTop: "0.1rem",
+              display: "inline-block",
+            }}
+            onMouseEnter={(e) => (e.target.style.color = "#60A5FA")}
+            onMouseLeave={(e) => (e.target.style.color = "#FFFFFF")}
+          >
+            {t.termsAndPolicies}
+          </Link>
         </div>
       </div>
     </footer>
