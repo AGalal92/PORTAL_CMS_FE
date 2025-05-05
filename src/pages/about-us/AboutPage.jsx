@@ -101,7 +101,7 @@ function About() {
            </div>
     </section>
         <TeamProcess />
-        <Team />
+        {/* <Team /> */}
          </>
        );
      }
