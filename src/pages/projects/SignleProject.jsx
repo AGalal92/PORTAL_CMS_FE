@@ -5,7 +5,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useScreenSize } from "../../hooks/useScreenSize";
 import { useParams, Link } from "react-router-dom";
-import { Helmet } from "react-helmet-async"; // Updated import
+import { Helmet } from "react-helmet-async";
 
 const translations = {
   en: {
@@ -65,6 +65,33 @@ export const projectsData = [
       "BrainyBattalion is a cybersecurity company that protects businesses from digital threats. We combine technical expertise with creative strategies to deliver strong security solutions.",
     technologies: ["React.js", "Tailwind CSS", "PHP Laravel", "MySQL", "Bootstrap", "Material UI"],
   },
+  {
+    id: 4,
+    name: "Madex",
+    image: "/images/madex.png",
+    category: "Portfolio",
+    link: "#",
+    created_at: "2025-02-28",
+    updated_at: "2025-03-05",
+    images: ["/images/madex1.png", "/images/madex2.png", "/images/madex3.png", "/images/madex4.png"],
+    video: ["/videos/madexVideo.mp4", "/videos/madexMobile.mp4"],
+    description: "Madex is a leading digital marketing company in Egypt, specializing in comprehensive digital solutions including social media management, content creation, SEO optimization, and strategic marketing campaigns to help businesses grow their online presence and reach their target audience effectively.",
+    technologies: ["React.js", "Tailwind CSS", "PHP Laravel", "MySQL", "Bootstrap", "Material UI"],
+  },
+  {
+    id: 5,
+    name: "Landmark Builders",
+    image: "/images/lmbsa.png",
+    category: "Construction",
+    link: "https://lmbsa.legionagency.tech",
+    created_at: "2024-03-01",
+    updated_at: "2024-03-15",
+    images: ["/images/lmbsa4.png", "/images/lmbsa3.png", "/images/lmbsa2.png", "/images/lmbsa1.png"],
+    video: ["/videos/lmbsaVideo.mp4", "/videos/lmbsaMobile.mp4"],
+    description:
+      "Landmark Builders is a leading construction company in Saudi Arabia, specialized in residential, commercial, and industrial projects with a focus on innovation, sustainability, and customer satisfaction.",
+    technologies: ["React.js", "Tailwind CSS", "PHP Laravel", "MySQL", "Bootstrap", "Material UI"],
+  }
 ];
 
 function ProjectDetails() {

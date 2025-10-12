@@ -14,8 +14,11 @@ const translations = {
     projectsData: [
       { id: 1, name: "Sphinx Platform", logo: "/images/sphinxLogo.png" },
       { id: 2, name: "EGAC Platform", logo: "/images/EgAcLogo.png" },
-      { id: 4, name: "Madex", logo: "/images/madexLogo.png" },
       { id: 3, name: "Brainy Battalion Platform", logo: "/images/brainLogo.png" },
+      { id: 4, name: "Madex", logo: "/images/madexLogo.png" },
+      { id: 5, name: "Landing Mark Company", logo: "/images/lmbsa.png" },
+
+
     
     ],
   },
@@ -27,6 +30,7 @@ const translations = {
       { id: 2, name: "منصة EGAC", logo: "/images/EgAcLogo.png" },
       { id: 3, name: "منصة Brainy Battalion", logo: "/images/brainLogo.png" },
       { id: 4, name: "مادكس", logo: "/images/madexLogo.png" },
+      { id: 5, name: "Landing Mark Company", logo: "/images/lmbsa.png" },
     ],
   },
 };
@@ -38,7 +42,7 @@ function Projects() {
   const t = translations[language];
   const [currentSlide, setCurrentSlide] = useState(0);
   const [slideDirection, setSlideDirection] = useState(null); // New state to track direction
-  const logosPerSlide = isMobile ? 2 : isTablet ? 3 : 4; // 2 logos on mobile
+  const logosPerSlide = isMobile ? 2 : isTablet ? 3 : 5; // 2 logos on mobile
   const totalSlides = Math.ceil(t.projectsData.length / logosPerSlide);
   const totalLogos = t.projectsData.length;
 
@@ -197,6 +201,7 @@ const ProjectCard = ({ project, darkMode, isMobile, isTablet }) => {
   });
 
   const width = isMobile ? 150 : isTablet ? 200 : 250;
+  const height = isMobile ? 100 : isTablet ? 120 : 150;
 
   return (
     <motion.div
@@ -207,24 +212,37 @@ const ProjectCard = ({ project, darkMode, isMobile, isTablet }) => {
       }}
     >
       <Link to={`/projects/${project.id}`}>
-        <img
-          src={project.logo}
-          alt={project.name}
-          className="object-contain  h-auto transition-all duration-300 cursor-pointer"
+        <div 
+          className="relative w-full bg-white rounded-lg transition-all duration-300 overflow-hidden"
           style={{
-            WebkitFilter: "grayscale(100%)", // Safari prefix
-            filter: "grayscale(100%)", // Standard
+            height: `${height}px`,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '1rem',
           }}
-          onMouseEnter={(e) => {
-            e.target.style.WebkitFilter = "none";
-            e.target.style.filter = "none";
-          }}
-          onMouseLeave={(e) => {
-            e.target.style.WebkitFilter = "grayscale(100%)";
-            e.target.style.filter = "grayscale(100%)";
-          }}
-          loading="lazy"
-        />
+        >
+          <img
+            src={project.logo}
+            alt={project.name}
+            className="object-contain w-full h-full transition-all duration-300 cursor-pointer"
+            style={{
+              WebkitFilter: "grayscale(100%)",
+              filter: "grayscale(100%)",
+              maxWidth: '100%',
+              maxHeight: '100%',
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.WebkitFilter = "none";
+              e.target.style.filter = "none";
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.WebkitFilter = "grayscale(100%)";
+              e.target.style.filter = "grayscale(100%)";
+            }}
+            loading="lazy"
+          />
+        </div>
       </Link>
     </motion.div>
   );

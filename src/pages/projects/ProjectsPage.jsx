@@ -19,6 +19,8 @@ const translations = {
       { id: 1, name: "Sphinx Platform", image: "/images/sphinx.png", category: "web" },
       { id: 2, name: "EGAC Platform", image: "/images/egac.png", category: "portfolio" },
       { id: 3, name: "Brainy Battalion Platform", image: "/images/brainy.png", category: "portfolio" },
+      { id: 4, name: "Madex", image: "/images/madex.png", category: "portfolio" },
+      { id: 5, name: "Landmark Builders", image: "/images/lmbsa7.png", category: "portfolio" },
       // { id: 4, name: "Brainy Battalion Platform", image: "/images/brainy.png", category: "portfolio" },
       
       // Add more projects here
@@ -36,6 +38,8 @@ const translations = {
       { id: 1, name: "منصة سفنكس", image: "/images/sphinx.png", category: "web" },
       { id: 2, name: "منصة EGAC", image: "/images/egac.png", category: "portfolio" },
       { id: 3, name: "منصة Brainy Battalion", image: "/images/brainy.png", category: "portfolio" },
+      { id: 4, name: "Madex", image: "/images/madex.png", category: "portfolio" },
+      { id: 5, name: "Landmark Builders", image: "/images/lmbsa7.png", category: "portfolio" },
       // { id: 4, name: "منصة Brainy Battalion", image: "/images/brainy.png", category: "portfolio" },
       // Add more projects here
     ],
