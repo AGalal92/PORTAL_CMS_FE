@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useScreenSize } from "../../hooks/useScreenSize";
 import { FiExternalLink } from "react-icons/fi";
+import { gaEvent } from "../../analytics/gtag";
 
 // Translation object
 const translations = {
@@ -88,14 +89,14 @@ function Projects() {
                   style={{ backgroundColor: 'var(--primary-color)' }}
                 ></span>
               </p>
-              <h2
+              <h1
                 className={`text-3xl sm:text-4xl md:text-5xl font-extrabold ${
                   language === "ar" ? "text-right" : "text-left"
                 } font-raleway`}
                 style={{ color: 'var(--text-heading-color)' }}
               >
                 {t.checkOurProjects}
-              </h2>
+              </h1>
             </div>
     
             {/* Category Buttons */}
@@ -103,7 +104,13 @@ function Projects() {
               {t.categories.map((category) => (
                 <motion.button
                   key={category.id}
-                  onClick={() => setSelectedCategory(category.id)}
+                  onClick={() => {
+                    gaEvent('filter_projects', { 
+                      category: category.id, 
+                      category_name: category.name 
+                    });
+                    setSelectedCategory(category.id);
+                  }}
                   className={`px-4 py-2 rounded-full font-raleway text-sm md:text-base transition-all duration-300 ${
                     selectedCategory === category.id
                       ? "bg-[var(--primary-color)] text-[var(--text-default-color)] shadow-[var(--shadow-default)]"
@@ -178,7 +185,15 @@ function Projects() {
         <h3 className="text-sm sm:text-lg md:text-xl font-semibold font-raleway mb-2" style={{ color: 'var(--primary-color)' }}>
           {project.name}
         </h3>
-        <a href={`/projects/${project.id}`} className="mt-2">
+        <a 
+          href={`/projects/${project.id}`} 
+          className="mt-2"
+          onClick={() => gaEvent('view_project', { 
+            project_id: project.id, 
+            project_name: project.name,
+            location: 'projects_page' 
+          })}
+        >
           <motion.div
             className="p-2 rounded-full shadow-lg cursor-pointer"
             style={{

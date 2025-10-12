@@ -7,6 +7,7 @@ import emailjs from "emailjs-com";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import TeamProcess from "../../components/TeamProcess";
+import { gaEvent } from "../../analytics/gtag";
 
 // Translation object
 const translations = {
@@ -68,9 +69,22 @@ function Contact() {
         "44ImNqv1CQtTUBhkg" // Replace with your EmailJS Public Key
       );
 
+      // Track successful form submission
+      gaEvent('generate_lead', { 
+        method: 'contact_form', 
+        location: 'contact_page',
+        value: 1 
+      });
+
       toast.success(t.successMessage);
       setForm({ name: "", email: "", subject: "", message: "" });
     } catch (error) {
+      // Track form submission error
+      gaEvent('form_error', { 
+        form_name: 'contact_form', 
+        error_message: error.message 
+      });
+      
       toast.error(t.errorMessage);
       console.error("EmailJS Error:", error);
     } finally {
@@ -105,14 +119,14 @@ function Contact() {
               style={{ backgroundColor: 'var(--primary-color)' }}
             ></span>
           </p>
-          <h2
+          <h1
             className={`text-3xl sm:text-4xl md:text-5xl font-extrabold ${
               language === "ar" ? "text-right" : "text-left"
             } font-raleway`}
             style={{ color: 'var(--text-heading-color)' }}
           >
             {t.weWillReachYou}
-          </h2>
+          </h1>
         </div>
 
         {/* Form */}

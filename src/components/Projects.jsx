@@ -5,6 +5,7 @@ import { useInView } from "react-intersection-observer";
 import { useScreenSize } from "../hooks/useScreenSize";
 import { Link } from "react-router-dom";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { gaEvent } from "../analytics/gtag";
 
 // Translation object with only logos
 const translations = {
@@ -48,11 +49,21 @@ function Projects() {
 
   // Arrow handlers with direction tracking
   const handlePrev = () => {
+    gaEvent('slider_navigation', { 
+      direction: 'previous', 
+      slider: 'clients_homepage',
+      slide: currentSlide 
+    });
     setSlideDirection("left"); // Moving left (content slides right)
     setCurrentSlide((prev) => Math.max(prev - 1, 0));
   };
 
   const handleNext = () => {
+    gaEvent('slider_navigation', { 
+      direction: 'next', 
+      slider: 'clients_homepage',
+      slide: currentSlide 
+    });
     setSlideDirection("right"); // Moving right (content slides left)
     setCurrentSlide((prev) => Math.min(prev + 1, totalSlides - 1));
   };
@@ -211,7 +222,14 @@ const ProjectCard = ({ project, darkMode, isMobile, isTablet }) => {
         width: `${width}px`,
       }}
     >
-      <Link to={`/projects/${project.id}`}>
+      <Link 
+        to={`/projects/${project.id}`}
+        onClick={() => gaEvent('view_project', { 
+          project_id: project.id, 
+          project_name: project.name,
+          location: 'clients_slider_homepage' 
+        })}
+      >
         <div 
           className="relative w-full bg-white rounded-lg transition-all duration-300 overflow-hidden"
           style={{

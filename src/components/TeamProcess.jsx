@@ -8,6 +8,7 @@ import LooksOneIcon from '@mui/icons-material/LooksOne';
 import LooksTwoIcon from '@mui/icons-material/LooksTwo';
 import Looks3Icon from '@mui/icons-material/Looks3';
 import Looks4Icon from '@mui/icons-material/Looks4';
+import { gaEvent } from "../analytics/gtag";
 
 // Translation object
 const translations = {
@@ -115,7 +116,14 @@ function TeamProcess() {
               {t.description}
             </h5>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Link to="/contact">
+              <Link 
+                to="/contact"
+                onClick={() => gaEvent('generate_lead', { 
+                  method: 'book_call_button', 
+                  location: 'team_process_section',
+                  value: 1 
+                })}
+              >
                 <motion.button
                   style={{
                     backgroundColor: "#0c59db",

@@ -67,14 +67,14 @@ function About() {
                    style={{ backgroundColor: 'var(--primary-color)' }}
                  ></span>
                </p>
-               <h2
+               <h1
                  className={`text-3xl sm:text-4xl md:text-5xl font-extrabold ${
                    language === "ar" ? "text-right" : "text-left"
                  } font-raleway`}
                  style={{ color: 'var(--text-heading-color)' }}
                >
                  {t.whoWeAre}
-               </h2>
+               </h1>
              </div>
              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                {/* Left Side: Text Content */}

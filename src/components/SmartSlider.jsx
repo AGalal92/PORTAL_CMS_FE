@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme, useLanguage } from "../App";
 import { useScreenSize } from "../hooks/useScreenSize";
+import { gaEvent } from "../analytics/gtag";
 
 const HomePage = () => {
   const { darkMode } = useTheme();
@@ -149,7 +150,7 @@ const HomePage = () => {
                 fontSize: isMobile ? "4rem" : isTablet ? "5rem" : "6rem",
               }}
             >
-              <h3> {t[currentSlide].title}</h3>
+              {t[currentSlide].title}
             </motion.h1>
 
             {/* Description */}
@@ -174,6 +175,11 @@ const HomePage = () => {
               custom={2}
               initial="hidden"
               animate="visible"
+              onClick={() => gaEvent('hero_cta_click', { 
+                button_text: t[currentSlide].button, 
+                slide_index: currentSlide,
+                slide_title: t[currentSlide].title 
+              })}
               style={{
                 backgroundColor: "#0c59db",
                 color: "var(--secondary-color, #ffffff)",
@@ -190,7 +196,7 @@ const HomePage = () => {
               }}
               whileTap={{ scale: 0.95 }}
             >
-              <h3 style={{ color: "white" }}> {t[currentSlide].button}</h3>
+              <span style={{ color: "white" }}>{t[currentSlide].button}</span>
             </motion.button>
           </motion.div>
         </AnimatePresence>

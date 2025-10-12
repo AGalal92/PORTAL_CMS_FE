@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useScreenSize } from "../hooks/useScreenSize";
 import { Link } from "react-router-dom";
+import { gaEvent } from "../analytics/gtag";
 
 // Translation object
 const translations = {
@@ -77,7 +78,14 @@ function Contact() {
   
         {/* Schedule a Call Button */}
         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-          <Link to="/contact">
+          <Link 
+            to="/contact"
+            onClick={() => gaEvent('generate_lead', { 
+              method: 'schedule_call_button', 
+              location: 'contact_section_homepage',
+              value: 1 
+            })}
+          >
            <motion.button
                         custom={2}
                         initial="hidden"

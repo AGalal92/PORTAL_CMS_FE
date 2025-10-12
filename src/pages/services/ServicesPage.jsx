@@ -163,14 +163,14 @@ function Services() {
               style={{ backgroundColor: 'var(--primary-color)' }}
             ></span>
           </p>
-          <h2
+          <h1
             className={`text-3xl sm:text-4xl md:text-5xl font-extrabold ${
               language === "ar" ? "text-right" : "text-left"
             } font-raleway`}
             style={{ color: 'var(--text-heading-color)' }}
           >
             {t.checkOurServices}
-          </h2>
+          </h1>
         </div>
 
         {/* Grid Layout */}

@@ -6,6 +6,7 @@ import { HelmetProvider } from "react-helmet-async";
 import "./App.css";
 import AppContent from "./AppContent";
 import { applyTheme } from './theme/theme'; // Import the applyTheme function
+import GAListener from "./analytics/GAListener"; 
 
 const ThemeContext = createContext();
 export function useTheme() {
@@ -77,6 +78,7 @@ function App() {
             <ThemeProvider theme={theme}>
               <CssBaseline />
               <Router>
+               <GAListener />
                 <AppContent
                   darkMode={darkMode}
                   animation={animation}

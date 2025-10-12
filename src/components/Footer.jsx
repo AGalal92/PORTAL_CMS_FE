@@ -2,6 +2,7 @@ import React from "react";
 import { useLanguage } from "../App";
 import { LinkedIn, Facebook, Twitter } from "@mui/icons-material";
 import { Link } from "react-router-dom";
+import { gaEvent } from "../analytics/gtag";
 
 // Custom hook for screen size detection
 const useScreen = () => {
@@ -177,6 +178,10 @@ function Footer() {
                     <li key={link.id}>
                       <Link
                         to={link.path}
+                        onClick={() => gaEvent('footer_link_click', { 
+                          page: link.id, 
+                          label: language === "en" ? link.labelEn : link.labelAr 
+                        })}
                         style={{
                           color: "#FFFFFF",
                           transition: "color 0.3s",
@@ -232,6 +237,10 @@ function Footer() {
                     <a
                       key={index}
                       href={social.href}
+                      onClick={() => gaEvent('social_media_click', { 
+                        platform: social.label, 
+                        location: 'footer_mobile' 
+                      })}
                       style={{
                         color: "#FFFFFF",
                         transition: "color 0.3s",
@@ -320,6 +329,10 @@ function Footer() {
                   <li key={link.id}>
                     <Link
                       to={link.path}
+                      onClick={() => gaEvent('footer_link_click', { 
+                        page: link.id, 
+                        label: language === "en" ? link.labelEn : link.labelAr 
+                      })}
                       style={{
                         color: "#FFFFFF",
                         transition: "color 0.3s",
@@ -375,6 +388,10 @@ function Footer() {
                   <a
                     key={index}
                     href={social.href}
+                    onClick={() => gaEvent('social_media_click', { 
+                      platform: social.label, 
+                      location: 'footer_desktop' 
+                    })}
                     style={{
                       color: "#FFFFFF",
                       transition: "color 0.3s",
@@ -417,6 +434,10 @@ function Footer() {
           />
           <Link
             to="/terms-condition"
+            onClick={() => gaEvent('footer_link_click', { 
+              page: 'terms-condition', 
+              label: t.termsAndPolicies 
+            })}
             style={{
               fontSize: isMobile ? "0.875rem" : "1rem",
               color: "#FFFFFF",

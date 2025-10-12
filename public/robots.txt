@@ -1,3 +1,45 @@
+# robots.txt for legionagency.tech
+# Allow all search engines to crawl the site
+
 User-agent: *
 Allow: /
+
+# Disallow admin and API routes
+Disallow: /api/
+Disallow: /admin/
+Disallow: /.git/
+Disallow: /node_modules/
+
+# Disallow duplicate content
+Disallow: /*?*utm_source
+Disallow: /*?*ref=
+Disallow: /*?*fbclid=
+
+# Allow crawling of CSS and JS (important for SEO)
+Allow: /src/*.js
+Allow: /src/*.css
+Allow: /images/
+Allow: /videos/
+
+# Sitemap location
 Sitemap: https://legionagency.tech/sitemap.xml
+
+# Crawl-delay (optional, adjust if needed)
+# Crawl-delay: 1
+
+# Specific rules for different bots (optional)
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /images/
+
+User-agent: Bingbot
+Allow: /
+
+# Block bad bots (optional)
+User-agent: AhrefsBot
+Crawl-delay: 2
+
+User-agent: SemrushBot
+Crawl-delay: 2

@@ -5,6 +5,7 @@ import { FiMenu, FiX } from "react-icons/fi";
 import { Home, Info, Build, Work, Group, Mail } from "@mui/icons-material";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import LanguageIcon from '@mui/icons-material/Language';
+import { gaEvent } from "../analytics/gtag";
 
 function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -121,7 +122,10 @@ function Header() {
         <div className={`flex justify-between items-center  ${isMobile ? "px-5 py-3" : "px-30 py-5"}`}>
           {/* Logo */}
           <div className="w-36">
-            <Link to="/">
+            <Link 
+              to="/"
+              onClick={() => gaEvent('logo_click', { location: 'header' })}
+            >
               <img
                 src={
                   shouldHaveBlackBackground || isScrolled
@@ -141,6 +145,11 @@ function Header() {
               <Link
                 key={item.id}
                 to={item.path}
+                onClick={() => gaEvent('navigation_click', { 
+                  page: item.id, 
+                  location: 'header_desktop',
+                  label: item.label 
+                })}
                 className={`text-xlg font-medium transition-all duration-300 ${
                   location.pathname === item.path ? "font-bold" : ""
                 }`}
@@ -165,7 +174,13 @@ function Header() {
           <div className="flex items-center gap-2">
             <motion.button
               title={language === "en" ? "العربية" : "English"}
-              onClick={toggleLanguage}
+              onClick={() => {
+                gaEvent('language_change', { 
+                  from: language, 
+                  to: language === "en" ? "ar" : "en" 
+                });
+                toggleLanguage();
+              }}
               className="p-2 rounded-full transition-all duration-300 cursor-pointer"
               style={{
                 color:
@@ -193,7 +208,12 @@ function Header() {
 
             {isMobile && (
               <motion.button
-                onClick={() => setMenuOpen(!menuOpen)}
+                onClick={() => {
+                  gaEvent('mobile_menu_toggle', { 
+                    action: menuOpen ? 'close' : 'open' 
+                  });
+                  setMenuOpen(!menuOpen);
+                }}
                 className="p-2 rounded-full shadow-lg transition-all duration-300"
                 style={{
                   backgroundColor: "var(--secondary-color)", // Use primary color for button background
@@ -224,7 +244,14 @@ function Header() {
               <Link
                 key={item.id}
                 to={item.path}
-                onClick={() => setMenuOpen(false)} // Close menu on click
+                onClick={() => {
+                  gaEvent('navigation_click', { 
+                    page: item.id, 
+                    location: 'header_mobile',
+                    label: item.label 
+                  });
+                  setMenuOpen(false);
+                }} // Close menu on click
                 className={`text-xlg font-medium transition-all duration-300 ${
                   location.pathname === item.path ? "font-bold" : ""
                 }`}
